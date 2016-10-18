@@ -6,7 +6,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{D7ED3139-6619-8EDB-E906-23FEBC08F9E3}</ProjectGuid>
+    <ProjectGuid>{5B580621-09B4-68CB-B5F4-5B9DD210A60F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -65,8 +65,6 @@
      <Compile Include="Assets\LERA_D-Coord Files\Scripts\WandControllerLeft.cs" />
      <Compile Include="Assets\LERA_D-Coord Files\Scripts\WandControllerRight.cs" />
      <Compile Include="Assets\LERA_D-Coord Files\Scripts\zActionManager.cs" />
-     <Compile Include="Assets\LaserImplm.cs" />
-     <Compile Include="Assets\LaserPicker.cs" />
      <Compile Include="Assets\Plane\PlaneActionManager.cs" />
      <Compile Include="Assets\Plane\PlaneCreator.cs" />
      <Compile Include="Assets\Plane\PlaneMenuManager.cs" />
@@ -82,6 +80,9 @@
      <Compile Include="Assets\Points\appPoint\EditPoint.cs" />
      <Compile Include="Assets\Points\appPoint\RefObjects_Point.cs" />
      <Compile Include="Assets\Points\appPoint\app_Point.cs" />
+     <Compile Include="Assets\Prefabs\LaserPickerNew Folder\LaserImplm.cs" />
+     <Compile Include="Assets\Prefabs\LaserPickerNew Folder\LaserPicker.cs" />
+     <Compile Include="Assets\Prefabs\LaserPickerNew Folder\LaserRenderer.cs" />
      <Compile Include="Assets\Scripts\ActionSwitcher.cs" />
      <Compile Include="Assets\Scripts\CloseMenuButtonActions.cs" />
      <Compile Include="Assets\Scripts\CursorManager.cs" />
@@ -90,7 +91,6 @@
      <Compile Include="Assets\Scripts\IToolsScreenManager.cs" />
      <Compile Include="Assets\Scripts\InfoObject.cs" />
      <Compile Include="Assets\Scripts\Interfaces.cs" />
-     <Compile Include="Assets\Scripts\LaserRenderer.cs" />
      <Compile Include="Assets\Scripts\ToolBoxButtonActions.cs" />
      <Compile Include="Assets\Scripts\ToolBoxManager.cs" />
      <Compile Include="Assets\Scripts\ToolScreenManager.cs" />
@@ -144,7 +144,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{186FF6F9-F5E9-CA9F-E541-32CB6120D50B}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
+      <Project>{FDE690F1-626F-FFA0-5754-E83120972A79}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

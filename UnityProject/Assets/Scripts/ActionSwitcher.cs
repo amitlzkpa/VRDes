@@ -5,6 +5,11 @@ using UnityEngine.UI;
 public class ActionSwitcher : MonoBehaviour
 {
 
+    public GameObject ui1;
+    public GameObject ui2;
+
+
+
     private GameObject laserObj;
     private LaserPicker laser;
 
@@ -61,6 +66,18 @@ public class ActionSwitcher : MonoBehaviour
 
     void Update()
     {
+        if (WandControlsManager.WandControllerRight.getGripDown())
+        {
+            GameObject currUI = (GameObject) Instantiate(ui1, transform.position, transform.rotation * Quaternion.Euler(60, 0, 0));
+            currUI.transform.SetParent(transform.parent.FindChild("_ContextCanvas"));
+        }
+        if (WandControlsManager.WandControllerRight.getTouchPadButtonDown())
+        {
+            GameObject currUI = (GameObject)Instantiate(ui2, transform.position, transform.rotation * Quaternion.Euler(60, 0, 0));
+            currUI.transform.SetParent(transform.parent.FindChild("_ContextCanvas"));
+        }
+
+
         if (laser.isHit())
         {
             hitObj = laser.getHitObject();
