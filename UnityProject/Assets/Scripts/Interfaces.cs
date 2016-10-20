@@ -60,3 +60,45 @@ public interface Infoable
     bool isOnLayer(int layer);
 }
 
+
+
+
+
+
+
+public interface WandController
+{
+    bool getGripDown();
+    bool getGripUp();
+    bool getGripPressed();
+
+    bool getTriggerDown();
+    bool getTriggerUp();
+    bool getTriggerPressed();
+
+    bool getMenuDown();
+    bool getMenuUp();
+    bool getMenuPressed();
+
+    bool getTouchPadButtonDown();
+    bool getTouchPadButtonUp();
+    bool getTouchPadButtonPressed();
+
+    float getTouchPadX();
+    float getTouchPadY();
+    bool getTouchPadTouchedDown();
+    bool getTouchPadTouchedUp();
+    bool getTouchPadTouched();
+
+    bool getTouchPadSwipeRight();
+    bool getTouchPadSwipeLeft();
+    bool getTouchPadSwipeUp();
+    bool getTouchPadSwipeDown();
+
+    bool getTouchPadButtonClickUp();
+    bool getTouchPadButtonClickDown();
+    bool getTouchPadButtonClickLeft();
+    bool getTouchPadButtonClickRight();
+
+}
+

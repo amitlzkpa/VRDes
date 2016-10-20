@@ -2,7 +2,16 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class CursorManager : MonoBehaviour {
+public class CursorManagerLeft : MonoBehaviour
+{
+
+
+
+    private float remap(float srcMax, float tgtMax, float val)
+    {
+        return (val / srcMax) * tgtMax;
+    }
+
 
 
 
@@ -14,8 +23,8 @@ public class CursorManager : MonoBehaviour {
     private Vector3 clickScale;
     private Vector3 activeScale;
 
-    private float defScaleVal = 0.4f;
-    private float clickScaleVal = 0.8f;
+    private float defScaleVal = 0.04f;
+    private float clickScaleVal = 0.08f;
 
     private Ray cursorRay;
     private RaycastHit cursorRayHit;
@@ -24,19 +33,21 @@ public class CursorManager : MonoBehaviour {
 
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         cursor = transform.FindChild("_Cursor").gameObject;
         touchPos = new Vector3();
         touchPos.z = cursor.transform.localPosition.z;
         defaultScale = new Vector3(defScaleVal, defScaleVal, defScaleVal);
         clickScale = new Vector3(clickScaleVal, clickScaleVal, clickScaleVal);
     }
-	
-	// Update is called once per frame
-	void Update () {
-        if (WandControlsManager.WandControllerRight.getTouchPadTouched())
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (WandControlsManager.WandControllerLeft.getTouchPadTouched())
         {
-            if (WandControlsManager.WandControllerRight.getTouchPadButtonPressed())
+            if (WandControlsManager.WandControllerLeft.getTouchPadButtonPressed())
             {
                 activeScale = clickScale;
             }
@@ -44,16 +55,17 @@ public class CursorManager : MonoBehaviour {
             {
                 activeScale = defaultScale;
             }
-            touchPos.x = WandControlsManager.WandControllerRight.getTouchPadX();
-            touchPos.y = WandControlsManager.WandControllerRight.getTouchPadY();
+            touchPos.x = remap(1f, 0.075f, WandControlsManager.WandControllerLeft.getTouchPadX());
+            touchPos.y = remap(1f, 0.1f, WandControlsManager.WandControllerLeft.getTouchPadY());
             cursor.transform.localPosition = touchPos;
             cursor.transform.localScale = activeScale;
-            
+
 
             cursorRay = new Ray(cursor.transform.position, cursor.transform.forward);
-            if (WandControlsManager.WandControllerRight.getTouchPadButtonUp())
+            if (WandControlsManager.WandControllerLeft.getTouchPadButtonUp())
             {
-                if (Physics.Raycast(cursorRay, out cursorRayHit, 0.1f)) {
+                if (Physics.Raycast(cursorRay, out cursorRayHit, 0.01f))
+                {
                     clickButton = cursorRayHit.transform.gameObject.GetComponent<Button>();
                     if (clickButton != null)
                     {
@@ -62,5 +74,5 @@ public class CursorManager : MonoBehaviour {
                 }
             }
         }
-	}
+    }
 }

@@ -196,12 +196,7 @@ public class GeneralSettings : MonoBehaviour {
     public static Color defaultLightColor;
     public static GeneralSettings instance;
 
-
-
-    void Awake()
-    {
-        instance = this;
-    }
+    
 
 
 
@@ -408,8 +403,10 @@ public class GeneralSettings : MonoBehaviour {
 
 
     // Use this for initialization
-    void Start () {
-		DateTime epochTime = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
+    void Awake ()
+    {
+        instance = this;
+        DateTime epochTime = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
 		int currTime = (int)(System.DateTime.UtcNow - epochTime).TotalSeconds;
 
 		sessionStartTime = DateTime.Now;
