@@ -126,8 +126,8 @@ public class GeneralSettings : MonoBehaviour {
     // user console setup
     ////////////////////////////////////////////////////////////////////////////////
 
-
-
+    
+    
 
     private static List<string> consoleList;
     private static bool consoleUpdate;

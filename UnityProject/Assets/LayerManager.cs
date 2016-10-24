@@ -4,8 +4,12 @@ using UnityEngine.UI;
 
 public class LayerManager : MonoBehaviour {
 
+
+
+
     public GameObject buttonPrefab;
     private GameObject modelObjects;
+    private GameObject layerButtonSets;
 
     private int layerCount;
 
@@ -16,11 +20,21 @@ public class LayerManager : MonoBehaviour {
     private int layerLimit = 9;
 
 
+    //---------------------------------------------------------------
 
 
+    private void destroyAllButtonSets()
+    {
+        GameObject buttonObj;
+        for (int i = 0; i < layerButtonSets.transform.childCount; i++)
+        {
+            buttonObj = layerButtonSets.transform.GetChild(i).gameObject;
+            Destroy(buttonObj);
+        }
+    }
 
 
-    private void setUpLayerUI()
+    private void createButtonSets()
     {
         layerCount = modelObjects.transform.childCount;
         if (layerCount > layerLimit)
@@ -35,44 +49,68 @@ public class LayerManager : MonoBehaviour {
             GameObject layerObject = modelObjects.transform.GetChild(i).gameObject;
             buttonCreated = (GameObject)Instantiate(buttonPrefab, gameObject.GetComponent<RectTransform>().localPosition, Quaternion.identity);
             buttonCreated.name = layerObject.name;
-            buttonCreated.transform.SetParent(transform, false);
+            buttonCreated.transform.SetParent(layerButtonSets.transform, false);
             buttonCreated.transform.localPosition = new Vector3(xPos, yPos - (i * yGap), 0f);
             buttonCreated.GetComponent<LayerButtonSet>().setLayerObject(layerObject);
         }
     }
 
 
+    private void refreshButtonSets()
+    {
+        destroyAllButtonSets();
+        createButtonSets();
+    }
 
 
-
+    //---------------------------------------------------------------
 
 
     public void deleteLayer(GameObject layerObject)
     {
-        string layerName = layerObject.name;
+        if (layerObject == modelObjects.transform.GetChild(0).gameObject)
+        {
+            GeneralSettings.addLineToConsole(string.Format("Can not delete the {0} layer.", layerObject.name));
+            return;
+        }
         Destroy(layerObject);
-        Destroy(transform.FindChild(layerName).gameObject);
+        Invoke("refreshButtonSets", 0.00001f);
     }
 
 
 
     public void addLayer()
     {
-        Debug.Log("Implement this.");
+        GameObject newLayerObj = new GameObject("New Layer");
+        newLayerObj.transform.SetParent(modelObjects.transform);
+        Invoke("refreshButtonSets", 0.00001f);
     }
 
 
 
+    public void unhideAllLayers()
+    {
+        layerCount = modelObjects.transform.childCount;
+        GameObject layerObject;
+        for (int i = 0; i < layerCount; i++)
+        {
+            layerObject = modelObjects.transform.GetChild(i).gameObject;
+            layerObject.SetActive(true);
+        }
+    }
+
+
+    //---------------------------------------------------------------
 
 
     void Start()
     {
         modelObjects = GeneralSettings.modelObjects;
-        setUpLayerUI();
+        layerButtonSets = transform.FindChild("_LayerButtonSets").gameObject;
+        createButtonSets();
     }
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
+
+
+
 }

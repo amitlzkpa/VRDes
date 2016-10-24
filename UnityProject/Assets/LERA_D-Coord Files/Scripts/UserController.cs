@@ -10,10 +10,16 @@ public class UserController : MonoBehaviour {
     private LaserPicker leftLaser;
     private GameObject headCamera;
 
-    private bool XZMoveOn = false;
-    private float XZFirstTouchTime;
-    private float XZLag = 0.5f;
-    private bool YMoveOn = false;
+    private float eyeHeight = 1.8f;
+
+
+
+    IEnumerator teleportToPoint(Vector3 hitPt)
+    {
+        yield return new WaitForSeconds(0.5f);
+        hitPt.y += eyeHeight;
+        transform.position = hitPt;
+    }
 
 
     // Use this for initialization
@@ -35,9 +41,7 @@ public class UserController : MonoBehaviour {
             if (leftLaser.isOn())
             {
                 GeneralSettings.fadeScreen();
-                Vector3 targetPosition = leftLaser.getHitPoint();
-                targetPosition.y += 1f;
-                transform.position = targetPosition;
+                StartCoroutine(teleportToPoint(leftLaser.getHitPoint()));
             }
         }
 
@@ -48,84 +52,6 @@ public class UserController : MonoBehaviour {
             Vector3 moveVector = (leftWand.transform.forward * moveSpeed);
             transform.Translate(moveVector);
         }
-
-
-
-
-
-
-
-        /*
-
-
-        // toggle laser
-        if (WandControlsManager.WandControllerLeft.getTouchPadSwipeDown())
-        {
-            leftLaser.disableLaser();
-        }
-        if (WandControlsManager.WandControllerLeft.getTouchPadSwipeUp())
-        {
-            leftLaser.enableLaser();
-        }
-
-
-
-
-        // THIS PART STILL NEEDS REFINEMENT
-
-        // Y move up
-        YMoveOn = false;
-        if (WandControlsManager.WandControllerLeft.getTouchPadButtonClickUp())
-        {
-            YMoveOn = true;
-        }
-
-        // Y move down
-        if (WandControlsManager.WandControllerLeft.getTouchPadButtonClickDown())
-        {
-            YMoveOn = true;
-        }
-
-        if (YMoveOn)
-        {
-            Vector3 moveVector = (Vector3.up * WandControlsManager.WandControllerLeft.getTouchPadY() * moveSpeed);
-            transform.Translate(moveVector);
-            XZFirstTouchTime = Time.time;
-        }
-
-
-
-        // XZ move
-        if (YMoveOn)
-        {
-            // dont xz move when performing y move
-            return;
-        }
-        XZMoveOn = false;
-        if (WandControlsManager.WandControllerLeft.getTouchPadTouchedDown())
-        {
-            XZFirstTouchTime = Time.time;
-        }
-        if((WandControlsManager.WandControllerLeft.getTouchPadTouched()) && ((Time.time - XZFirstTouchTime) > XZLag))
-        {
-            XZMoveOn = true;
-        }
-        if (WandControlsManager.WandControllerLeft.getTouchPadTouchedUp())
-        {
-            XZMoveOn = false;
-        }
-        if (WandControlsManager.WandControllerLeft.getTouchPadButtonPressed())
-        {
-            XZMoveOn = false;
-        }
-        if (XZMoveOn)
-        {
-            Vector3 moveVector = (headCamera.transform.forward * WandControlsManager.WandControllerLeft.getTouchPadY() * moveSpeed) +
-                                 (headCamera.transform.right * WandControlsManager.WandControllerLeft.getTouchPadX() * moveSpeed);
-            moveVector.y = 0;
-            transform.Translate(moveVector);
-        }
-        */
 
 
 

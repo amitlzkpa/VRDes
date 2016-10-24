@@ -56,7 +56,7 @@ public class CursorManagerLeft : MonoBehaviour
                 activeScale = defaultScale;
             }
             touchPos.x = remap(1f, 0.075f, WandControlsManager.WandControllerLeft.getTouchPadX());
-            touchPos.y = remap(1f, 0.1f, WandControlsManager.WandControllerLeft.getTouchPadY());
+            touchPos.y = remap(1f, 0.15f, WandControlsManager.WandControllerLeft.getTouchPadY());
             cursor.transform.localPosition = touchPos;
             cursor.transform.localScale = activeScale;
 
