@@ -47,6 +47,7 @@
   <ItemGroup>
      <Compile Include="Assets\AbstractCreator.cs" />
      <Compile Include="Assets\CursorManagerLeft.cs" />
+     <Compile Include="Assets\CursorManagerRight.cs" />
      <Compile Include="Assets\LERA_D-Coord Files\Scripts\AudioManager.cs" />
      <Compile Include="Assets\LERA_D-Coord Files\Scripts\AudioRecordManager.cs" />
      <Compile Include="Assets\LERA_D-Coord Files\Scripts\ButtonActions.cs" />
