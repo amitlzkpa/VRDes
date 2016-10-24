@@ -68,6 +68,8 @@
      <Compile Include="Assets\LERA_D-Coord Files\Scripts\zActionManager.cs" />
      <Compile Include="Assets\LayerButtonSet.cs" />
      <Compile Include="Assets\LayerManager.cs" />
+     <Compile Include="Assets\ObjectMenuManager.cs" />
+     <Compile Include="Assets\ObjectMenu_Point.cs" />
      <Compile Include="Assets\Plane\PlaneActionManager.cs" />
      <Compile Include="Assets\Plane\PlaneCreator.cs" />
      <Compile Include="Assets\Plane\PlaneMenuManager.cs" />

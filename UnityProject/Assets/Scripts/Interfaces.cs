@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 
 
+//---------------------------------------------------------------
+
+
 public interface Creator
 {
     GameObject getActionObject();
@@ -26,11 +29,26 @@ public interface ActionManager
 }
 
 
+//---------------------------------------------------------------
+
 
 public interface Highlightable
 {
     void highlightObject();
 }
+
+
+public interface ObjectMenu
+{
+    void transformObject();
+    void edit();
+    void rename();
+    void delete();
+}
+
+
+//---------------------------------------------------------------
+
 
 public interface Editable
 {
@@ -61,9 +79,7 @@ public interface Infoable
 }
 
 
-
-
-
+//---------------------------------------------------------------
 
 
 public interface WandController

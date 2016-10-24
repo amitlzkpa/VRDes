@@ -400,6 +400,26 @@ public class GeneralSettings : MonoBehaviour {
     ////////////////////////////////////////////////////////////////////////////////
 
 
+    private static GameObject objectMenuHolderObject;
+    private static ObjectMenuManager objMenuManager;
+
+
+    public static void setObjectMenu(GameObject objectMenu)
+    {
+        objMenuManager.setObjectMenu(objectMenu);
+    }
+
+
+    public static void detachObjectMenu()
+    {
+        objMenuManager.detachObjectMenu();
+    }
+
+
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+
 
 
     // Use this for initialization
@@ -430,6 +450,9 @@ public class GeneralSettings : MonoBehaviour {
 
         actionSwitcherObject = transform.FindChild("[CameraRig]").FindChild("Controller (right)").FindChild("_ActionSwitcher").gameObject;
         actionSwitcher = actionSwitcherObject.GetComponent<ActionSwitcher>();
+
+        objectMenuHolderObject = transform.FindChild("[CameraRig]").FindChild("Controller (right)").FindChild("_ObjectMenuCanvas").gameObject;
+        objMenuManager = objectMenuHolderObject.GetComponent<ObjectMenuManager>();
 
         blackScreen = player.transform.FindChild("_BlackScreen").FindChild("Image").gameObject.GetComponent<Image>();
 
