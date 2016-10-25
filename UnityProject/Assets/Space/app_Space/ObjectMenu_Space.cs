@@ -2,7 +2,8 @@
 using System.Collections;
 using System;
 
-public class ObjectMenu_Point : MonoBehaviour, ObjectMenu {
+public class ObjectMenu_Space : MonoBehaviour, ObjectMenu
+{
 
 
 
@@ -18,8 +19,8 @@ public class ObjectMenu_Point : MonoBehaviour, ObjectMenu {
 
     public void delete()
     {
-        // get the object menu back and
-        Destroy(parentObj);
+        GeneralSettings.detachObjectMenu(parentObj);
+        GeneralSettings.deleteObject(parentObj);
     }
 
     public void edit()
@@ -36,9 +37,8 @@ public class ObjectMenu_Point : MonoBehaviour, ObjectMenu {
 
 
 
-
-    // Use this for initialization
-    void Start () {
+    void Awake()
+    {
         parentObj = transform.parent.gameObject;
     }
 }

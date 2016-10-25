@@ -70,11 +70,11 @@
      <Compile Include="Assets\LayerButtonSet.cs" />
      <Compile Include="Assets\LayerManager.cs" />
      <Compile Include="Assets\ObjectMenuManager.cs" />
-     <Compile Include="Assets\ObjectMenu_Point.cs" />
      <Compile Include="Assets\Plane\PlaneActionManager.cs" />
      <Compile Include="Assets\Plane\PlaneCreator.cs" />
      <Compile Include="Assets\Plane\PlaneMenuManager.cs" />
      <Compile Include="Assets\Plane\appPlane\EditPlane.cs" />
+     <Compile Include="Assets\Plane\appPlane\ObjectMenu_Plane.cs" />
      <Compile Include="Assets\Plane\appPlane\RefObjects_Plane.cs" />
      <Compile Include="Assets\Plane\appPlane\app_Plane.cs" />
      <Compile Include="Assets\PlaneEdit\PlaneEditActionManager.cs" />
@@ -84,6 +84,7 @@
      <Compile Include="Assets\Points\PointCreator.cs" />
      <Compile Include="Assets\Points\PointMenuManager.cs" />
      <Compile Include="Assets\Points\appPoint\EditPoint.cs" />
+     <Compile Include="Assets\Points\appPoint\ObjectMenu_Point.cs" />
      <Compile Include="Assets\Points\appPoint\RefObjects_Point.cs" />
      <Compile Include="Assets\Points\appPoint\app_Point.cs" />
      <Compile Include="Assets\Prefabs\LaserPickerNew Folder\LaserImplm.cs" />
@@ -105,6 +106,7 @@
      <Compile Include="Assets\Space\SpaceCreator.cs" />
      <Compile Include="Assets\Space\SpaceMenuManager.cs" />
      <Compile Include="Assets\Space\app_Space\Edit_Space.cs" />
+     <Compile Include="Assets\Space\app_Space\ObjectMenu_Space.cs" />
      <Compile Include="Assets\Space\app_Space\RefObjects_Space.cs" />
      <Compile Include="Assets\Space\app_Space\app_Space.cs" />
      <Compile Include="Assets\SteamVR\Extras\SteamVR_GazeTracker.cs" />

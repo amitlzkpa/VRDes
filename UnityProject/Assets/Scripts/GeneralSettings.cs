@@ -290,6 +290,18 @@ public class GeneralSettings : MonoBehaviour {
     }
 
 
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+
+    private static GameObject deleteHoldingObject;
+
+    public static void deleteObject(GameObject inpObject)
+    {
+        inpObject.transform.SetParent(deleteHoldingObject.transform);
+    }
+
+
     ////////////////////////////////////////////////////////////////////////////////
 
 
@@ -410,9 +422,9 @@ public class GeneralSettings : MonoBehaviour {
     }
 
 
-    public static void detachObjectMenu()
+    public static void detachObjectMenu(GameObject tgtObject)
     {
-        objMenuManager.detachObjectMenu();
+        objMenuManager.detachObjectMenu(tgtObject);
     }
 
 
@@ -447,6 +459,8 @@ public class GeneralSettings : MonoBehaviour {
         scaledPlayerLocation = scaledModelLocation + new Vector3(3f, 3f, 3f);
 
         int_ModelObjects = model.transform.FindChild("_Objects").gameObject;
+        deleteHoldingObject = model.transform.FindChild("_Deleted").gameObject;
+        deleteHoldingObject.SetActive(false);
 
         actionSwitcherObject = transform.FindChild("[CameraRig]").FindChild("Controller (right)").FindChild("_ActionSwitcher").gameObject;
         actionSwitcher = actionSwitcherObject.GetComponent<ActionSwitcher>();

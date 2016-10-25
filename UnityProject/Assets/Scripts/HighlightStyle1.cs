@@ -88,9 +88,7 @@ public class HighlightStyle1 : MonoBehaviour, Highlightable
 
     private void unsetObjectMenu()
     {
-        GeneralSettings.detachObjectMenu();
-        objectMenuObj.transform.position = modelObj.transform.position;
-        objectMenuObj.transform.localRotation = Quaternion.identity;
+        GeneralSettings.detachObjectMenu(gameObject);
         objectMenuObj.SetActive(false);
     }
 
@@ -145,6 +143,7 @@ public class HighlightStyle1 : MonoBehaviour, Highlightable
             setHighlightMaterial();
             infoCanvasObj.SetActive(true);
             setObjectMenu();
+            highlightDown = false;
         }
 
         if (highlightPressed)
@@ -158,6 +157,7 @@ public class HighlightStyle1 : MonoBehaviour, Highlightable
             infoCanvasObj.SetActive(false);
             resetUICanvasOrient();
             unsetObjectMenu();
+            highlightUp = false;
         }
 
 
