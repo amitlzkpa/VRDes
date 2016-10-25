@@ -103,7 +103,7 @@ public class ToolBoxManager : MonoBehaviour {
 
 
 
-
+        /*
         if (WandControlsManager.WandControllerLeft.getTouchPadSwipeUp())
         {
             toolsScreenList[activeScreenIdx].GetComponent<ToolScreenManager>().prevButton();
@@ -120,6 +120,7 @@ public class ToolBoxManager : MonoBehaviour {
         {
             toolsScreenList[activeScreenIdx].GetComponent<ToolScreenManager>().clickActiveButton();
         }
+        */
 
     }
 }

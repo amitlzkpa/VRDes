@@ -17,7 +17,7 @@ public class LayerManager : MonoBehaviour {
     private float yPos = 0f;
     private float yGap = 0.015f;
 
-    private int layerLimit = 9;
+    private int layerLimit = 15;
 
 
     //---------------------------------------------------------------

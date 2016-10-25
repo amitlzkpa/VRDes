@@ -12,6 +12,8 @@ public class ObjectMenuManager : MonoBehaviour {
     {
         menuObj.transform.SetParent(menuContainer.transform, false);
         menuObj.transform.localPosition = Vector3.zero;
+        RectTransform menuRectSize = menuObj.GetComponent<RectTransform>();
+        cursorManager.setCursorRange(menuRectSize.rect.width, menuRectSize.rect.height);
         cursorManager.enableCursor();
     }
 
@@ -23,6 +25,7 @@ public class ObjectMenuManager : MonoBehaviour {
         menuObj.transform.SetParent(tgtObject.transform);
         menuObj.transform.localPosition = Vector3.zero;
         menuObj.transform.localRotation = Quaternion.identity;
+        cursorManager.setCursorRange(1.5f, 1.2f);
         cursorManager.disableCursor();
     }
 

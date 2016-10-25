@@ -83,7 +83,7 @@ public class ToolScreenManager : MonoBehaviour, IToolsScreenManager
         defaultColor = new Color(0.25f, 0.25f, 0.25f, 0.5f);
         hlColor = new Color(defaultColor.r * hl, defaultColor.g * hl, defaultColor.b * hl, 1f);
         clickColor = new Color(defaultColor.r * click, defaultColor.g * click, defaultColor.b * click, 1f);
-        highlightButtonColors(buttonList[activeButtonIdx].GetComponent<Button>());
+        // highlightButtonColors(buttonList[activeButtonIdx].GetComponent<Button>());
     }
 	
 	// Update is called once per frame

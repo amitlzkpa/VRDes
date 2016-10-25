@@ -19,6 +19,7 @@ public class ObjectMenu_Plane : MonoBehaviour, ObjectMenu
 
     public void delete()
     {
+        GeneralSettings.addLineToConsole(string.Format("{0} object deleted.", parentObj.name));
         GeneralSettings.detachObjectMenu(parentObj);
         GeneralSettings.deleteObject(parentObj);
     }
