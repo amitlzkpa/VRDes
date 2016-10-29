@@ -6,7 +6,7 @@ public class Mesh_Plane_try : MonoBehaviour {
 
 
     private GameObject parentCloneObj;
-    private RefObjects_Plane_try refObj;
+    private RefObjects_Plane refObj;
     private GameObject meshObj;
     private MeshFilter meshFilter;
 
@@ -99,7 +99,7 @@ public class Mesh_Plane_try : MonoBehaviour {
     void Start()
     {
         parentCloneObj = transform.parent.gameObject;
-        refObj = parentCloneObj.transform.FindChild("_RefObjects").gameObject.GetComponent<RefObjects_Plane_try>();
+        refObj = parentCloneObj.transform.FindChild("_RefObjects").gameObject.GetComponent<RefObjects_Plane>();
         setupMeshObjects();
         updateMesh();
     }

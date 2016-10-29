@@ -13,12 +13,14 @@ public class PlaneActionManager : MonoBehaviour, ActionManager {
 
     public void amUpdate(LaserPicker laser)
     {
-        if (laser.isHit())
+        if (WandControlsManager.WandControllerRight.getTriggerDown())
         {
-            if (WandControlsManager.WandControllerRight.getTriggerDown())
+            if (laser.isHit())
             {
-                GameObject currentPoint = (GameObject)Instantiate(app_Plane, laser.getHitPoint(), Quaternion.LookRotation(laser.getHitNormal()));
-                currentPoint.transform.SetParent(GeneralSettings.modelObjects.transform);
+                Vector3 centerPt = laser.getTerminalPoint();
+                Vector3 normal = laser.getTerminalNormal();
+                GameObject currentPlane = (GameObject)Instantiate(app_Plane, centerPt, Quaternion.LookRotation(normal));
+                currentPlane.transform.SetParent(GeneralSettings.modelObjects.transform);
             }
         }
     }

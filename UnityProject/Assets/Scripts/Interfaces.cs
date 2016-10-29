@@ -41,7 +41,6 @@ public interface Highlightable
 public interface ObjectMenu
 {
     void edit();
-    void rename();
     void delete();
 }
 
@@ -75,6 +74,17 @@ public interface Infoable
     void setLayer(int layer);
     int getLayer();
     bool isOnLayer(int layer);
+}
+
+
+//---------------------------------------------------------------
+
+
+public interface RefObject
+{
+    void showRefObjects();
+    void hideRefObjects();
+    void toggleRefObjects();
 }
 
 

@@ -17,12 +17,7 @@ public class ObjectMenu_Point : MonoBehaviour, ObjectMenu {
 
     public void edit()
     {
-        Debug.Log(parentObj.name + "will be edited");
-    }
-
-    public void rename()
-    {
-        Debug.Log(parentObj.name + "will be renamed");
+        parentObj.GetComponent<EditPoint>().toggleEditMode();
     }
 
 

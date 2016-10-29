@@ -1,38 +1,42 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EditPlane : MonoBehaviour, Editable {
+public class EditPlane : MonoBehaviour, Editable
+{
 
 
-    private GameObject refObjs;
+
+    //---------------------------------------------------------------
+
+
+
+    private bool editOn = false;
 
 
     public void enterEditMode()
     {
-        refObjs.SetActive(true);
+        GeneralSettings.setEditObject(gameObject);
+        editOn = true;
     }
+
 
     public void exitEditMode()
     {
-        refObjs.SetActive(false);
+        GeneralSettings.clearEditObject();
+        editOn = false;
     }
+
 
     public void toggleEditMode()
     {
-        refObjs.SetActive(!refObjs.activeInHierarchy);
+        if (editOn) exitEditMode();
+        else enterEditMode();
     }
 
 
 
+    //---------------------------------------------------------------
+    
 
 
-    // Use this for initialization
-    void Start () {
-        refObjs = transform.FindChild("_RefObjects").gameObject;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 }

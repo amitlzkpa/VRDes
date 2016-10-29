@@ -52,10 +52,11 @@ public class GeneralSettings : MonoBehaviour {
 
     public static void clearEditObject()
     {
-        // close refObjects and gizmos
-        // free laser
-        rightLaser.clearRestrictedObject();
+        GeneralSettings.addLineToConsole(string.Format("Exiting edit for {0}.", objBeingEdited.name));
+        objBeingEdited.transform.FindChild("_RefObjects").gameObject.GetComponent<RefObject>().hideRefObjects();
         objBeingEdited = null;
+        rightLaser.clearRestrictedObject();
+        // close gizmos
     }
 
 
@@ -65,8 +66,9 @@ public class GeneralSettings : MonoBehaviour {
         if (editOn()) clearEditObject();
         objBeingEdited = inpObj;
         rightLaser.setRestrictedObject(objBeingEdited, GeneralSettings.modelObjects);
-        // open refObjects and gizmos
-        // set Laser to detect only objBeingEdited
+        objBeingEdited.transform.FindChild("_RefObjects").gameObject.GetComponent<RefObject>().showRefObjects();
+        // open gizmos
+        GeneralSettings.addLineToConsole(string.Format("Editing {0}.", objBeingEdited.name));
     }
 
 
@@ -252,7 +254,10 @@ public class GeneralSettings : MonoBehaviour {
 
     public static void deleteObject(GameObject inpObject)
     {
+        // if the object is in edit more; clear it before deleting
+        if (GeneralSettings.getEditObject() == inpObject) GeneralSettings.clearEditObject();
         inpObject.transform.SetParent(deleteHoldingObject.transform);
+        GeneralSettings.addLineToConsole(string.Format("{0} object deleted.", inpObject.name));
     }
 
 

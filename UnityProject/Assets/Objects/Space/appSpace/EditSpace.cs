@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EditPoint : MonoBehaviour, Editable
+public class EditSpace : MonoBehaviour, Editable
 {
 
 
