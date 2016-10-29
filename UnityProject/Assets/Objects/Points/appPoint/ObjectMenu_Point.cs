@@ -9,13 +9,6 @@ public class ObjectMenu_Point : MonoBehaviour, ObjectMenu {
     private GameObject parentObj;
 
 
-
-    public void transformObject()
-    {
-        Debug.Log(parentObj.name + "will be transformed");
-    }
-
-
     public void delete()
     {
         GeneralSettings.detachObjectMenu(parentObj);

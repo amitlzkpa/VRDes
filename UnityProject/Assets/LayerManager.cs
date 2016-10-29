@@ -14,8 +14,8 @@ public class LayerManager : MonoBehaviour {
     private int layerCount;
 
     private float xPos = 1.043081e-06f;
-    private float yPos = 0f;
-    private float yGap = 0.015f;
+    private float yPos = 2800f;
+    private float yGap = -350f;
 
     private int layerLimit = 15;
 
@@ -50,7 +50,7 @@ public class LayerManager : MonoBehaviour {
             buttonCreated = (GameObject)Instantiate(buttonPrefab, gameObject.GetComponent<RectTransform>().localPosition, Quaternion.identity);
             buttonCreated.name = layerObject.name;
             buttonCreated.transform.SetParent(layerButtonSets.transform, false);
-            buttonCreated.transform.localPosition = new Vector3(xPos, yPos - (i * yGap), 0f);
+            buttonCreated.transform.position = buttonCreated.transform.TransformPoint(new Vector3(xPos, yPos + (i * yGap), -5f));
             buttonCreated.GetComponent<LayerButtonSet>().setLayerObject(layerObject);
         }
     }

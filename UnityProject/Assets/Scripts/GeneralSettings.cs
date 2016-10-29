@@ -41,59 +41,47 @@ public class GeneralSettings : MonoBehaviour {
 
 
 
-
-
-    /*
     // default and current tag setup
     ////////////////////////////////////////////////////////////////////////////////
 
-    
 
-    
-    // default tag object is set to 'Tag_default" and should always be
-    public static GameObject defaultTagObject;
-    public static GameObject currentlyActiveTagObject;
+
+    private static GameObject objBeingEdited;
 
 
 
-
-	// if the default tag isnt the current active tag; some action is underway
-	public static bool isActionOn()
-	{
-		if (currentlyActiveTagObject == defaultTagObject)
-			return false;
-		return true;
-	}
-
-
-
-
-	public static void resetCurrentTagObjectToDefaultObject()
+    public static void clearEditObject()
     {
-		currentlyActiveTagObject = defaultTagObject;
-	}
-
-
-
-
-    public static void resetActiveTagAndSwitchToTagManager()
-    {
-        resetCurrentTagObjectToDefaultObject();
-        setActiveLaser(2);
-        UIInteractText.text = "";
-        UIInteractBackground.color = new Color(0.25f, 0.25f, 0.25f, 0.4901f);
+        // close refObjects and gizmos
+        // free laser
+        rightLaser.clearRestrictedObject();
+        objBeingEdited = null;
     }
 
 
 
-
-	public static void setActiveLaser(int idx)
-	{
-		actionManagerObject.GetComponent<ActionManager>().switchLaserByInt(idx);
+    public static void setEditObject(GameObject inpObj)
+    {
+        if (editOn()) clearEditObject();
+        objBeingEdited = inpObj;
+        rightLaser.setRestrictedObject(objBeingEdited, GeneralSettings.modelObjects);
+        // open refObjects and gizmos
+        // set Laser to detect only objBeingEdited
     }
 
-    */
 
+
+    public static GameObject getEditObject()
+    {
+        return objBeingEdited;
+    }
+
+
+
+    public static bool editOn()
+    {
+        return objBeingEdited != null;
+    }
 
 
 
@@ -102,7 +90,7 @@ public class GeneralSettings : MonoBehaviour {
 
 
 
-    
+
     public static GameObject getParentRecursive(GameObject inputObj, string tgtParentName, string endObjectName)
     {
         if (inputObj == null || inputObj.transform.parent == null || inputObj.name.Equals(endObjectName)) return null;
@@ -230,43 +218,6 @@ public class GeneralSettings : MonoBehaviour {
 
 
 
-    /*
-    // audio recording setup
-    // only exposing the audio recording setup in a global setup to allow easy access across different objects
-    ////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-    private static bool isRec;
-
-
-
-    public static void recordAudioClip()
-    {
-        if (isRec)
-        {
-            actionManagerObject.GetComponent<AudioRecordManager>().stopAndSaveRecording();
-            isRec = false;
-        }
-        else
-        {
-            actionManagerObject.GetComponent<AudioRecordManager>().startNewAudioRecording();
-            isRec = true;
-        }
-    }
-
-
-    
-    public static void replayAudio()
-    {
-        actionManagerObject.GetComponent<AudioRecordManager>().replayLast();
-    }
-    */
-
-
-
-
     ////////////////////////////////////////////////////////////////////////////////
 
 
@@ -288,6 +239,9 @@ public class GeneralSettings : MonoBehaviour {
     {
         get { return int_ModelObjects; }
     }
+
+
+    private static LaserPicker rightLaser;
 
 
 
@@ -450,6 +404,8 @@ public class GeneralSettings : MonoBehaviour {
         UIInteractBackground = transform.FindChild("[CameraRig]").FindChild("Controller (right)").FindChild ("_Canvas").FindChild ("InteractSet").FindChild ("Background").gameObject.GetComponent<Image>();
 
         int_Player = transform.FindChild("[CameraRig]").FindChild("Camera (eye)").gameObject;
+
+        rightLaser = transform.FindChild("[CameraRig]").FindChild("Controller (right)").FindChild("_LaserPicker").gameObject.GetComponent<LaserPicker>();
 
         int_Model = transform.FindChild("_Model").gameObject;
         modelStartPos = model.transform.position;

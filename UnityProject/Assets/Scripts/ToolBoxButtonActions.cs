@@ -24,6 +24,13 @@ public class ToolBoxButtonActions : MonoBehaviour {
     }
 
 
+    public GameObject planeCreatorPrefab_try;
+    public void createPlane_try()
+    {
+        GeneralSettings.setActiveActionObject(planeCreatorPrefab_try);
+    }
+
+
     //---------------------------------------------------------------
 
 

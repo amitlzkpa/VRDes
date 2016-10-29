@@ -96,6 +96,19 @@ public class HighlightStyle1 : MonoBehaviour, Highlightable
     //---------------------------------------------------------------
 
 
+    public void setupRealMaterialArray()
+    {
+        realMaterialArray = new Material[modelObj.transform.childCount];
+        for (int i = 0; i < modelObj.transform.childCount; i++)
+        {
+            realMaterialArray[i] = modelObj.transform.GetChild(i).gameObject.GetComponent<MeshRenderer>().material;
+        }
+    }
+
+
+    //---------------------------------------------------------------
+
+
     // Use this for initialization
     void Start()
     {
@@ -104,11 +117,7 @@ public class HighlightStyle1 : MonoBehaviour, Highlightable
         infoCanvasObj.SetActive(false);
         objectMenuObj = transform.FindChild("_ObjectMenu").gameObject;
         objectMenuObj.SetActive(false);
-        realMaterialArray = new Material[modelObj.transform.childCount];
-        for (int i = 0; i < modelObj.transform.childCount; i++)
-        {
-            realMaterialArray[i] = modelObj.transform.GetChild(i).gameObject.GetComponent<MeshRenderer>().material;
-        }
+        setupRealMaterialArray();
     }
 
 

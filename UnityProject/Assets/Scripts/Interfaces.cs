@@ -40,7 +40,6 @@ public interface Highlightable
 
 public interface ObjectMenu
 {
-    void transformObject();
     void edit();
     void rename();
     void delete();

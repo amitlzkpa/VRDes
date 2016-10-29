@@ -117,6 +117,11 @@ public class LaserImplm : MonoBehaviour
 
     private bool parentHasObj(GameObject hitObj, GameObject tgtObject, GameObject endObject, out GameObject foundObject)
     {
+        if (hitObj == tgtObject)
+        {
+            foundObject = hitObj;
+            return true;
+        }
         if (hitObj == null || hitObj.transform == null)
         {
             foundObject = null;
@@ -127,34 +132,7 @@ public class LaserImplm : MonoBehaviour
             foundObject = null;
             return false;
         }
-        if (hitObj.transform.parent.gameObject == tgtObject)
-        {
-            foundObject = hitObj.transform.parent.gameObject;
-            return true;
-        }
         return (parentHasObj(hitObj.transform.parent.gameObject, tgtObject, endObject, out foundObject));
-    }
-
-
-
-    private bool parentHasObjName(GameObject hitObj, string tgtObjectName, string endObjectName, out GameObject foundObject)
-    {
-        if (hitObj == null || hitObj.transform == null)
-        {
-            foundObject = null;
-            return false;
-        }
-        if (hitObj.transform.parent == null || hitObj.transform.parent.gameObject.name.StartsWith(endObjectName))
-        {
-            foundObject = null;
-            return false;
-        }
-        if (hitObj.transform.parent.gameObject.name.StartsWith(tgtObjectName))
-        {
-            foundObject = hitObj.transform.parent.gameObject;
-            return true;
-        }
-        return (parentHasObjName(hitObj.transform.parent.gameObject, tgtObjectName, endObjectName, out foundObject));
     }
 
 
@@ -162,17 +140,12 @@ public class LaserImplm : MonoBehaviour
     // Update is called once per frame
     void Update ()
     {
+        hitObject = null;
         raycastRay = new Ray(transform.position, transform.forward);
         if (Physics.Raycast(raycastRay, out hitRayObj, maxLength, layerMask))
         {
-            if (restrictedObj != null && parentHasObj(hitObject, restrictedObj, topLevelObject, out hitObject)) { }
-            if (tgtNameStart != null && parentHasObjName(hitObject, tgtNameStart, endNameStart, out hitObject)) { }
-            if (tgtNameContains != null && parentHasObjName(hitObject, tgtNameContains, endNameContains, out hitObject)) { }
+            if (restrictedObj != null) { parentHasObj(hitRayObj.transform.gameObject, restrictedObj, topLevelObject, out hitObject); }
             else hitObject = hitRayObj.transform.gameObject;
-        }
-        else
-        {
-            hitObject = null;
         }
     }
 
@@ -258,7 +231,7 @@ public class LaserImplm : MonoBehaviour
 
     public bool imp_isHit()
     {
-        return hitRayObj.transform != null;
+        return hitObject != null;
     }
 
     public bool imp_hasEnd()

@@ -69,6 +69,7 @@
      <Compile Include="Assets\LERA_D-Coord Files\Scripts\zActionManager.cs" />
      <Compile Include="Assets\LayerButtonSet.cs" />
      <Compile Include="Assets\LayerManager.cs" />
+     <Compile Include="Assets\Mesh_Plane_try.cs" />
      <Compile Include="Assets\ObjectMenuManager.cs" />
      <Compile Include="Assets\Objects\Plane\PlaneActionManager.cs" />
      <Compile Include="Assets\Objects\Plane\PlaneCreator.cs" />
@@ -77,6 +78,13 @@
      <Compile Include="Assets\Objects\Plane\appPlane\ObjectMenu_Plane.cs" />
      <Compile Include="Assets\Objects\Plane\appPlane\RefObjects_Plane.cs" />
      <Compile Include="Assets\Objects\Plane\appPlane\app_Plane.cs" />
+     <Compile Include="Assets\Objects\Plane_try\PlaneActionManager_try.cs" />
+     <Compile Include="Assets\Objects\Plane_try\PlaneCreator_try.cs" />
+     <Compile Include="Assets\Objects\Plane_try\PlaneMenuManager_try.cs" />
+     <Compile Include="Assets\Objects\Plane_try\appPlane_try\EditPlane_try.cs" />
+     <Compile Include="Assets\Objects\Plane_try\appPlane_try\ObjectMenu_Plane_try.cs" />
+     <Compile Include="Assets\Objects\Plane_try\appPlane_try\RefObjects_Plane_try.cs" />
+     <Compile Include="Assets\Objects\Plane_try\appPlane_try\app_Plane_try.cs" />
      <Compile Include="Assets\Objects\Points\PointActionManager.cs" />
      <Compile Include="Assets\Objects\Points\PointCreator.cs" />
      <Compile Include="Assets\Objects\Points\PointMenuManager.cs" />
