@@ -15,13 +15,10 @@ public class PlaneActionManager : MonoBehaviour, ActionManager {
     {
         if (WandControlsManager.WandControllerRight.getTriggerDown())
         {
-            if (laser.isHit())
-            {
-                Vector3 centerPt = laser.getTerminalPoint();
-                Vector3 normal = laser.getTerminalNormal();
-                GameObject currentPlane = (GameObject)Instantiate(app_Plane, centerPt, Quaternion.LookRotation(normal));
-                currentPlane.transform.SetParent(GeneralSettings.modelObjects.transform);
-            }
+            Vector3 centerPt = laser.getTerminalPoint();
+            Vector3 normal = laser.getTerminalNormal();
+            GameObject currentPlane = (GameObject)Instantiate(app_Plane, centerPt, Quaternion.LookRotation(normal));
+            currentPlane.transform.SetParent(GeneralSettings.modelObjects.transform);
         }
     }
 }

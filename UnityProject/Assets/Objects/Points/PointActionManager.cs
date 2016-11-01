@@ -14,13 +14,10 @@ public class PointActionManager : MonoBehaviour, ActionManager {
 
     public void amUpdate(LaserPicker laser)
     {
-        if (laser.isHit())
+        if (WandControlsManager.WandControllerRight.getTriggerDown())
         {
-            if (WandControlsManager.WandControllerRight.getTriggerDown())
-            {
-                GameObject currentPoint = (GameObject)Instantiate(app_Point, laser.getHitPoint(), Quaternion.identity);
-                currentPoint.transform.SetParent(GeneralSettings.modelObjects.transform);
-            }
+            GameObject currentPoint = (GameObject)Instantiate(app_Point, laser.getTerminalPoint(), Quaternion.LookRotation(laser.getHitNormal()));
+            currentPoint.transform.SetParent(GeneralSettings.modelObjects.transform);
         }
     }
 

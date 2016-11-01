@@ -10,6 +10,7 @@ public class HighlightStyle1 : MonoBehaviour, Highlightable
     private GameObject modelObj;
     private GameObject infoCanvasObj;
     private GameObject objectMenuObj;
+    private bool objectMenuDisplayed;
 
     private Vector3 directionVec;
     Quaternion tgtRotation;
@@ -151,7 +152,11 @@ public class HighlightStyle1 : MonoBehaviour, Highlightable
         {
             setHighlightMaterial();
             infoCanvasObj.SetActive(true);
-            setObjectMenu();
+            if (GeneralSettings.selActionOn())
+            {
+                setObjectMenu();
+                objectMenuDisplayed = true;
+            }
             highlightDown = false;
         }
 
@@ -164,8 +169,12 @@ public class HighlightStyle1 : MonoBehaviour, Highlightable
         {
             unsetHighlightMaterial();
             infoCanvasObj.SetActive(false);
+            if (objectMenuDisplayed)
+            {
+                unsetObjectMenu();
+                objectMenuDisplayed = false;
+            }
             resetUICanvasOrient();
-            unsetObjectMenu();
             highlightUp = false;
         }
 

@@ -5,11 +5,6 @@ using UnityEngine.UI;
 public class ActionSwitcher : MonoBehaviour
 {
 
-    public GameObject ui1;
-    public GameObject ui2;
-
-
-
     private GameObject laserObj;
     private LaserPicker laser;
 
@@ -22,6 +17,16 @@ public class ActionSwitcher : MonoBehaviour
 
     public void setActionItem(GameObject crObj)
     {
+        // setting to selection ray
+        if (crObj == null)
+        {
+            amObj = null;
+            am = null;
+            cmObj = null;
+            cm = null;
+            return;
+        }
+
         cr = crObj.GetComponent<Creator>();
         if (cr == null)
         {
@@ -31,8 +36,10 @@ public class ActionSwitcher : MonoBehaviour
 
         amObj = cr.getActionObject();
         am = cr.getActionManager();
-        cmObj = cr.getMenuObject();
-        cm = cr.getMenuManager();
+        cmObj = (GameObject) Instantiate(cr.getMenuObject(), Vector3.zero, Quaternion.identity);
+        cm = cmObj.GetComponent<ContextMenuManager>();
+        GeneralSettings.setObjectMenu(cmObj);
+
 
         cr.setupLaser(laser);
 
@@ -41,6 +48,13 @@ public class ActionSwitcher : MonoBehaviour
 
 
 
+    public GameObject getActionItem()
+    {
+        return amObj;
+    }
+
+
+    //---------------------------------------------------------------
 
 
     void Awake()
@@ -62,20 +76,14 @@ public class ActionSwitcher : MonoBehaviour
     }
 
 
+    //---------------------------------------------------------------
+
+
     GameObject hitObj;
+
 
     void Update()
     {
-        if (WandControlsManager.WandControllerRight.getGripDown())
-        {
-            GameObject currUI = (GameObject) Instantiate(ui1, transform.position, transform.rotation * Quaternion.Euler(60, 0, 0));
-            currUI.transform.SetParent(transform.parent.FindChild("_ContextCanvas"));
-        }
-        if (WandControlsManager.WandControllerRight.getTouchPadButtonDown())
-        {
-            GameObject currUI = (GameObject)Instantiate(ui2, transform.position, transform.rotation * Quaternion.Euler(60, 0, 0));
-            currUI.transform.SetParent(transform.parent.FindChild("_ContextCanvas"));
-        }
 
 
         if (laser.isHit())
@@ -87,11 +95,49 @@ public class ActionSwitcher : MonoBehaviour
             }
         }
 
-        if (am == null) return;
+
+        // actions in selection mode
+        if (am == null)
+        {
+            selActionMethods();
+            return;
+        }
 
 
         am.amUpdate(laser);
         cm.cmUpdate(laser);
+    }
+
+
+    //---------------------------------------------------------------
+
+
+    private float laserEditStartLen;
+    private bool keepMoving;
+
+
+    private void selActionMethods()
+    {
+
+        if (GeneralSettings.editOn())
+        {
+            if (laser.isHit())
+            {
+                if (WandControlsManager.WandControllerRight.getTriggerDown())
+                {
+                    laserEditStartLen = laser.getTerminalDistance();
+                    keepMoving = true;
+                }
+            }
+            if (WandControlsManager.WandControllerRight.getTriggerUp())
+            {
+                keepMoving = false;
+            }
+            if (keepMoving)
+            {
+                GeneralSettings.getEditObject().transform.position = (laser.getDirection() * laserEditStartLen) + laser.getStartPoint();
+            }
+        }
     }
 
 

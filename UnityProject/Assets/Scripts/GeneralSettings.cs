@@ -56,7 +56,6 @@ public class GeneralSettings : MonoBehaviour {
         objBeingEdited.transform.FindChild("_RefObjects").gameObject.GetComponent<RefObject>().hideRefObjects();
         objBeingEdited = null;
         rightLaser.clearRestrictedObject();
-        // close gizmos
     }
 
 
@@ -67,7 +66,6 @@ public class GeneralSettings : MonoBehaviour {
         objBeingEdited = inpObj;
         rightLaser.setRestrictedObject(objBeingEdited, GeneralSettings.modelObjects);
         objBeingEdited.transform.FindChild("_RefObjects").gameObject.GetComponent<RefObject>().showRefObjects();
-        // open gizmos
         GeneralSettings.addLineToConsole(string.Format("Editing {0}.", objBeingEdited.name));
     }
 
@@ -306,10 +304,8 @@ public class GeneralSettings : MonoBehaviour {
 
     private static Vector3 modelStartPos;
     private static Vector3 modelStartScale;
-    private static Vector3 lastPlayerPosition;
     private static Vector3 scaledModelLocation;
     private static Vector3 scaledModelScale;
-    private static Vector3 scaledPlayerLocation;
 
 
 
@@ -326,7 +322,6 @@ public class GeneralSettings : MonoBehaviour {
         fadeScreen();
         model.transform.position = scaledModelLocation;
         setModelScale(scaledModelScale);
-        lastPlayerPosition = player.transform.position;
         tableModeOn = true;
     }
 
@@ -336,7 +331,6 @@ public class GeneralSettings : MonoBehaviour {
         fadeScreen();
         model.transform.position = modelStartPos;
         model.transform.localScale = modelStartScale;
-        player.transform.position = lastPlayerPosition;
         tableModeOn = false;
     }
 
@@ -364,6 +358,12 @@ public class GeneralSettings : MonoBehaviour {
     public static void setActiveActionObject(GameObject creatorObject)
     {
         actionSwitcher.setActionItem(creatorObject);
+    }
+
+
+    public static bool selActionOn()
+    {
+        return actionSwitcher.getActionItem() == null;
     }
 
 
@@ -417,7 +417,6 @@ public class GeneralSettings : MonoBehaviour {
         modelStartScale = model.transform.localScale;
         scaledModelLocation = modelStartPos;
         scaledModelScale = new Vector3(0.005f, 0.005f, 0.005f);
-        scaledPlayerLocation = scaledModelLocation + new Vector3(3f, 3f, 3f);
 
         int_ModelObjects = model.transform.FindChild("_Objects").gameObject;
         deleteHoldingObject = model.transform.FindChild("_Deleted").gameObject;

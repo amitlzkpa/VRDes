@@ -15,14 +15,14 @@ public class EditPoint : MonoBehaviour, Editable
 
     public void enterEditMode()
     {
-        //GeneralSettings.setEditObject(gameObject);
+        GeneralSettings.setEditObject(gameObject);
         editOn = true;
     }
 
 
     public void exitEditMode()
     {
-        //GeneralSettings.clearEditObject();
+        GeneralSettings.clearEditObject();
         editOn = false;
     }
 

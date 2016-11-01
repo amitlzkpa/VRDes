@@ -13,13 +13,15 @@ public class CursorManagerLeft : MonoBehaviour
     private bool cursorOn;
     private bool cursorStateUpdate = false;
 
+    private Vector3 upPos;
     private Vector3 touchPos;
+
     private Vector3 defaultScale;
     private Vector3 clickScale;
     private Vector3 activeScale;
 
-    private float defScaleVal = 0.005f;
-    private float clickScaleVal = 0.01f;
+    private float defScaleVal = 0.04f;
+    private float clickScaleVal = 0.08f;
 
     private Ray cursorRay;
     private RaycastHit cursorRayHit;
@@ -32,7 +34,6 @@ public class CursorManagerLeft : MonoBehaviour
     public GameObject getCursorObj()
     {
         return cursor;
-
     }
 
 
@@ -78,14 +79,32 @@ public class CursorManagerLeft : MonoBehaviour
 
     private void moveCursor()
     {
-        xVal = remap(1f, windowWidth, WandControlsManager.WandControllerLeft.getTouchPadX());
-        yVal = remap(1f, windowHeight, WandControlsManager.WandControllerLeft.getTouchPadY());
-        xVal = Mathf.Abs(xVal) > windowWidth / 2f ? Mathf.Sign(xVal) * windowWidth / 2 : xVal;
-        yVal = Mathf.Abs(yVal) > windowHeight / 2f ? Mathf.Sign(yVal) * windowHeight / 2 : yVal;
-        touchPos.x = xVal;
-        touchPos.y = yVal;
-        cursor.transform.localPosition = touchPos;
-        cursor.transform.localScale = activeScale;
+        if (WandControlsManager.WandControllerLeft.getTouchPadButtonPressed())
+        {
+            activeScale = clickScale;
+        }
+        else
+        {
+            activeScale = defaultScale;
+        }
+
+
+        if (WandControlsManager.WandControllerLeft.getTouchPadTouchedUp())
+        {
+            upPos = cursor.transform.localPosition;
+            return;
+        }
+        if (WandControlsManager.WandControllerLeft.getTouchPadTouched())
+        {
+            xVal = remap(1f, windowWidth/2f, WandControlsManager.WandControllerLeft.getTouchPadX());
+            yVal = remap(1f, windowHeight/3f, WandControlsManager.WandControllerLeft.getTouchPadY());
+            touchPos.x = xVal + upPos.x;
+            touchPos.y = yVal + upPos.y;
+            touchPos.x = Mathf.Abs(touchPos.x) > windowWidth / 2f ? Mathf.Sign(touchPos.x) * windowWidth / 2 : touchPos.x;
+            touchPos.y = Mathf.Abs(touchPos.y) > windowHeight / 2f ? Mathf.Sign(touchPos.y) * windowHeight / 2 : touchPos.y;
+            cursor.transform.localPosition = touchPos;
+            cursor.transform.localScale = activeScale;
+        }
     }
 
 
@@ -94,6 +113,7 @@ public class CursorManagerLeft : MonoBehaviour
     void Start()
     {
         cursor = transform.FindChild("_Cursor").gameObject;
+        upPos = new Vector3();
         touchPos = new Vector3();
         touchPos.z = cursor.transform.localPosition.z;
         defaultScale = new Vector3(defScaleVal, defScaleVal, defScaleVal);
@@ -112,30 +132,16 @@ public class CursorManagerLeft : MonoBehaviour
         }
 
 
-
-
-        if (WandControlsManager.WandControllerLeft.getTouchPadTouched())
+        moveCursor();
+        if (WandControlsManager.WandControllerLeft.getTouchPadButtonDown())
         {
-            if (WandControlsManager.WandControllerLeft.getTouchPadButtonPressed())
-            {
-                activeScale = clickScale;
-            }
-            else
-            {
-                activeScale = defaultScale;
-                moveCursor();
-            }
-
             cursorRay = new Ray(cursor.transform.position, cursor.transform.forward);
-            if (WandControlsManager.WandControllerLeft.getTouchPadButtonUp())
+            if (Physics.Raycast(cursorRay, out cursorRayHit, 0.1f))
             {
-                if (Physics.Raycast(cursorRay, out cursorRayHit, 0.1f))
+                clickButton = cursorRayHit.transform.gameObject.GetComponent<Button>();
+                if (clickButton != null)
                 {
-                    clickButton = cursorRayHit.transform.gameObject.GetComponent<Button>();
-                    if (clickButton != null)
-                    {
-                        clickButton.onClick.Invoke();
-                    }
+                    clickButton.onClick.Invoke();
                 }
             }
         }

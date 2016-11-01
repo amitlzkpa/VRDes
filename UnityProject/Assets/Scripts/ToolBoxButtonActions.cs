@@ -3,6 +3,13 @@ using System.Collections;
 
 public class ToolBoxButtonActions : MonoBehaviour {
 
+
+    public void setToSelectionRay()
+    {
+        GeneralSettings.setActiveActionObject(null);
+    }
+
+
     public GameObject pointCreatorPrefab;
     public void createPoint()
     {
