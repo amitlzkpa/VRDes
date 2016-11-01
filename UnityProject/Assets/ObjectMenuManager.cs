@@ -21,12 +21,20 @@ public class ObjectMenuManager : MonoBehaviour {
 
     public void detachObjectMenu(GameObject tgtObject)
     {
+        if (!hasObjectMenu()) return;
         GameObject menuObj = menuContainer.transform.GetChild(0).gameObject;
         menuObj.transform.SetParent(tgtObject.transform);
         menuObj.transform.localPosition = Vector3.zero;
         menuObj.transform.localRotation = Quaternion.identity;
         cursorManager.setCursorRange(1.5f, 1.2f);
         cursorManager.disableCursor();
+    }
+
+
+    // theres an object menu if there are more than one menu parented below
+    public bool hasObjectMenu()
+    {
+        return (menuContainer.transform.childCount > 0);
     }
 
 

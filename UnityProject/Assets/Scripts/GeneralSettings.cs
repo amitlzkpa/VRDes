@@ -387,6 +387,12 @@ public class GeneralSettings : MonoBehaviour {
     }
 
 
+    public static bool hasObjectMenu()
+    {
+        return objMenuManager.hasObjectMenu();
+    }
+
+
 
     ////////////////////////////////////////////////////////////////////////////////
 

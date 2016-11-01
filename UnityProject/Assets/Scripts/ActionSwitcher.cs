@@ -15,6 +15,9 @@ public class ActionSwitcher : MonoBehaviour
     private ContextMenuManager cm;
 
 
+    //---------------------------------------------------------------
+
+
     public void setActionItem(GameObject crObj)
     {
         // setting to selection ray
@@ -24,6 +27,7 @@ public class ActionSwitcher : MonoBehaviour
             am = null;
             cmObj = null;
             cm = null;
+            laser.setLength(1000000f);
             return;
         }
 
@@ -81,11 +85,8 @@ public class ActionSwitcher : MonoBehaviour
 
     GameObject hitObj;
 
-
     void Update()
     {
-
-
         if (laser.isHit())
         {
             hitObj = laser.getHitObject();
@@ -95,9 +96,8 @@ public class ActionSwitcher : MonoBehaviour
             }
         }
 
-
-        // actions in selection mode
-        if (am == null)
+            // actions in selection mode
+            if (am == null)
         {
             selActionMethods();
             return;
@@ -115,17 +115,41 @@ public class ActionSwitcher : MonoBehaviour
     private float laserEditStartLen;
     private bool keepMoving;
 
+    private GameObject prevHitObj;
+    private GameObject currHitObj;
+
 
     private void selActionMethods()
     {
 
-        if (GeneralSettings.editOn())
+
+
+        // CONTINUE HERE-----------------------------------------------------------------------------------------------------------
+        if (laser.isHit())
         {
-            if (laser.isHit())
+            if (GeneralSettings.getParentRecursive(laser.getHitObject().transform.gameObject, "_Objects", "_Model") != null)
+            {
+                currHitObj = GeneralSettings.getParentClone(hitObj, "app_");
+                if (currHitObj != prevHitObj)
+                {
+                    if (prevHitObj != null) prevHitObj.GetComponent<HighlightStyle1>().hideObjectMenu();
+                    if (currHitObj != null) currHitObj.GetComponent<HighlightStyle1>().displayObjectMenu();
+                }
+                prevHitObj = currHitObj;
+            }
+        }
+
+
+
+
+        if (laser.isHit())
+        {
+            if (GeneralSettings.editOn())
             {
                 if (WandControlsManager.WandControllerRight.getTriggerDown())
                 {
-                    laserEditStartLen = laser.getTerminalDistance();
+                    // set laser length equal to gap between laser and the center of the object highlighted
+                    laserEditStartLen = Vector3.Distance(laser.getHitObject().transform.position, laser.getStartPoint());
                     keepMoving = true;
                 }
             }

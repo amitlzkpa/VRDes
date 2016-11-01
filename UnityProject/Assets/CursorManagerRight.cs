@@ -32,7 +32,6 @@ public class CursorManagerRight : MonoBehaviour
     public GameObject getCursorObj()
     {
         return cursor;
-
     }
 
 
