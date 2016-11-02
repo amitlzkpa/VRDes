@@ -11,16 +11,15 @@ public class ObjectMenu_Point : MonoBehaviour, ObjectMenu {
 
     public void delete()
     {
-        GeneralSettings.detachObjectMenu(parentObj);
+        GeneralSettings.deleteObjectMenu();
         GeneralSettings.deleteObject(parentObj);
     }
+
 
     public void edit()
     {
         parentObj.GetComponent<EditPoint>().toggleEditMode();
     }
-
-
 
 
 

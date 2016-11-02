@@ -12,7 +12,7 @@ public class ObjectMenu_Space : MonoBehaviour, ObjectMenu
 
     public void delete()
     {
-        GeneralSettings.detachObjectMenu(parentObj);
+        GeneralSettings.deleteObjectMenu();
         GeneralSettings.deleteObject(parentObj);
     }
 

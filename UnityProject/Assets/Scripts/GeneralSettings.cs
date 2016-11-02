@@ -52,7 +52,7 @@ public class GeneralSettings : MonoBehaviour {
 
     public static void clearEditObject()
     {
-        GeneralSettings.addLineToConsole(string.Format("Exiting edit for {0}.", objBeingEdited.name));
+        GeneralSettings.addLineToConsole(System.String.Format("Exiting edit for {0}.", objBeingEdited.name));
         objBeingEdited.transform.FindChild("_RefObjects").gameObject.GetComponent<RefObject>().hideRefObjects();
         objBeingEdited = null;
         rightLaser.clearRestrictedObject();
@@ -62,11 +62,12 @@ public class GeneralSettings : MonoBehaviour {
 
     public static void setEditObject(GameObject inpObj)
     {
+        // if an object is being edited, reslease it and set the new object to edit mode
         if (editOn()) clearEditObject();
         objBeingEdited = inpObj;
         rightLaser.setRestrictedObject(objBeingEdited, GeneralSettings.modelObjects);
         objBeingEdited.transform.FindChild("_RefObjects").gameObject.GetComponent<RefObject>().showRefObjects();
-        GeneralSettings.addLineToConsole(string.Format("Editing {0}.", objBeingEdited.name));
+        GeneralSettings.addLineToConsole(System.String.Format("Editing {0}.", objBeingEdited.name));
     }
 
 
@@ -187,7 +188,6 @@ public class GeneralSettings : MonoBehaviour {
     
 
 
-
     public static void updateInteractText(string inputText)
     {
         UIInteractText.text = inputText;
@@ -196,7 +196,7 @@ public class GeneralSettings : MonoBehaviour {
 
 
 
-    public static IEnumerator flashyEffect()
+    private static IEnumerator flashyEffect()
     {
         for (int cnt = 0; cnt < 10; cnt++)
         {
@@ -381,9 +381,9 @@ public class GeneralSettings : MonoBehaviour {
     }
 
 
-    public static void detachObjectMenu(GameObject tgtObject)
+    public static void deleteObjectMenu()
     {
-        objMenuManager.detachObjectMenu(tgtObject);
+        objMenuManager.deleteObjectMenu();
     }
 
 

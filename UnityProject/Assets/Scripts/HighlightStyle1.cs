@@ -97,18 +97,20 @@ public class HighlightStyle1 : MonoBehaviour, Highlightable
     }
 
 
+    //---------------------------------------------------------------
+
 
     private void setObjectMenu()
     {
-        objectMenuObj.SetActive(true);
-        GeneralSettings.setObjectMenu(objectMenuObj);
+        // menu object has to be duplicated with the same state as it'll be destryed on unsetting
+        GameObject menuToSend = (GameObject)Object.Instantiate(objectMenuObj, transform);
+        GeneralSettings.setObjectMenu(menuToSend);
     }
 
 
     private void unsetObjectMenu()
     {
-        GeneralSettings.detachObjectMenu(gameObject);
-        objectMenuObj.SetActive(false);
+        GeneralSettings.deleteObjectMenu();
     }
 
 

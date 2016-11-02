@@ -3,7 +3,7 @@ using System.Collections;
 
 public class ToolBoxButtonActions : MonoBehaviour {
 
-
+    /*
     private void deleteAnyExistingMenu()
     {
         
@@ -15,6 +15,7 @@ public class ToolBoxButtonActions : MonoBehaviour {
         }
         
     }
+    */
 
 
     private bool editOnCheck()
@@ -37,7 +38,7 @@ public class ToolBoxButtonActions : MonoBehaviour {
     {
         if (!editOnCheck())
         {
-            deleteAnyExistingMenu();
+            GeneralSettings.deleteObjectMenu();
             GeneralSettings.setActiveActionObject(null);
         }
     }
@@ -48,7 +49,7 @@ public class ToolBoxButtonActions : MonoBehaviour {
     {
         if (!editOnCheck())
         {
-            deleteAnyExistingMenu();
+            GeneralSettings.deleteObjectMenu();
             GeneralSettings.setActiveActionObject(pointCreatorPrefab);
         }
     }
@@ -59,7 +60,7 @@ public class ToolBoxButtonActions : MonoBehaviour {
     {
         if (!editOnCheck())
         {
-            deleteAnyExistingMenu();
+            GeneralSettings.deleteObjectMenu();
             GeneralSettings.setActiveActionObject(planeCreatorPrefab);
         }
     }
@@ -70,7 +71,7 @@ public class ToolBoxButtonActions : MonoBehaviour {
     {
         if (!editOnCheck())
         {
-            deleteAnyExistingMenu();
+            GeneralSettings.deleteObjectMenu();
             GeneralSettings.setActiveActionObject(spaceCreatorPrefab);
         }
     }
@@ -83,7 +84,7 @@ public class ToolBoxButtonActions : MonoBehaviour {
     {
         if (!editOnCheck())
         {
-            deleteAnyExistingMenu();
+            GeneralSettings.deleteObjectMenu();
             GeneralSettings.toggleTableMode();
         }
     }

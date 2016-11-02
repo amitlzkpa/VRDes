@@ -8,8 +8,11 @@ public class ObjectMenuManager : MonoBehaviour {
     private GameObject menuContainer;
 
 
+    // Always pass a new copy of the menuObj with the same state as menu to be created
+    // needs a copy since the object will be destroyed on unsetting
     public void setObjectMenu(GameObject menuObj)
     {
+        menuObj.SetActive(true);
         menuObj.transform.SetParent(menuContainer.transform, false);
         menuObj.transform.localPosition = Vector3.zero;
         RectTransform menuRectSize = menuObj.GetComponent<RectTransform>();
@@ -18,14 +21,14 @@ public class ObjectMenuManager : MonoBehaviour {
     }
 
 
-
-    public void detachObjectMenu(GameObject tgtObject)
+    // deletes all objetcs nested under the mnu container
+    public void deleteObjectMenu()
     {
-        if (!hasObjectMenu()) return;
-        GameObject menuObj = menuContainer.transform.GetChild(0).gameObject;
-        menuObj.transform.SetParent(tgtObject.transform);
-        menuObj.transform.localPosition = Vector3.zero;
-        menuObj.transform.localRotation = Quaternion.identity;
+        for (int i=0; i<menuContainer.transform.childCount; i++)
+        {
+            GameObject menuObj = menuContainer.transform.GetChild(i).gameObject;
+            Destroy(menuObj);
+        }
         cursorManager.setCursorRange(1.5f, 1.2f);
         cursorManager.disableCursor();
     }

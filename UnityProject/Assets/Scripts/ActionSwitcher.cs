@@ -20,7 +20,7 @@ public class ActionSwitcher : MonoBehaviour
 
     public void setActionItem(GameObject crObj)
     {
-        // setting to selection ray
+        // setting to selection ray; null used to represent selection ray
         if (crObj == null)
         {
             amObj = null;
@@ -40,16 +40,15 @@ public class ActionSwitcher : MonoBehaviour
 
         amObj = cr.getActionObject();
         am = cr.getActionManager();
+        // Context manager prefabs to be instantiated, as all context menus defined are destroyed on end of use
         cmObj = (GameObject) Instantiate(cr.getMenuObject(), Vector3.zero, Quaternion.identity);
         cm = cmObj.GetComponent<ContextMenuManager>();
         GeneralSettings.setObjectMenu(cmObj);
-
 
         cr.setupLaser(laser);
 
         Start();
     }
-
 
 
     public GameObject getActionItem()
@@ -71,9 +70,7 @@ public class ActionSwitcher : MonoBehaviour
 
     void Start()
     {
-
         if (am == null) return;
-
 
         am.amStart(laser);
         cm.cmStart(laser);
@@ -83,21 +80,20 @@ public class ActionSwitcher : MonoBehaviour
     //---------------------------------------------------------------
 
 
-    GameObject hitObj;
+    private GameObject hitObj;
 
     void Update()
     {
-        if (laser.isHit())
+        // highlight object being edited if edit mode is on or the pointed object
+        hitObj = GeneralSettings.editOn() ? GeneralSettings.getEditObject() : GeneralSettings.getParentClone(laser.getHitObject(), "app_");
+        if (hitObj != null)
         {
-            hitObj = laser.getHitObject();
-            if (GeneralSettings.getParentRecursive(hitObj.transform.gameObject, "_Objects", "_Model") != null)
-            {
-                GeneralSettings.getParentClone(hitObj, "app_").GetComponent<Highlightable>().highlightObject();
-            }
+            hitObj.GetComponent<Highlightable>().highlightObject();
         }
 
-            // actions in selection mode
-            if (am == null)
+        
+        // actions in selection mode
+        if (am == null)
         {
             selActionMethods();
             return;
@@ -121,23 +117,17 @@ public class ActionSwitcher : MonoBehaviour
 
     private void selActionMethods()
     {
-
-
-
-        // CONTINUE HERE-----------------------------------------------------------------------------------------------------------
-        if (laser.isHit())
+        // if the hit object is a prefab
+        currHitObj = hitObj;
+        // and is not pointing to the same prefab as it was in the last frame
+        if (currHitObj != prevHitObj)
         {
-            if (GeneralSettings.getParentRecursive(laser.getHitObject().transform.gameObject, "_Objects", "_Model") != null)
-            {
-                currHitObj = GeneralSettings.getParentClone(hitObj, "app_");
-                if (currHitObj != prevHitObj)
-                {
-                    if (prevHitObj != null) prevHitObj.GetComponent<HighlightStyle1>().hideObjectMenu();
-                    if (currHitObj != null) currHitObj.GetComponent<HighlightStyle1>().displayObjectMenu();
-                }
-                prevHitObj = currHitObj;
-            }
+            // collapse the edit menu on the object it was previously pointing
+            if (prevHitObj != null) prevHitObj.GetComponent<HighlightStyle1>().hideObjectMenu();
+            // expand the edit menu for current object
+            if (currHitObj != null) currHitObj.GetComponent<HighlightStyle1>().displayObjectMenu();
         }
+        prevHitObj = currHitObj;
 
 
 
@@ -157,10 +147,10 @@ public class ActionSwitcher : MonoBehaviour
             {
                 keepMoving = false;
             }
-            if (keepMoving)
-            {
-                GeneralSettings.getEditObject().transform.position = (laser.getDirection() * laserEditStartLen) + laser.getStartPoint();
-            }
+        }
+        if (keepMoving)
+        {
+            GeneralSettings.getEditObject().transform.position = (laser.getDirection() * laserEditStartLen) + laser.getStartPoint();
         }
     }
 
