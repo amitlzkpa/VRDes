@@ -1,10 +1,16 @@
 fileFormatVersion: 2
 guid: 88f119b92712d20418459bb207e4ed75
-timeCreated: 1476788467
-licenseType: Pro
+timeCreated: 1478063724
+licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - pointRepPrefab: {fileID: 1000011401677652, guid: ed53576f636103949b91776de5e752d0,
+      type: 2}
+  - edgeRepPrefab: {fileID: 1000012881230666, guid: 29cbea00031c84b47b0671049d22d4f4,
+      type: 2}
+  - planeRepPrefab: {fileID: 1000012447816274, guid: 0b4c1f6e3065ba74fb43f056c66aeefc,
+      type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
