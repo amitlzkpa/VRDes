@@ -6,17 +6,34 @@ public class RefObjects_Space : MonoBehaviour, RefObject
 {
 
 
+    private bool isVisible = true;
+
 
     public void hideRefObjects()
     {
+        isVisible = false;
+        updateVisisble();
     }
 
     public void showRefObjects()
     {
+        isVisible = true;
+        updateVisisble();
     }
 
     public void toggleRefObjects()
     {
+        isVisible = !isVisible;
+        updateVisisble();
+    }
+
+
+    private void updateVisisble()
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            transform.GetChild(i).gameObject.SetActive(isVisible);
+        }
     }
 
 
@@ -94,7 +111,7 @@ public class RefObjects_Space : MonoBehaviour, RefObject
         return emptyObject;
     }
 
-
+    // Quaternion.LookRotation(Vector3.forward, ptLeftBottomFront.transform.position - ptRightBottomFront.transform.position)
 
     private GameObject createFrameAtOrigin()
     {
@@ -112,18 +129,30 @@ public class RefObjects_Space : MonoBehaviour, RefObject
         ptRightTopBack = (GameObject)Instantiate(pointRepPrefab, new Vector3(+halfWidth, +halfHeight, -halfDepth), Quaternion.identity, emptyObject.transform);
 
 
-        edLeftFront = (GameObject)Instantiate(edgeRepPrefab, new Vector3(-halfWidth, 0, +halfDepth), Quaternion.identity, emptyObject.transform);
-        edBottomFront = (GameObject)Instantiate(edgeRepPrefab, new Vector3(0, -halfHeight, +halfDepth), Quaternion.identity, emptyObject.transform);
-        edRightFront = (GameObject)Instantiate(edgeRepPrefab, new Vector3(+halfWidth, 0, +halfDepth), Quaternion.identity, emptyObject.transform);
-        edTopFront = (GameObject)Instantiate(edgeRepPrefab, new Vector3(0, +halfHeight, +halfDepth), Quaternion.identity, emptyObject.transform);
-        edLeftMid = (GameObject)Instantiate(edgeRepPrefab, new Vector3(-halfWidth, +halfHeight, 0), Quaternion.identity, emptyObject.transform);
-        edBottomMid = (GameObject)Instantiate(edgeRepPrefab, new Vector3(-halfWidth, -halfHeight, 0), Quaternion.identity, emptyObject.transform);
-        edRightMid = (GameObject)Instantiate(edgeRepPrefab, new Vector3(+halfWidth, -halfHeight, 0), Quaternion.identity, emptyObject.transform);
-        edTopMid = (GameObject)Instantiate(edgeRepPrefab, new Vector3(+halfWidth, +halfHeight, 0), Quaternion.identity, emptyObject.transform);
-        edLeftBack = (GameObject)Instantiate(edgeRepPrefab, new Vector3(-halfWidth, 0, -halfDepth), Quaternion.identity, emptyObject.transform);
-        edBottomBack = (GameObject)Instantiate(edgeRepPrefab, new Vector3(0, -halfHeight, -halfDepth), Quaternion.identity, emptyObject.transform);
-        edRightBack = (GameObject)Instantiate(edgeRepPrefab, new Vector3(+halfWidth, 0, -halfDepth), Quaternion.identity, emptyObject.transform);
-        edTopBack = (GameObject)Instantiate(edgeRepPrefab, new Vector3(0, +halfHeight, -halfDepth), Quaternion.identity, emptyObject.transform);
+        edLeftFront = (GameObject)Instantiate(edgeRepPrefab, new Vector3(-halfWidth, 0, +halfDepth), Quaternion.Euler(0, 0, 0), emptyObject.transform);
+        edLeftFront.transform.localScale = new Vector3(0.2f, halfHeight * edSpan, 0.2f);
+        edBottomFront = (GameObject)Instantiate(edgeRepPrefab, new Vector3(0, -halfHeight, +halfDepth), Quaternion.Euler(0, 0, 90), emptyObject.transform);
+        edBottomFront.transform.localScale = new Vector3(0.2f, halfWidth * edSpan, 0.2f);
+        edRightFront = (GameObject)Instantiate(edgeRepPrefab, new Vector3(+halfWidth, 0, +halfDepth), Quaternion.Euler(0, 0, 0), emptyObject.transform);
+        edRightFront.transform.localScale = new Vector3(0.2f, halfHeight * edSpan, 0.2f);
+        edTopFront = (GameObject)Instantiate(edgeRepPrefab, new Vector3(0, +halfHeight, +halfDepth), Quaternion.Euler(0, 0, -90), emptyObject.transform);
+        edTopFront.transform.localScale = new Vector3(0.2f, halfWidth * edSpan, 0.2f);
+        edLeftMid = (GameObject)Instantiate(edgeRepPrefab, new Vector3(-halfWidth, +halfHeight, 0), Quaternion.Euler(90, 0, 0), emptyObject.transform);
+        edLeftMid.transform.localScale = new Vector3(0.2f, halfDepth * edSpan, 0.2f);
+        edBottomMid = (GameObject)Instantiate(edgeRepPrefab, new Vector3(-halfWidth, -halfHeight, 0), Quaternion.Euler(90, 0, 0), emptyObject.transform);
+        edBottomMid.transform.localScale = new Vector3(0.2f, halfDepth * edSpan, 0.2f);
+        edRightMid = (GameObject)Instantiate(edgeRepPrefab, new Vector3(+halfWidth, -halfHeight, 0), Quaternion.Euler(-90, 0, 0), emptyObject.transform);
+        edRightMid.transform.localScale = new Vector3(0.2f, halfDepth * edSpan, 0.2f);
+        edTopMid = (GameObject)Instantiate(edgeRepPrefab, new Vector3(+halfWidth, +halfHeight, 0), Quaternion.Euler(-90, 0, 0), emptyObject.transform);
+        edTopMid.transform.localScale = new Vector3(0.2f, halfDepth * edSpan, 0.2f);
+        edLeftBack = (GameObject)Instantiate(edgeRepPrefab, new Vector3(-halfWidth, 0, -halfDepth), Quaternion.Euler(0, 0, 0), emptyObject.transform);
+        edLeftBack.transform.localScale = new Vector3(0.2f, halfHeight * edSpan, 0.2f);
+        edBottomBack = (GameObject)Instantiate(edgeRepPrefab, new Vector3(0, -halfHeight, -halfDepth), Quaternion.Euler(0, 0, 90), emptyObject.transform);
+        edBottomBack.transform.localScale = new Vector3(0.2f, halfWidth * edSpan, 0.2f);
+        edRightBack = (GameObject)Instantiate(edgeRepPrefab, new Vector3(+halfWidth, 0, -halfDepth), Quaternion.Euler(0, 0, 0), emptyObject.transform);
+        edRightBack.transform.localScale = new Vector3(0.2f, halfHeight * edSpan, 0.2f);
+        edTopBack = (GameObject)Instantiate(edgeRepPrefab, new Vector3(0, +halfHeight, -halfDepth), Quaternion.Euler(0, 0, -90), emptyObject.transform);
+        edTopBack.transform.localScale = new Vector3(0.2f, halfWidth * edSpan, 0.2f);
 
         return emptyObject;
     }
@@ -146,8 +175,6 @@ public class RefObjects_Space : MonoBehaviour, RefObject
     // Use this for initialization
     void Awake ()
     {
-
-
         // create the frame at origin
         GameObject frame = createFrameAtOrigin();
 
@@ -210,5 +237,7 @@ public class RefObjects_Space : MonoBehaviour, RefObject
         // destroy empty object
         Destroy(frame);
 
+
+        hideRefObjects();
     }
 }
