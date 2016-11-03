@@ -96,8 +96,8 @@ public class CursorManagerLeft : MonoBehaviour
         }
         if (WandControlsManager.WandControllerLeft.getTouchPadTouched())
         {
-            xVal = remap(1f, windowWidth/2f, WandControlsManager.WandControllerLeft.getTouchPadX());
-            yVal = remap(1f, windowHeight/3f, WandControlsManager.WandControllerLeft.getTouchPadY());
+            xVal = remap(1f, windowWidth * 0.5f, WandControlsManager.WandControllerLeft.getTouchPadX());
+            yVal = remap(1f, windowHeight * 0.3f, WandControlsManager.WandControllerLeft.getTouchPadY());
             touchPos.x = xVal + upPos.x;
             touchPos.y = yVal + upPos.y;
             touchPos.x = Mathf.Abs(touchPos.x) > windowWidth / 2f ? Mathf.Sign(touchPos.x) * windowWidth / 2 : touchPos.x;
@@ -133,7 +133,7 @@ public class CursorManagerLeft : MonoBehaviour
 
 
         moveCursor();
-        if (WandControlsManager.WandControllerLeft.getTouchPadButtonDown())
+        if (WandControlsManager.WandControllerLeft.getTouchPadButtonUp())
         {
             cursorRay = new Ray(cursor.transform.position, cursor.transform.forward);
             if (Physics.Raycast(cursorRay, out cursorRayHit, 0.1f))

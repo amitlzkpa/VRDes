@@ -13,11 +13,14 @@ public class LayerManager : MonoBehaviour {
 
     private int layerCount;
 
-    private float xPos = 1.043081e-06f;
-    private float yPos = 2800f;
+    private float xPos = 0;
+    private float yPos = 2100f;
     private float yGap = -350f;
+    
+    private int layerLimit = 7;
 
-    private int layerLimit = 15;
+    private int activeLayerIdx = 2;
+    private Color activeLayerColor;
 
 
     //---------------------------------------------------------------
@@ -52,6 +55,11 @@ public class LayerManager : MonoBehaviour {
             buttonCreated.transform.SetParent(layerButtonSets.transform, false);
             buttonCreated.transform.position = buttonCreated.transform.TransformPoint(new Vector3(xPos, yPos + (i * yGap), -5f));
             buttonCreated.GetComponent<LayerButtonSet>().setLayerObject(layerObject);
+            buttonCreated.GetComponent<LayerButtonSet>().setLayerIdx(i);
+            if (i == activeLayerIdx)
+            {
+                buttonCreated.transform.FindChild("_Name").gameObject.GetComponent<Image>().color = activeLayerColor;
+            }
         }
     }
 
@@ -100,11 +108,25 @@ public class LayerManager : MonoBehaviour {
     }
 
 
+    public void setActiveLayer(int idx)
+    {
+        activeLayerIdx = idx;
+        refreshButtonSets();
+    }
+
+
+    public GameObject getActiveLayerObject()
+    {
+        return layerButtonSets.transform.GetChild(activeLayerIdx).gameObject.GetComponent<LayerButtonSet>().getLayerObject();
+    }
+
+
     //---------------------------------------------------------------
 
 
     void Start()
     {
+        activeLayerColor = new Color(0/255f, 70/255f, 180/255f, 255/255);
         modelObjects = GeneralSettings.modelObjects;
         layerButtonSets = transform.FindChild("_LayerButtonSets").gameObject;
         createButtonSets();

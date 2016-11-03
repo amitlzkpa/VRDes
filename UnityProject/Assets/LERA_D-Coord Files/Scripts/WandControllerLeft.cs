@@ -196,8 +196,8 @@ namespace WandControlsManager
         private static float touchUpY;
         private static float touchDownTime;
         private static float touchUpTime;
-        private static float swipeInterval = 1.2f;
-        private static float swipeWidth = 1f;
+        private static float swipeInterval = 1.5f;
+        private static float swipeWidth = 1.6f;
 
 
         public static bool getTouchPadSwipeRight()

@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class LayerButtonSet : MonoBehaviour {
 
+    private int layerIdx;
 
     private LayerManager layerManager;
 
@@ -20,6 +21,18 @@ public class LayerButtonSet : MonoBehaviour {
 
 
     //---------------------------------------------------------------
+    
+
+    public void setLayerIdx(int idx)
+    {
+        layerIdx = idx;
+    }
+
+
+    public int getLayerIdx()
+    {
+        return layerIdx;
+    }
 
 
     public void setLayerObject(GameObject inpObject)
@@ -56,6 +69,12 @@ public class LayerButtonSet : MonoBehaviour {
     public void toggleLayer()
     {
         layerObj.SetActive(!layerObj.activeSelf);
+    }
+
+
+    public void setAsActiveLayer()
+    {
+        layerManager.setActiveLayer(layerIdx);
     }
 
 
