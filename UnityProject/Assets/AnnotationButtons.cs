@@ -33,6 +33,17 @@ public class AnnotationButtons : MonoBehaviour {
     }
 
 
+    public GameObject boardSketchCreatorPrefab;
+    public void createBoardSketch()
+    {
+        if (!editOnCheck())
+        {
+            GeneralSettings.deleteObjectMenu();
+            GeneralSettings.setActiveActionObject(boardSketchCreatorPrefab);
+        }
+    }
+
+
     public void toggleScale()
     {
         if (!editOnCheck())

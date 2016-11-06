@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StrokeCreator : AbstractCreator
+public class BoardSketchCreator : AbstractCreator
 {
     public override void setupLaser(LaserPicker laser)
     {

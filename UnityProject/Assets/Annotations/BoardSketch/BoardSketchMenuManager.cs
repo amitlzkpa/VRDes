@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StrokeMenuManager : MonoBehaviour, ContextMenuManager
+public class BoardSketchMenuManager : MonoBehaviour, ContextMenuManager
 {
 
-    public GameObject strokeActionObject;
-    private StrokeActionManager strokeActionManager;
+    public GameObject sketchActionObject;
+    private BoardSketchActionManager boardSketchActionManager;
     private LaserPicker l;
     private float[] widthChoices = { 0.02f, 0.04f, 0.08f, 0.1f, 0.15f, 0.2f, 0.5f, 0.7f, 1.0f };
     private int widthIdx = 0;
@@ -29,7 +29,7 @@ public class StrokeMenuManager : MonoBehaviour, ContextMenuManager
 
     private void updateStrokeWidth()
     {
-        strokeActionManager.setLineThickness(widthChoices[widthIdx]);
+        boardSketchActionManager.setLineThickness(widthChoices[widthIdx]);
         widthText.text = System.String.Format("{0} CM", Mathf.RoundToInt(widthChoices[widthIdx] * 100));
     }
 
@@ -53,7 +53,7 @@ public class StrokeMenuManager : MonoBehaviour, ContextMenuManager
 
     public void nextColor()
     {
-        strokeActionManager.nextLineColor();
+        boardSketchActionManager.nextLineColor();
     }
 
 
@@ -72,7 +72,7 @@ public class StrokeMenuManager : MonoBehaviour, ContextMenuManager
 
     public void cmStart(LaserPicker laser)
     {
-        strokeActionManager = strokeActionObject.GetComponent<StrokeActionManager>();
+        boardSketchActionManager = sketchActionObject.GetComponent<BoardSketchActionManager>();
         widthText = transform.FindChild("Button_strokeWidth").FindChild("Text").gameObject.GetComponent<Text>();
         updateStrokeWidth();
         l = laser;

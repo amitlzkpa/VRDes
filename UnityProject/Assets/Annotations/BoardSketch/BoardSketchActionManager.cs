@@ -3,12 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StrokeActionManager : MonoBehaviour, ActionManager
+public class BoardSketchActionManager : MonoBehaviour, ActionManager
 {
 
+    public GameObject boardPrefab;
 
-    public GameObject strokeMenuObject;
-    private StrokeMenuManager strokeMenuManager;
+    private GameObject targetBoard;
+
+
+    public GameObject sketchMenuObject;
+    private BoardSketchMenuManager boardSketchMenuManager;
 
     public float lineWidth = 0.02f;
 
@@ -205,7 +209,7 @@ public class StrokeActionManager : MonoBehaviour, ActionManager
     {
         currentMaterialIndex++;
         currentMaterialIndex %= lineMaterialArray.Length;
-        strokeMenuManager.setUIColor(lineMaterialArray[currentMaterialIndex].color);
+        boardSketchMenuManager.setUIColor(lineMaterialArray[currentMaterialIndex].color);
     }
 
 
@@ -222,13 +226,13 @@ public class StrokeActionManager : MonoBehaviour, ActionManager
 
     public void amStart(LaserPicker laser)
     {
-        strokeMenuManager = strokeMenuObject.GetComponent<StrokeMenuManager>();
+        boardSketchMenuManager = sketchMenuObject.GetComponent<BoardSketchMenuManager>();
         drawingSet = GeneralSettings.model.transform.FindChild("_Sets").FindChild("_DrawingSetManager").gameObject;
         currPoints = new List<Vector3>();
         setupLineMaterials();
         setupStrokeBuffer();
         createNewSketch();
-        strokeMenuManager.setUIColor(lineMaterialArray[currentMaterialIndex].color);
+        boardSketchMenuManager.setUIColor(lineMaterialArray[currentMaterialIndex].color);
     }
 
 
@@ -236,7 +240,38 @@ public class StrokeActionManager : MonoBehaviour, ActionManager
     public void amUpdate(LaserPicker laser)
     {
 
+        if (targetBoard == null)
+        {
+            setupBoardMode(laser);
+        }
+        else
+        {
+            sketchMode(laser);
+        }
 
+
+    }
+
+
+
+
+    private void setupBoardMode(LaserPicker laser)
+    {
+        if (WandControlsManager.WandControllerRight.getTriggerDown())
+        {
+            targetBoard = Instantiate(boardPrefab, laser.getTerminalPoint(),
+                                      Quaternion.LookRotation(laser.getTerminalNormal()),
+                                      GeneralSettings.modelObjects.transform);
+            laser.setRestrictedObject(targetBoard);
+        }
+    }
+
+
+
+
+
+    private void sketchMode(LaserPicker laser)
+    {
         if (WandControlsManager.WandControllerRight.getTriggerDown())
         {
             createStroke();
@@ -251,8 +286,6 @@ public class StrokeActionManager : MonoBehaviour, ActionManager
         {
             emptyStrokeBuffer();
         }
-
-
-
     }
+
 }
