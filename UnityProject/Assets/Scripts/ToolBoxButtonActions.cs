@@ -3,20 +3,6 @@ using System.Collections;
 
 public class ToolBoxButtonActions : MonoBehaviour {
 
-    /*
-    private void deleteAnyExistingMenu()
-    {
-        
-        if (GeneralSettings.hasObjectMenu())
-        {
-            GameObject delObj = new GameObject("delObj");
-            GeneralSettings.detachObjectMenu(delObj);
-            Destroy(delObj);
-        }
-        
-    }
-    */
-
 
     private bool editOnCheck()
     {
@@ -73,20 +59,6 @@ public class ToolBoxButtonActions : MonoBehaviour {
         {
             GeneralSettings.deleteObjectMenu();
             GeneralSettings.setActiveActionObject(spaceCreatorPrefab);
-        }
-    }
-
-
-    //---------------------------------------------------------------
-
-
-    public void toggleScale()
-    {
-        if (!editOnCheck())
-        {
-            GeneralSettings.deleteObjectMenu();
-            GeneralSettings.toggleTableMode();
-            GeneralSettings.addLineToConsole(System.String.Format("Viewing the model at 1:{0} scale.", 1/GeneralSettings.model.transform.localScale.x));
         }
     }
 }

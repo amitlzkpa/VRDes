@@ -441,8 +441,7 @@ public class GeneralSettings : MonoBehaviour {
         deleteHoldingObject = model.transform.FindChild("_Deleted").gameObject;
         deleteHoldingObject.SetActive(false);
 
-        // TEST THIS-----------------------------------------------------------------------
-        // layerManager = transform.FindChild("[CameraRig]").FindChild("Controller (left)").FindChild("_ToolBox").FindChild("Screen_LayerManagement").GetComponent<LayerManager>();
+        layerManager = transform.FindChild("[CameraRig]").FindChild("Controller (left)").FindChild("_ToolBox").FindChild("Screen_LayerManagement").GetComponent<LayerManager>();
 
         actionSwitcherObject = transform.FindChild("[CameraRig]").FindChild("Controller (right)").FindChild("_ActionSwitcher").gameObject;
         actionSwitcher = actionSwitcherObject.GetComponent<ActionSwitcher>();

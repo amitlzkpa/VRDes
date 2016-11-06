@@ -18,7 +18,7 @@ public class PlaneActionManager : MonoBehaviour, ActionManager {
             Vector3 centerPt = laser.getTerminalPoint();
             Vector3 normal = laser.getTerminalNormal();
             GameObject currentPlane = (GameObject)Instantiate(app_Plane, centerPt, Quaternion.LookRotation(normal));
-            currentPlane.transform.SetParent(GeneralSettings.modelObjects.transform);
+            currentPlane.transform.SetParent(GeneralSettings.getActiveLayerObject().transform);
         }
     }
 }

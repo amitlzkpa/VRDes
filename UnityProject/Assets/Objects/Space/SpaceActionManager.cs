@@ -16,7 +16,7 @@ public class SpaceActionManager : MonoBehaviour, ActionManager {
         if (WandControlsManager.WandControllerRight.getTriggerDown())
         {
             GameObject currentPoint = (GameObject)Instantiate(app_Space, laser.getTerminalPoint(), Quaternion.LookRotation(laser.getHitNormal()));
-            currentPoint.transform.SetParent(GeneralSettings.modelObjects.transform);
+            currentPoint.transform.SetParent(GeneralSettings.getActiveLayerObject().transform);
         }
     }
 }
