@@ -22,6 +22,24 @@ public class LaserPicker : MonoBehaviour {
     }
 
 
+    public void setLengthToInfinity()
+    {
+        l.imp_setLength(100000f);
+    }
+
+
+    public void setToStickMode(float len)
+    {
+        l.imp_setStickMode();
+        setLength(len);
+    }
+
+    public void clearStickMode()
+    {
+        l.imp_clearStickMode();
+        setLengthToInfinity();
+    }
+
     public void setLength(float len)
     {
         l.imp_setLength(len);
@@ -55,6 +73,16 @@ public class LaserPicker : MonoBehaviour {
     public void clearRestrictedObject()
     {
         l.imp_clearRestrictedObject();
+    }
+
+    public void setRestrictedPlane(Plane tgtPlane)
+    {
+        l.imp_setRestrictedPlane(tgtPlane);
+    }
+
+    public void clearRestrictedPlane()
+    {
+        l.imp_clearRestrictedPlane();
     }
 
     public void setLayerMask(LayerMask layerMask)

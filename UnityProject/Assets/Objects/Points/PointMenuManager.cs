@@ -16,7 +16,7 @@ public class PointMenuManager : MonoBehaviour, ContextMenuManager {
 
     public void setupForSurface()
     {
-        l.setLength(1000000f);
+        l.setLengthToInfinity();
     }
 
 

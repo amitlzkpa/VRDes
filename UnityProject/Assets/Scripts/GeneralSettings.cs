@@ -53,7 +53,7 @@ public class GeneralSettings : MonoBehaviour {
     public static void clearEditObject()
     {
         GeneralSettings.addLineToConsole(System.String.Format("Exiting edit for {0}.", objBeingEdited.name));
-        objBeingEdited.transform.FindChild("_RefObjects").gameObject.GetComponent<RefObject>().hideRefObjects();
+        objBeingEdited.transform.FindChild("_RefObjects").gameObject.GetComponent<RefObjectManager>().hideRefObjects();
         objBeingEdited = null;
         rightLaser.clearRestrictedObject();
     }
@@ -66,7 +66,7 @@ public class GeneralSettings : MonoBehaviour {
         if (editOn()) clearEditObject();
         objBeingEdited = inpObj;
         rightLaser.setRestrictedObject(objBeingEdited, GeneralSettings.modelObjects);
-        objBeingEdited.transform.FindChild("_RefObjects").gameObject.GetComponent<RefObject>().showRefObjects();
+        objBeingEdited.transform.FindChild("_RefObjects").gameObject.GetComponent<RefObjectManager>().showRefObjects();
         GeneralSettings.addLineToConsole(System.String.Format("Editing {0}.", objBeingEdited.name));
     }
 
@@ -486,6 +486,20 @@ public class GeneralSettings : MonoBehaviour {
 			consoleUpdate = false;
 		}
 
+    }
 
-	}
+
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+
+    public static string REF_OBJ_START_NAME = "ref_";
+
+
+
+
+
+
+
+
 }

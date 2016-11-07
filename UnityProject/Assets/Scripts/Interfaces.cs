@@ -80,7 +80,7 @@ public interface Infoable
 //---------------------------------------------------------------
 
 
-public interface RefObject
+public interface RefObjectManager
 {
     void showRefObjects();
     void hideRefObjects();

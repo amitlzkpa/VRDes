@@ -31,5 +31,10 @@ public abstract class AbstractCreator : MonoBehaviour, Creator {
     // to be overridden by each creator
     public virtual void setupLaser(LaserPicker laser)
     {
+        laser.setLengthToInfinity();
+        laser.clearLayerMask();
+        laser.clearRestrictedObject();
+        laser.clearRestrictedObjectContainsName();
+        laser.clearRestrictedObjectStartName();
     }
 }

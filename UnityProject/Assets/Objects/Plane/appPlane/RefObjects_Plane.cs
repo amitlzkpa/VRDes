@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class RefObjects_Plane : MonoBehaviour, RefObject
+public class RefObjects_Plane : MonoBehaviour, RefObjectManager
 {
 
 
@@ -44,6 +44,7 @@ public class RefObjects_Plane : MonoBehaviour, RefObject
 
     public GameObject pointRepPrefab;
     public GameObject edgeRepPrefab;
+    public GameObject planeRepPrefab;
 
 
 
@@ -56,7 +57,9 @@ public class RefObjects_Plane : MonoBehaviour, RefObject
 
 
 
-    private GameObject ptCenter;
+    private GameObject plCenter;
+
+
     private GameObject ptLeftTop;
     private GameObject ptLeftBottom;
     private GameObject ptRightTop;
@@ -69,8 +72,6 @@ public class RefObjects_Plane : MonoBehaviour, RefObject
     private GameObject edTop;
     private float edSpan = 0.75f;
 
-    private Plane refPlane;
-
 
 
     //---------------------------------------------------------------
@@ -79,7 +80,7 @@ public class RefObjects_Plane : MonoBehaviour, RefObject
 
     public Vector3 getPtCenter()
     {
-        return ptCenter.transform.position;
+        return plCenter.transform.position;
     }
 
 
@@ -108,6 +109,13 @@ public class RefObjects_Plane : MonoBehaviour, RefObject
 
 
 
+    public Plane getRefPlane()
+    {
+        return new Plane(transform.parent.forward, getPtCenter());
+    }
+
+
+
     //---------------------------------------------------------------
 
 
@@ -127,20 +135,21 @@ public class RefObjects_Plane : MonoBehaviour, RefObject
         // create an empty object at origin
         GameObject emptyObject = getEmptyGameObjectAtOrigin();
 
-        ptCenter = (GameObject)Instantiate(pointRepPrefab, Vector3.zero, Quaternion.identity, emptyObject.transform);
-        ptLeftTop = (GameObject)Instantiate(pointRepPrefab, new Vector3(-halfWidth, +halfHeight, 0), Quaternion.identity, emptyObject.transform);
-        ptLeftBottom = (GameObject)Instantiate(pointRepPrefab, new Vector3(-halfWidth, -halfHeight, 0), Quaternion.identity, emptyObject.transform);
-        ptRightBottom = (GameObject)Instantiate(pointRepPrefab, new Vector3(+halfWidth, -halfHeight, 0), Quaternion.identity, emptyObject.transform);
-        ptRightTop = (GameObject)Instantiate(pointRepPrefab, new Vector3(+halfWidth, +halfHeight, 0), Quaternion.identity, emptyObject.transform);
+        plCenter = Instantiate(planeRepPrefab, Vector3.zero, Quaternion.LookRotation(Vector3.up), emptyObject.transform);
 
-        edLeft = (GameObject)Instantiate(edgeRepPrefab, new Vector3(-halfWidth, 0, 0), Quaternion.identity, emptyObject.transform);
+        ptLeftTop = Instantiate(pointRepPrefab, new Vector3(-halfWidth, +halfHeight, 0), Quaternion.identity, emptyObject.transform);
+        ptLeftBottom = Instantiate(pointRepPrefab, new Vector3(-halfWidth, -halfHeight, 0), Quaternion.identity, emptyObject.transform);
+        ptRightBottom = Instantiate(pointRepPrefab, new Vector3(+halfWidth, -halfHeight, 0), Quaternion.identity, emptyObject.transform);
+        ptRightTop = Instantiate(pointRepPrefab, new Vector3(+halfWidth, +halfHeight, 0), Quaternion.identity, emptyObject.transform);
+
+        edLeft = Instantiate(edgeRepPrefab, new Vector3(-halfWidth, 0, 0), Quaternion.identity, emptyObject.transform);
         edLeft.transform.localScale = new Vector3(0.2f, halfHeight * edSpan, 0.2f);
-        edBottom = (GameObject)Instantiate(edgeRepPrefab, new Vector3(0, -halfHeight, 0), Quaternion.identity, emptyObject.transform);
+        edBottom = Instantiate(edgeRepPrefab, new Vector3(0, -halfHeight, 0), Quaternion.identity, emptyObject.transform);
         edBottom.transform.localScale = new Vector3(0.2f, halfWidth * edSpan, 0.2f);
         edBottom.transform.Rotate(0, 0, 90);
-        edRight = (GameObject)Instantiate(edgeRepPrefab, new Vector3(+halfWidth, 0, 0), Quaternion.identity, emptyObject.transform);
+        edRight = Instantiate(edgeRepPrefab, new Vector3(+halfWidth, 0, 0), Quaternion.identity, emptyObject.transform);
         edRight.transform.localScale = new Vector3(0.2f, halfHeight * edSpan, 0.2f);
-        edTop = (GameObject)Instantiate(edgeRepPrefab, new Vector3(0, +halfHeight, 0), Quaternion.identity, emptyObject.transform);
+        edTop = Instantiate(edgeRepPrefab, new Vector3(0, +halfHeight, 0), Quaternion.identity, emptyObject.transform);
         edTop.transform.localScale = new Vector3(0.2f, halfWidth * edSpan, 0.2f);
         edTop.transform.Rotate(0, 0, 90);
 
@@ -155,9 +164,6 @@ public class RefObjects_Plane : MonoBehaviour, RefObject
 
     void Awake ()
     {
-        refPlane = new Plane(transform.forward, transform.position);
-
-
         // create the frame at origin
         GameObject frame = createFrameAtOrigin();
 
@@ -168,7 +174,8 @@ public class RefObjects_Plane : MonoBehaviour, RefObject
 
 
         // change the parent of each object to the object the script is on
-        ptCenter.transform.SetParent(transform);
+        plCenter.transform.SetParent(transform);
+
         ptLeftTop.transform.SetParent(transform);
         ptLeftBottom.transform.SetParent(transform);
         ptRightBottom.transform.SetParent(transform);
@@ -180,17 +187,37 @@ public class RefObjects_Plane : MonoBehaviour, RefObject
         edTop.transform.SetParent(transform);
 
 
-        // rename all the objects
-        ptCenter.name = "ptCenter";
-        ptLeftTop.name = "ptLeftTop";
-        ptLeftBottom.name = "ptLeftBottom";
-        ptRightBottom.name = "ptRightBottom";
-        ptRightTop.name = "ptRightTop";
+        // add the RefObject script and add the the reference of the plane to the refobject
+        RefObject addedScript;
 
-        edLeft.name = "edLeft";
-        edBottom.name = "edBottom";
-        edRight.name = "edRight";
-        edTop.name = "edTop";
+        addedScript = plCenter.AddComponent<RefObject>() as RefObject;
+
+        addedScript = ptLeftTop.AddComponent<RefObject>() as RefObject;
+        addedScript = ptLeftBottom.AddComponent<RefObject>() as RefObject;
+        addedScript = ptRightBottom.AddComponent<RefObject>() as RefObject;
+        addedScript = ptRightTop.AddComponent<RefObject>() as RefObject;
+
+        addedScript = edLeft.AddComponent<RefObject>() as RefObject;
+        addedScript = edBottom.AddComponent<RefObject>() as RefObject;
+        addedScript = edRight.AddComponent<RefObject>() as RefObject;
+        addedScript = edTop.AddComponent<RefObject>() as RefObject;
+
+
+        // rename all the objects
+        // add the ref object name prepend to all names
+        string refStrt = GeneralSettings.REF_OBJ_START_NAME;
+
+        plCenter.name = refStrt + "plCenter";
+
+        ptLeftTop.name = refStrt + "ptLeftTop";
+        ptLeftBottom.name = refStrt + "ptLeftBottom";
+        ptRightBottom.name = refStrt + "ptRightBottom";
+        ptRightTop.name = refStrt + "ptRightTop";
+
+        edLeft.name = refStrt + "edLeft";
+        edBottom.name = refStrt + "edBottom";
+        edRight.name = refStrt + "edRight";
+        edTop.name = refStrt + "edTop";
 
 
         // destroy empty object

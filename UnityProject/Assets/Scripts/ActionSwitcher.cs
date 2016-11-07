@@ -80,15 +80,15 @@ public class ActionSwitcher : MonoBehaviour
     //---------------------------------------------------------------
 
 
-    private GameObject hitObj;
+    private GameObject hitAppObj;
 
     void Update()
     {
         // highlight object being edited if edit mode is on or the pointed object
-        hitObj = GeneralSettings.editOn() ? GeneralSettings.getEditObject() : GeneralSettings.getParentClone(laser.getHitObject(), "app_");
-        if (hitObj != null)
+        hitAppObj = GeneralSettings.editOn() ? GeneralSettings.getEditObject() : GeneralSettings.getParentClone(laser.getHitObject(), "app_");
+        if (hitAppObj != null)
         {
-            hitObj.GetComponent<Highlightable>().highlightObject();
+            hitAppObj.GetComponent<Highlightable>().highlightObject();
         }
 
         
@@ -109,48 +109,75 @@ public class ActionSwitcher : MonoBehaviour
 
 
     private float laserEditStartLen;
-    private bool keepMoving;
+    private GameObject objToMove;
+    private Vector3 offsetVal;
 
-    private GameObject prevHitObj;
-    private GameObject currHitObj;
+    private GameObject prevHitAppObj;
+    private GameObject currHitAppObj;
+
+    private GameObject incidentObj;
 
 
     private void selActionMethods()
     {
         // if the hit object is a prefab
-        currHitObj = hitObj;
+        currHitAppObj = hitAppObj;
         // and is not pointing to the same prefab as it was in the last frame
-        if (currHitObj != prevHitObj)
+        if (currHitAppObj != prevHitAppObj)
         {
             // collapse the edit menu on the object it was previously pointing
-            if (prevHitObj != null) prevHitObj.GetComponent<HighlightStyle1>().hideObjectMenu();
+            if (prevHitAppObj != null) prevHitAppObj.GetComponent<HighlightStyle1>().hideObjectMenu();
             // expand the edit menu for current object
-            if (currHitObj != null) currHitObj.GetComponent<HighlightStyle1>().displayObjectMenu();
+            if (currHitAppObj != null) currHitAppObj.GetComponent<HighlightStyle1>().displayObjectMenu();
         }
-        prevHitObj = currHitObj;
+        prevHitAppObj = currHitAppObj;
 
 
 
 
-        if (laser.isHit())
+        if (GeneralSettings.editOn())
         {
-            if (GeneralSettings.editOn())
+            if (WandControlsManager.WandControllerRight.getTriggerDown())
             {
-                if (WandControlsManager.WandControllerRight.getTriggerDown())
+                if (laser.isHit())
                 {
-                    // set laser length equal to gap between laser and the center of the object highlighted
-                    laserEditStartLen = Vector3.Distance(laser.getHitObject().transform.position, laser.getStartPoint());
-                    keepMoving = true;
+                    // look at the parameters for the thing just hit
+                    RaycastHit detectRay;
+                    Physics.Raycast(new Ray(laser.getStartPoint(), laser.getDirection()), out detectRay);
+                    incidentObj = detectRay.transform.gameObject;
+
+
+                    // check whether hittin a refObject; in that case move only the ref object
+                    RefObject refScript = incidentObj.GetComponent<RefObject>();
+                    if (refScript != null)
+                    {
+                        laser.setRestrictedPlane(incidentObj.GetComponent<RefObject>().getRefPlane());
+                        objToMove = incidentObj;
+                        offsetVal = Vector3.zero;
+                    }
+                    // otherwise move the whole edit object
+                    else
+                    {
+                        // set laser length equal to gap between laser and the center of the object highlighted
+                        laser.setToStickMode(detectRay.distance);
+                        objToMove = GeneralSettings.getEditObject();
+                        offsetVal = objToMove.transform.position - detectRay.point;
+                    }
                 }
             }
             if (WandControlsManager.WandControllerRight.getTriggerUp())
             {
-                keepMoving = false;
+                laser.clearRestrictedPlane();
+                laser.clearStickMode();
+                objToMove = null;
             }
         }
-        if (keepMoving)
+
+        if (objToMove != null)
         {
-            GeneralSettings.getEditObject().transform.position = (laser.getDirection() * laserEditStartLen) + laser.getStartPoint();
+            objToMove.transform.position = laser.getTerminalPoint() + offsetVal;
+            // FIX THIS: constain movement along 1 axis
+            //objToMove.GetComponent<RefObject>().moveObject(laser.getTerminalPoint() + offsetVal);
         }
     }
 

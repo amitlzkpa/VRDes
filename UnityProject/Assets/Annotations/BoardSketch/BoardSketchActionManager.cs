@@ -14,7 +14,7 @@ public class BoardSketchActionManager : MonoBehaviour, ActionManager
     public GameObject sketchMenuObject;
     private BoardSketchMenuManager boardSketchMenuManager;
 
-    public float lineWidth = 0.02f;
+    private float lineWidth = 0.02f;
 
     public Color blackStrokeColor = Color.black;
     public Color errorStrokeColor = Color.red;
@@ -175,6 +175,7 @@ public class BoardSketchActionManager : MonoBehaviour, ActionManager
     // strokes are updated in the buffer only for display
     private void updateStroke(LaserPicker laser)
     {
+        if (!laser.isHit()) return;
         currPoints.Add(laser.getTerminalPoint());
         Vector3[] currPtsArray = currPoints.ToArray();
         currentStrokeDisplayBufferLineRenderer.numPositions = currPtsArray.Length;
@@ -263,6 +264,7 @@ public class BoardSketchActionManager : MonoBehaviour, ActionManager
                                       Quaternion.LookRotation(laser.getTerminalNormal()),
                                       GeneralSettings.modelObjects.transform);
             laser.setRestrictedObject(targetBoard);
+            laser.setLengthToInfinity();
         }
     }
 

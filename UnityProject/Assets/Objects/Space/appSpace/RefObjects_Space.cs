@@ -2,7 +2,7 @@
 using System.Collections;
 using System;
 
-public class RefObjects_Space : MonoBehaviour, RefObject
+public class RefObjects_Space : MonoBehaviour, RefObjectManager
 {
 
 

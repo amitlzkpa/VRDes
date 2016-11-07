@@ -24,13 +24,30 @@ public class LaserImplm : MonoBehaviour
     private string endNameStart;
     private string tgtNameContains;
     private string endNameContains;
+    private Plane restrictedPlane;
+    private bool planeRestrictMode;
+    private bool planeRayHit;
+    private float planeHitLen;
+    private Vector3 planeHitPt;
 
     private bool inAir = true;
     private bool isFirst = true;
 
+    private bool stickMode;
 
 
 
+
+    public void imp_setStickMode()
+    {
+        stickMode = true;
+    }
+
+    public void imp_clearStickMode()
+    {
+        stickMode = false;
+    }
+    
     public void imp_setLength(float len)
     {
         maxLength = len;
@@ -65,6 +82,18 @@ public class LaserImplm : MonoBehaviour
     public void imp_clearRestrictedObject()
     {
         imp_setRestrictedObject(null, null);
+    }
+
+    public void imp_setRestrictedPlane(Plane tgtPlane)
+    {
+        restrictedPlane = tgtPlane;
+        planeRestrictMode = true;
+    }
+
+    public void imp_clearRestrictedPlane()
+    {
+        restrictedPlane = new Plane();
+        planeRestrictMode = false;
     }
 
     public void imp_setLayerMask(LayerMask l)
@@ -142,11 +171,34 @@ public class LaserImplm : MonoBehaviour
     {
         hitObject = null;
         raycastRay = new Ray(transform.position, transform.forward);
+        if (stickMode)
+        {
+            stickModeCheck(raycastRay);
+            return;
+        }
+        if (planeRestrictMode)
+        {
+            planeHitCheck(raycastRay);
+            return;
+        }
         if (Physics.Raycast(raycastRay, out hitRayObj, maxLength, layerMask))
         {
             if (restrictedObj != null) { parentHasObj(hitRayObj.transform.gameObject, restrictedObj, topLevelObject, out hitObject); }
             else hitObject = hitRayObj.transform.gameObject;
         }
+    }
+
+
+    private void stickModeCheck(Ray raycastRay)
+    {
+
+    }
+
+
+    private void planeHitCheck(Ray raycastRay)
+    {
+        planeRayHit = restrictedPlane.Raycast(raycastRay, out planeHitLen);
+        planeHitPt = raycastRay.GetPoint(planeHitLen);
     }
 
 
@@ -167,17 +219,22 @@ public class LaserImplm : MonoBehaviour
 
     public Vector3 imp_getHitPoint()
     {
+        if (stickMode) return Vector3.zero;
+        if (planeRestrictMode) return planeHitPt;
         return hitRayObj.point;
     }
 
     public Vector3 imp_getHitNormal()
     {
+        if (stickMode) return Vector3.zero;
+        if (planeRestrictMode) return restrictedPlane.normal;
         return hitRayObj.normal;
     }
 
     public float imp_getHitDistance()
     {
-        if (!(imp_isHit())) return -1f;
+        if (stickMode || !(imp_isHit())) return -1f;
+        if (planeRestrictMode) return planeHitLen;
         return hitRayObj.distance;
     }
 
@@ -210,6 +267,7 @@ public class LaserImplm : MonoBehaviour
 
     public Vector3 imp_getTerminalPoint()
     {
+        if (stickMode) return imp_getEndPoint();
         if (inAir && !isFirst) return imp_getEndPoint();
         if (imp_isHit()) return imp_getHitPoint();
         return imp_getEndPoint();
@@ -217,6 +275,7 @@ public class LaserImplm : MonoBehaviour
 
     public Vector3 imp_getTerminalNormal()
     {
+        if (stickMode) return imp_getEndNormal();
         if (inAir && !isFirst) return imp_getEndNormal();
         if (imp_isHit()) return imp_getHitNormal();
         return imp_getEndNormal();
@@ -224,6 +283,7 @@ public class LaserImplm : MonoBehaviour
 
     public float imp_getTerminalDistance()
     {
+        if (stickMode) return imp_getEndDistance();
         if (inAir && !isFirst) return imp_getEndDistance();
         if (imp_isHit()) return imp_getHitDistance();
         return imp_getEndDistance();
@@ -231,11 +291,15 @@ public class LaserImplm : MonoBehaviour
 
     public bool imp_isHit()
     {
+        if (stickMode) return false;
+        if (planeRestrictMode) return planeRayHit;
         return hitObject != null;
     }
 
     public bool imp_hasEnd()
     {
+        if (stickMode) return true;
+        if (planeRestrictMode) return planeRayHit;
         return maxLength > infinity;
     }
 

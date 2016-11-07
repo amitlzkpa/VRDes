@@ -10,7 +10,7 @@ public class SketchActionManager : MonoBehaviour, ActionManager
     public GameObject sketchMenuObject;
     private SketchMenuManager sketchMenuManager;
 
-    public float lineWidth = 0.02f;
+    private float lineWidth = 0.02f;
 
     public Color blackStrokeColor = Color.black;
     public Color errorStrokeColor = Color.red;

@@ -4,7 +4,4 @@ using UnityEngine;
 
 public class BoardSketchCreator : AbstractCreator
 {
-    public override void setupLaser(LaserPicker laser)
-    {
-    }
 }
