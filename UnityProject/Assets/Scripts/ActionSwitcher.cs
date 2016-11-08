@@ -2,6 +2,15 @@
 using System.Collections;
 using UnityEngine.UI;
 
+
+
+enum SelectMoveType
+{
+    MoveRef, MoveGiz, MoveObj, None
+}
+
+
+
 public class ActionSwitcher : MonoBehaviour
 {
 
@@ -107,10 +116,14 @@ public class ActionSwitcher : MonoBehaviour
 
     //---------------------------------------------------------------
 
-
+    private SelectMoveType activeMoveType;
+    
     private float laserEditStartLen;
     private GameObject objToMove;
     private Vector3 offsetVal;
+
+    private Vector3 startPos;
+    private Vector3 tgtPos;
 
     private GameObject prevHitAppObj;
     private GameObject currHitAppObj;
@@ -131,10 +144,8 @@ public class ActionSwitcher : MonoBehaviour
             if (currHitAppObj != null) currHitAppObj.GetComponent<HighlightStyle1>().displayObjectMenu();
         }
         prevHitAppObj = currHitAppObj;
-
-
-
-
+        
+        
         if (GeneralSettings.editOn())
         {
             if (WandControlsManager.WandControllerRight.getTriggerDown())
@@ -153,7 +164,8 @@ public class ActionSwitcher : MonoBehaviour
                     {
                         laser.setRestrictedPlane(incidentObj.GetComponent<RefObject>().getRefPlane());
                         objToMove = incidentObj;
-                        offsetVal = Vector3.zero;
+                        startPos = objToMove.transform.localPosition;
+                        activeMoveType = SelectMoveType.MoveRef;
                     }
                     // otherwise move the whole edit object
                     else
@@ -162,22 +174,47 @@ public class ActionSwitcher : MonoBehaviour
                         laser.setToStickMode(detectRay.distance);
                         objToMove = GeneralSettings.getEditObject();
                         offsetVal = objToMove.transform.position - detectRay.point;
+                        activeMoveType = SelectMoveType.MoveObj;
                     }
                 }
+                return;
             }
             if (WandControlsManager.WandControllerRight.getTriggerUp())
             {
                 laser.clearRestrictedPlane();
                 laser.clearStickMode();
                 objToMove = null;
+                activeMoveType = SelectMoveType.None;
+                return;
             }
         }
 
         if (objToMove != null)
         {
-            objToMove.transform.position = laser.getTerminalPoint() + offsetVal;
-            // FIX THIS: constain movement along 1 axis
-            //objToMove.GetComponent<RefObject>().moveObject(laser.getTerminalPoint() + offsetVal);
+            switch (activeMoveType)
+            {
+                // FIX-THIS: working only near origin
+                case SelectMoveType.MoveRef:
+                    {
+                        tgtPos = objToMove.transform.parent.InverseTransformVector(laser.getTerminalPoint());
+                        if (WandControlsManager.WandControllerRight.getGripPressed()) { tgtPos.x = startPos.x; }
+                        else { tgtPos.y = startPos.y; }
+                        tgtPos.z = startPos.z;
+                        objToMove.transform.localPosition = tgtPos;
+                        break;
+                    }
+                case SelectMoveType.MoveObj:
+                    {
+                        tgtPos = laser.getTerminalPoint();
+                        objToMove.transform.position = tgtPos + offsetVal;
+                        break;
+                    }
+                case SelectMoveType.None:
+                    {
+                        break;
+                    }
+            }
+
         }
     }
 
