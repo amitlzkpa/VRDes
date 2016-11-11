@@ -44,6 +44,20 @@ public class AnnotationButtons : MonoBehaviour {
     }
 
 
+    public GameObject measurementsCreatorPrefab;
+    public void createMeasurements()
+    {
+        if (!editOnCheck())
+        {
+            GeneralSettings.deleteObjectMenu();
+            GeneralSettings.setActiveActionObject(measurementsCreatorPrefab);
+        }
+    }
+
+
+    //---------------------------------------------------------------
+
+
     public void toggleScale()
     {
         if (!editOnCheck())

@@ -92,6 +92,10 @@
     <Compile Include="Assets\Annotations\BoardSketch\BoardSketchActionManager.cs" />
     <Compile Include="Assets\Annotations\BoardSketch\BoardSketchCreator.cs" />
     <Compile Include="Assets\Annotations\BoardSketch\BoardSketchMenuManager.cs" />
+    <Compile Include="Assets\Annotations\Measure\MarkerAssets\DimensionLineRenderer.cs" />
+    <Compile Include="Assets\Annotations\Measure\MeasureActionManager.cs" />
+    <Compile Include="Assets\Annotations\Measure\MeasureCreator.cs" />
+    <Compile Include="Assets\Annotations\Measure\MeasureMenuManager.cs" />
     <Compile Include="Assets\Annotations\Sketch\SketchActionManager.cs" />
     <Compile Include="Assets\Annotations\Sketch\SketchCreator.cs" />
     <Compile Include="Assets\Annotations\Sketch\SketchMenuManager.cs" />
@@ -101,7 +105,6 @@
     <Compile Include="Assets\LERA_D-Coord Files\Scripts\AudioRecordManager.cs" />
     <Compile Include="Assets\LERA_D-Coord Files\Scripts\ButtonActions.cs" />
     <Compile Include="Assets\LERA_D-Coord Files\Scripts\ButtonClick.cs" />
-    <Compile Include="Assets\LERA_D-Coord Files\Scripts\DimensionLineRenderer.cs" />
     <Compile Include="Assets\LERA_D-Coord Files\Scripts\DisappearAfterTime.cs" />
     <Compile Include="Assets\LERA_D-Coord Files\Scripts\DrawManager.cs" />
     <Compile Include="Assets\LERA_D-Coord Files\Scripts\HideManager.cs" />

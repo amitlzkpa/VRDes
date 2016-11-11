@@ -3,8 +3,7 @@ using System.Collections;
 
 public class DimensionLineRenderer : MonoBehaviour {
 
-
-    /*
+    
     private int tickCount;
     private float strokeWidth = 0.5f;
     private bool update = false;
@@ -12,7 +11,7 @@ public class DimensionLineRenderer : MonoBehaviour {
     private Vector3 startPt;
     private Vector3 endPt;
     private LineRenderer dimensionLineRenderer;
-    private Material dimensionLineMaterial;
+    public Material dimensionLineMaterial;
 
 
 
@@ -49,7 +48,7 @@ public class DimensionLineRenderer : MonoBehaviour {
     {
         startPt = transform.GetChild(0).transform.position;
         endPt = transform.GetChild(1).transform.position;
-        dimensionLineRenderer.SetVertexCount(2);
+        dimensionLineRenderer.numPositions = 2;
         dimensionLineRenderer.SetPosition(0, startPt);
         dimensionLineRenderer.SetPosition(1, endPt);
         string distanceText = Vector3.Distance(startPt, endPt).ToString("F2");
@@ -89,29 +88,17 @@ public class DimensionLineRenderer : MonoBehaviour {
 
 
 
-    private void createTempDimensionLine()
-    {
-        startPt = transform.GetChild(0).transform.position;
-        endPt = transform.GetChild(1).transform.position;
-        dimensionLineRenderer.SetVertexCount(2);
-        dimensionLineRenderer.SetPosition(0, startPt);
-        dimensionLineRenderer.SetPosition(1, endPt);
-    }
-
-
-
     // Use this for initialization
     void Start () {
-        // FIX-THIS: convert absolute call to a relative call...maybe put a reference to this material in general settings
-        dimensionLineMaterial = GameObject.Find("MeasureManager").GetComponent<MeasureManager>().dimensionLineMaterial;
         tickCount = getChildTickCount();
         gameObject.AddComponent<LineRenderer>();
         dimensionLineRenderer = gameObject.GetComponent<LineRenderer>();
-        dimensionLineRenderer.SetVertexCount(0);
+        dimensionLineRenderer.numPositions = 0;
         dimensionLineRenderer.receiveShadows = false;
-        dimensionLineRenderer.useLightProbes = false;
+        dimensionLineRenderer.lightProbeUsage = UnityEngine.Rendering.LightProbeUsage.Off;
         dimensionLineRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-        dimensionLineRenderer.SetWidth(0.01f, 0.01f);
+        dimensionLineRenderer.startWidth = 0.01f;
+        dimensionLineRenderer.endWidth = 0.01f;
         dimensionLineRenderer.material = dimensionLineMaterial;
         update = false;
     }
@@ -142,6 +129,5 @@ public class DimensionLineRenderer : MonoBehaviour {
 
 
     }
-
-    */
+    
 }
