@@ -200,7 +200,8 @@ public class ActionSwitcher : MonoBehaviour
                         if (WandControlsManager.WandControllerRight.getGripPressed()) { tgtPos.x = startPos.x; }
                         else { tgtPos.y = startPos.y; }
                         tgtPos.z = startPos.z;
-                        objToMove.transform.localPosition = tgtPos;
+                        objToMove.GetComponent<RefObject>().moveObject(tgtPos);
+                        // objToMove.transform.localPosition = tgtPos;
                         break;
                     }
                 case SelectMoveType.MoveObj:

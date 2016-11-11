@@ -24,7 +24,7 @@ public class MeasureActionManager : MonoBehaviour, ActionManager
 
     private GameObject currentTickObj;
     private string tickObjectName = "TickObject";
-    private int tickCount = 0;
+    private bool lineComplete = false;
 
 
     //---------------------------------------------------------------
@@ -54,24 +54,23 @@ public class MeasureActionManager : MonoBehaviour, ActionManager
     {
         Vector3 targetPoint = laser.getTerminalPoint();
         createNewTick(targetPoint);
-        if (tickCount == 0)
+        if (!lineComplete)
         {
             // start new dimension line
             createNewDimSet();
             currentTickObj.transform.SetParent(currentDim.transform);
-            currentTickObj.name = tickObjectName + "_" + dimCount + "_" + tickCount;
+            currentTickObj.name = tickObjectName + "_" + dimCount + "_0";
             GeneralSettings.addLineToConsole("New dimension line started.");
         }
         else
         {
             // close existing dimension line
             currentTickObj.transform.SetParent(currentDim.transform);
-            currentTickObj.name = tickObjectName + "_" + dimCount + "_" + tickCount;
+            currentTickObj.name = tickObjectName + "_" + dimCount + "_1";
             currentDim.GetComponent<DimensionLineRenderer>().updateDimensionLine();
             GeneralSettings.addLineToConsole((System.String.Format("Dimension line completed: {0}", currentDim.name)));
         }
-        tickCount++;
-        tickCount %= 2;
+        lineComplete = !lineComplete;
     }
 
 

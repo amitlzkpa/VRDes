@@ -198,9 +198,17 @@ public class RefObjects_Plane : MonoBehaviour, RefObjectManager
         addedScript = ptRightTop.AddComponent<RefObject>() as RefObject;
 
         addedScript = edLeft.AddComponent<RefObject>() as RefObject;
+        addedScript.addToAssocList(ptLeftTop);
+        addedScript.addToAssocList(ptLeftBottom);
         addedScript = edBottom.AddComponent<RefObject>() as RefObject;
+        addedScript.addToAssocList(ptLeftBottom);
+        addedScript.addToAssocList(ptRightBottom);
         addedScript = edRight.AddComponent<RefObject>() as RefObject;
+        addedScript.addToAssocList(ptRightTop);
+        addedScript.addToAssocList(ptRightBottom);
         addedScript = edTop.AddComponent<RefObject>() as RefObject;
+        addedScript.addToAssocList(ptLeftTop);
+        addedScript.addToAssocList(ptRightTop);
 
 
         // rename all the objects

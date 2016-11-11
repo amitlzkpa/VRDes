@@ -10,6 +10,7 @@ public class MeshMakerPlane : MonoBehaviour
     private RefObjects_Plane refObj;
     private GameObject meshObj;
     private MeshFilter meshFilter;
+    private MeshCollider meshCollider;
 
 
 
@@ -20,11 +21,11 @@ public class MeshMakerPlane : MonoBehaviour
     private void setupMeshObjects()
     {
         meshObj = GameObject.CreatePrimitive(PrimitiveType.Quad);
-        Destroy(meshObj.GetComponent<MeshCollider>());
         Material defMat = Resources.Load("Materials/defaultObjectMaterial", typeof(Material)) as Material;
         meshObj.GetComponent<MeshRenderer>().material = defMat;
         meshObj.transform.SetParent(transform);
         meshFilter = meshObj.GetComponent<MeshFilter>();
+        meshCollider = meshObj.GetComponent<MeshCollider>();
         // method call yo update the real material array in highlight script since the model has changed
         parentCloneObj.GetComponent<HighlightStyle1>().setupRealMaterialArray();
     }
@@ -92,7 +93,9 @@ public class MeshMakerPlane : MonoBehaviour
         cornerPoints.Add(lT);
         cornerPoints.Add(rT);
 
-        meshFilter.mesh = getMesh(cornerPoints, transform.forward);
+        Mesh newMesh = getMesh(cornerPoints, transform.forward);
+        meshFilter.mesh = newMesh;
+        meshCollider.sharedMesh = newMesh;
     }
 
 

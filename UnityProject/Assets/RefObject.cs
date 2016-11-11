@@ -2,7 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
+
+
 public class RefObject : MonoBehaviour {
+
+
+
+    private HashSet<GameObject> assocObjects;
+
+
+
+    public void addToAssocList(GameObject obj)
+    {
+        assocObjects.Add(obj);
+    }
+
+
+
+    //---------------------------------------------------------------
+
+
 
     public Plane getRefPlane()
     {
@@ -11,13 +32,39 @@ public class RefObject : MonoBehaviour {
 
 
 
+    //---------------------------------------------------------------
+
+
+
     public void moveObject(Vector3 inpLoc)
     {
-        Vector3 trPos = transform.InverseTransformVector(inpLoc);
-        trPos.y = 0f;
-        trPos.z = 0f;
-        transform.localPosition = trPos;
+        Dictionary<GameObject, Vector3> prevPos = new Dictionary<GameObject, Vector3>();
+        foreach(GameObject o in assocObjects) {
+            prevPos.Add(o, o.transform.position - transform.position);
+        }
+        transform.localPosition = inpLoc;
+        foreach (GameObject o in assocObjects)
+        {
+            o.transform.position = (transform.position) + prevPos[o];
+        }
+        GeneralSettings.getParentClone(gameObject, "app_").transform.FindChild("_Model").gameObject.GetComponent<MeshMakerPlane>().updateMesh();
     }
+
+
+
+    //---------------------------------------------------------------
+
+
+
+    void Awake()
+    {
+        assocObjects = new HashSet<GameObject>();
+    }
+
+
+
+
+
 
 
 
