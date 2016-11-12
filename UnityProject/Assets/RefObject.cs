@@ -36,18 +36,30 @@ public class RefObject : MonoBehaviour {
 
 
 
-    public void moveObject(Vector3 inpLoc)
+    public void moveObject(Vector3 startPos, Vector3 tgtPos)
     {
-        Dictionary<GameObject, Vector3> prevPos = new Dictionary<GameObject, Vector3>();
-        foreach(GameObject o in assocObjects) {
-            prevPos.Add(o, o.transform.position - transform.position);
-        }
-        transform.localPosition = inpLoc;
-        foreach (GameObject o in assocObjects)
+        if (gameObject.name.ToLower().Contains("left") || gameObject.name.ToLower().Contains("right"))
         {
-            o.transform.position = (transform.position) + prevPos[o];
+            tgtPos.y = startPos.y;
         }
-        GeneralSettings.getParentClone(gameObject, "app_").transform.FindChild("_Model").gameObject.GetComponent<MeshMakerPlane>().updateMesh();
+        else
+        {
+            tgtPos.x = startPos.x;
+        }
+        tgtPos.z = startPos.z;
+
+
+        Dictionary<GameObject, Vector3> prevPos = new Dictionary<GameObject, Vector3>();
+        foreach(GameObject assocObj in assocObjects) {
+            prevPos.Add(assocObj, assocObj.transform.position - transform.position);
+        }
+        transform.localPosition = tgtPos;
+        foreach (GameObject assocObj in assocObjects) {
+            assocObj.transform.position = (transform.position) + prevPos[assocObj];
+        }
+        GameObject parentCloneObj = GeneralSettings.getParentClone(gameObject, "app_");
+        parentCloneObj.transform.FindChild("_Model").gameObject.GetComponent<MeshMakerPlane>().updateMesh();
+        parentCloneObj.transform.FindChild("_RefObjects").gameObject.GetComponent<RefObjects_Plane>().adjustEdgeHandles();
     }
 
 

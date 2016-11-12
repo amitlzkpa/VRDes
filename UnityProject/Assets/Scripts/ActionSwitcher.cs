@@ -197,11 +197,7 @@ public class ActionSwitcher : MonoBehaviour
                 case SelectMoveType.MoveRef:
                     {
                         tgtPos = objToMove.transform.parent.InverseTransformVector(laser.getTerminalPoint());
-                        if (WandControlsManager.WandControllerRight.getGripPressed()) { tgtPos.x = startPos.x; }
-                        else { tgtPos.y = startPos.y; }
-                        tgtPos.z = startPos.z;
-                        objToMove.GetComponent<RefObject>().moveObject(tgtPos);
-                        // objToMove.transform.localPosition = tgtPos;
+                        objToMove.GetComponent<RefObject>().moveObject(startPos, tgtPos);
                         break;
                     }
                 case SelectMoveType.MoveObj:

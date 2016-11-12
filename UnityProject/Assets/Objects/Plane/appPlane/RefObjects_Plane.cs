@@ -130,6 +130,20 @@ public class RefObjects_Plane : MonoBehaviour, RefObjectManager
 
 
 
+    public void adjustEdgeHandles()
+    {
+        edLeft.transform.up = getPtLeftBottom() - getPtLeftTop();
+        edLeft.transform.position = (getPtLeftBottom() + getPtLeftTop()) / 2;
+        edTop.transform.up = getPtLeftTop() - getPtRightTop();
+        edTop.transform.position = (getPtLeftTop() + getPtRightTop()) / 2;
+        edRight.transform.up = getPtRightTop() - getPtRightBottom();
+        edRight.transform.position = (getPtRightTop() + getPtRightBottom()) / 2;
+        edBottom.transform.up = getPtRightBottom() - getPtLeftBottom();
+        edBottom.transform.position = (getPtRightBottom() + getPtLeftBottom()) / 2;
+    }
+
+
+
     private GameObject createFrameAtOrigin()
     {
         // create an empty object at origin
@@ -146,12 +160,13 @@ public class RefObjects_Plane : MonoBehaviour, RefObjectManager
         edLeft.transform.localScale = new Vector3(0.2f, halfHeight * edSpan, 0.2f);
         edBottom = Instantiate(edgeRepPrefab, new Vector3(0, -halfHeight, 0), Quaternion.identity, emptyObject.transform);
         edBottom.transform.localScale = new Vector3(0.2f, halfWidth * edSpan, 0.2f);
-        edBottom.transform.Rotate(0, 0, 90);
+        //edBottom.transform.Rotate(0, 0, 90);
         edRight = Instantiate(edgeRepPrefab, new Vector3(+halfWidth, 0, 0), Quaternion.identity, emptyObject.transform);
         edRight.transform.localScale = new Vector3(0.2f, halfHeight * edSpan, 0.2f);
         edTop = Instantiate(edgeRepPrefab, new Vector3(0, +halfHeight, 0), Quaternion.identity, emptyObject.transform);
         edTop.transform.localScale = new Vector3(0.2f, halfWidth * edSpan, 0.2f);
-        edTop.transform.Rotate(0, 0, 90);
+        //edTop.transform.Rotate(0, 0, 90);
+        adjustEdgeHandles();
 
         return emptyObject;
     }
@@ -189,13 +204,6 @@ public class RefObjects_Plane : MonoBehaviour, RefObjectManager
 
         // add the RefObject script and add the the reference of the plane to the refobject
         RefObject addedScript;
-
-        addedScript = plCenter.AddComponent<RefObject>() as RefObject;
-
-        addedScript = ptLeftTop.AddComponent<RefObject>() as RefObject;
-        addedScript = ptLeftBottom.AddComponent<RefObject>() as RefObject;
-        addedScript = ptRightBottom.AddComponent<RefObject>() as RefObject;
-        addedScript = ptRightTop.AddComponent<RefObject>() as RefObject;
 
         addedScript = edLeft.AddComponent<RefObject>() as RefObject;
         addedScript.addToAssocList(ptLeftTop);

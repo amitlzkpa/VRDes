@@ -15,4 +15,6 @@ public class app_Space : MonoBehaviour
         infoCanvasObj = transform.FindChild("_ObjectInfo").gameObject;
         refObjs = transform.FindChild("_RefObjects").gameObject;
     }
+
+
 }
