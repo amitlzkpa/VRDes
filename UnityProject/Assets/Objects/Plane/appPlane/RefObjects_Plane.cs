@@ -109,13 +109,6 @@ public class RefObjects_Plane : MonoBehaviour, RefObjectManager
 
 
 
-    public Plane getRefPlane()
-    {
-        return new Plane(transform.parent.forward, getPtCenter());
-    }
-
-
-
     //---------------------------------------------------------------
 
 

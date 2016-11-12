@@ -85,45 +85,16 @@ public interface RefObjectManager
     void showRefObjects();
     void hideRefObjects();
     void toggleRefObjects();
+    void adjustEdgeHandles();
+    Vector3 getPtCenter();
 }
 
 
 //---------------------------------------------------------------
 
 
-public interface WandController
+public interface MeshMaker
 {
-    bool getGripDown();
-    bool getGripUp();
-    bool getGripPressed();
-
-    bool getTriggerDown();
-    bool getTriggerUp();
-    bool getTriggerPressed();
-
-    bool getMenuDown();
-    bool getMenuUp();
-    bool getMenuPressed();
-
-    bool getTouchPadButtonDown();
-    bool getTouchPadButtonUp();
-    bool getTouchPadButtonPressed();
-
-    float getTouchPadX();
-    float getTouchPadY();
-    bool getTouchPadTouchedDown();
-    bool getTouchPadTouchedUp();
-    bool getTouchPadTouched();
-
-    bool getTouchPadSwipeRight();
-    bool getTouchPadSwipeLeft();
-    bool getTouchPadSwipeUp();
-    bool getTouchPadSwipeDown();
-
-    bool getTouchPadButtonClickUp();
-    bool getTouchPadButtonClickDown();
-    bool getTouchPadButtonClickLeft();
-    bool getTouchPadButtonClickRight();
-
+    void updateMesh();
 }
 

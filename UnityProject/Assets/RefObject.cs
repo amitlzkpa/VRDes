@@ -27,7 +27,7 @@ public class RefObject : MonoBehaviour {
 
     public Plane getRefPlane()
     {
-        return transform.parent.gameObject.GetComponent<RefObjects_Plane>().getRefPlane();
+        return new Plane(transform.parent.parent.forward, transform.parent.gameObject.GetComponent<RefObjectManager>().getPtCenter());
     }
 
 
@@ -58,8 +58,8 @@ public class RefObject : MonoBehaviour {
             assocObj.transform.position = (transform.position) + prevPos[assocObj];
         }
         GameObject parentCloneObj = GeneralSettings.getParentClone(gameObject, "app_");
-        parentCloneObj.transform.FindChild("_Model").gameObject.GetComponent<MeshMakerPlane>().updateMesh();
-        parentCloneObj.transform.FindChild("_RefObjects").gameObject.GetComponent<RefObjects_Plane>().adjustEdgeHandles();
+        parentCloneObj.transform.FindChild("_RefObjects").gameObject.GetComponent<RefObjectManager>().adjustEdgeHandles();
+        parentCloneObj.transform.FindChild("_Model").gameObject.GetComponent<MeshMaker>().updateMesh();
     }
 
 

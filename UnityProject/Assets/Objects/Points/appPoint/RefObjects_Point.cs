@@ -18,12 +18,15 @@ public class RefObjects_Point : MonoBehaviour, RefObjectManager
     private GameObject pt;
 
 
-
     //---------------------------------------------------------------
 
+    public void adjustEdgeHandles()
+    {
+        // point has no edge handles to be adjusted
+        return;
+    }
 
-
-    public Vector3 getPt()
+    public Vector3 getPtCenter()
     {
         return pt.transform.position;
     }

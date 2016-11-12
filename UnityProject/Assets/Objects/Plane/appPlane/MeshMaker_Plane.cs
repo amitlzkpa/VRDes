@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class MeshMakerPlane : MonoBehaviour
+public class MeshMaker_Plane : MonoBehaviour, MeshMaker
 {
 
 
@@ -70,6 +70,7 @@ public class MeshMakerPlane : MonoBehaviour
     private void clearMesh()
     {
         meshFilter.mesh.Clear();
+        meshCollider.sharedMesh.Clear();
     }
 
 

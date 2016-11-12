@@ -126,7 +126,7 @@
     <Compile Include="Assets\Objects\Plane\PlaneCreator.cs" />
     <Compile Include="Assets\Objects\Plane\PlaneMenuManager.cs" />
     <Compile Include="Assets\Objects\Plane\appPlane\EditPlane.cs" />
-    <Compile Include="Assets\Objects\Plane\appPlane\MeshMakerPlane.cs" />
+    <Compile Include="Assets\Objects\Plane\appPlane\MeshMaker_Plane.cs" />
     <Compile Include="Assets\Objects\Plane\appPlane\ObjectMenu_Plane.cs" />
     <Compile Include="Assets\Objects\Plane\appPlane\RefObjects_Plane.cs" />
     <Compile Include="Assets\Objects\Plane\appPlane\app_Plane.cs" />
@@ -141,6 +141,7 @@
     <Compile Include="Assets\Objects\Space\SpaceCreator.cs" />
     <Compile Include="Assets\Objects\Space\SpaceMenuManager.cs" />
     <Compile Include="Assets\Objects\Space\appSpace\EditSpace.cs" />
+    <Compile Include="Assets\Objects\Space\appSpace\MeshMaker_Space.cs" />
     <Compile Include="Assets\Objects\Space\appSpace\ObjectMenu_Space.cs" />
     <Compile Include="Assets\Objects\Space\appSpace\RefObjects_Space.cs" />
     <Compile Include="Assets\Objects\Space\appSpace\app_Space.cs" />

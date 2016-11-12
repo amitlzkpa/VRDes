@@ -54,6 +54,94 @@ public class RefObjects_Space : MonoBehaviour, RefObjectManager
     //---------------------------------------------------------------
 
 
+    public void adjustEdgeHandles()
+    {
+        edLeftFront.transform.up = getPtLeftBottomFront() - getPtLeftTopFront();
+        edLeftFront.transform.position = (getPtLeftBottomFront() + getPtLeftTopFront()) / 2;
+        edBottomFront.transform.up = getPtLeftBottomFront() - getPtRightBottomFront();
+        edBottomFront.transform.position = (getPtLeftBottomFront() + getPtRightBottomFront()) / 2;
+        edRightFront.transform.up = getPtRightBottomFront() - getPtRightTopFront();
+        edRightFront.transform.position = (getPtRightBottomFront() + getPtRightTopFront()) / 2;
+        edTopFront.transform.up = getPtLeftTopFront() - getPtRightTopFront();
+        edTopFront.transform.position = (getPtLeftTopFront() + getPtRightTopFront()) / 2;
+        edLeftMid.transform.up = getPtLeftTopFront() - getPtLeftTopBack();
+        edLeftMid.transform.position = (getPtLeftTopFront() + getPtLeftTopBack()) / 2;
+        edBottomMid.transform.up = getPtLeftBottomFront() - getPtLeftBottomBack();
+        edBottomMid.transform.position = (getPtLeftBottomFront() + getPtLeftBottomBack()) / 2;
+        edRightMid.transform.up = getPtRightBottomFront() - getPtRightBottomBack();
+        edRightMid.transform.position = (getPtRightBottomFront() + getPtRightBottomBack()) / 2;
+        edTopMid.transform.up = getPtRightTopFront() - getPtRightTopBack();
+        edTopMid.transform.position = (getPtRightTopFront() + getPtRightTopBack()) / 2;
+        edLeftBack.transform.up = getPtLeftTopBack() - getPtLeftBottomBack();
+        edLeftBack.transform.position = (getPtLeftTopBack() + getPtLeftBottomBack()) / 2;
+        edBottomBack.transform.up = getPtLeftBottomBack() - getPtRightBottomBack();
+        edBottomBack.transform.position = (getPtLeftBottomBack() + getPtRightBottomBack()) / 2;
+        edRightBack.transform.up = getPtRightBottomBack() - getPtRightTopBack();
+        edRightBack.transform.position = (getPtRightBottomBack() + getPtRightTopBack()) / 2;
+        edTopBack.transform.up = getPtLeftTopBack() - getPtRightTopBack();
+        edTopBack.transform.position = (getPtLeftTopBack() + getPtRightTopBack()) / 2;  
+    }
+
+    public Vector3 getPtCenter()
+    {
+        return ptCenter.transform.position;
+    }
+
+
+    //---------------------------------------------------------------
+
+
+    public Vector3 getPtLeftTopFront()
+    {
+        return ptLeftTopFront.transform.position;
+    }
+
+
+    public Vector3 getPtLeftBottomFront()
+    {
+        return ptLeftBottomFront.transform.position;
+    }
+
+
+    public Vector3 getPtRightBottomFront()
+    {
+        return ptRightBottomFront.transform.position;
+    }
+
+
+    public Vector3 getPtRightTopFront()
+    {
+        return ptRightTopFront.transform.position;
+    }
+
+
+    public Vector3 getPtLeftTopBack()
+    {
+        return ptLeftTopBack.transform.position;
+    }
+
+
+    public Vector3 getPtLeftBottomBack()
+    {
+        return ptLeftBottomBack.transform.position;
+    }
+
+
+    public Vector3 getPtRightBottomBack()
+    {
+        return ptRightBottomBack.transform.position;
+    }
+
+
+    public Vector3 getPtRightTopBack()
+    {
+        return ptRightTopBack.transform.position;
+    }
+
+
+    //---------------------------------------------------------------
+
+
     private GameObject ptCenter;
     private GameObject ptLeftTopFront;
     private GameObject ptLeftBottomFront;
@@ -111,47 +199,47 @@ public class RefObjects_Space : MonoBehaviour, RefObjectManager
         return emptyObject;
     }
 
-    // Quaternion.LookRotation(Vector3.forward, ptLeftBottomFront.transform.position - ptRightBottomFront.transform.position)
+
 
     private GameObject createFrameAtOrigin()
     {
         // create an empty object at origin
         GameObject emptyObject = getEmptyGameObjectAtOrigin();
 
-        ptCenter = (GameObject)Instantiate(pointRepPrefab, Vector3.zero, Quaternion.identity, emptyObject.transform);
-        ptLeftTopFront = (GameObject)Instantiate(pointRepPrefab, new Vector3(-halfWidth, +halfHeight, +halfDepth), Quaternion.identity, emptyObject.transform);
-        ptLeftBottomFront = (GameObject)Instantiate(pointRepPrefab, new Vector3(-halfWidth, -halfHeight, +halfDepth), Quaternion.identity, emptyObject.transform);
-        ptRightBottomFront = (GameObject)Instantiate(pointRepPrefab, new Vector3(+halfWidth, -halfHeight, +halfDepth), Quaternion.identity, emptyObject.transform);
-        ptRightTopFront = (GameObject)Instantiate(pointRepPrefab, new Vector3(+halfWidth, +halfHeight, +halfDepth), Quaternion.identity, emptyObject.transform);
-        ptLeftTopBack = (GameObject)Instantiate(pointRepPrefab, new Vector3(-halfWidth, +halfHeight, -halfDepth), Quaternion.identity, emptyObject.transform);
-        ptLeftBottomBack = (GameObject)Instantiate(pointRepPrefab, new Vector3(-halfWidth, -halfHeight, -halfDepth), Quaternion.identity, emptyObject.transform);
-        ptRightBottomBack = (GameObject)Instantiate(pointRepPrefab, new Vector3(+halfWidth, -halfHeight, -halfDepth), Quaternion.identity, emptyObject.transform);
-        ptRightTopBack = (GameObject)Instantiate(pointRepPrefab, new Vector3(+halfWidth, +halfHeight, -halfDepth), Quaternion.identity, emptyObject.transform);
+        ptCenter = Instantiate(pointRepPrefab, Vector3.zero, Quaternion.identity, emptyObject.transform);
+        ptLeftTopFront = Instantiate(pointRepPrefab, new Vector3(-halfWidth, +halfHeight, +halfDepth), Quaternion.identity, emptyObject.transform);
+        ptLeftBottomFront = Instantiate(pointRepPrefab, new Vector3(-halfWidth, -halfHeight, +halfDepth), Quaternion.identity, emptyObject.transform);
+        ptRightBottomFront = Instantiate(pointRepPrefab, new Vector3(+halfWidth, -halfHeight, +halfDepth), Quaternion.identity, emptyObject.transform);
+        ptRightTopFront = Instantiate(pointRepPrefab, new Vector3(+halfWidth, +halfHeight, +halfDepth), Quaternion.identity, emptyObject.transform);
+        ptLeftTopBack = Instantiate(pointRepPrefab, new Vector3(-halfWidth, +halfHeight, -halfDepth), Quaternion.identity, emptyObject.transform);
+        ptLeftBottomBack = Instantiate(pointRepPrefab, new Vector3(-halfWidth, -halfHeight, -halfDepth), Quaternion.identity, emptyObject.transform);
+        ptRightBottomBack = Instantiate(pointRepPrefab, new Vector3(+halfWidth, -halfHeight, -halfDepth), Quaternion.identity, emptyObject.transform);
+        ptRightTopBack = Instantiate(pointRepPrefab, new Vector3(+halfWidth, +halfHeight, -halfDepth), Quaternion.identity, emptyObject.transform);
 
 
-        edLeftFront = (GameObject)Instantiate(edgeRepPrefab, new Vector3(-halfWidth, 0, +halfDepth), Quaternion.Euler(0, 0, 0), emptyObject.transform);
+        edLeftFront = Instantiate(edgeRepPrefab, new Vector3(-halfWidth, 0, +halfDepth), Quaternion.Euler(0, 0, 0), emptyObject.transform);
         edLeftFront.transform.localScale = new Vector3(0.2f, halfHeight * edSpan, 0.2f);
-        edBottomFront = (GameObject)Instantiate(edgeRepPrefab, new Vector3(0, -halfHeight, +halfDepth), Quaternion.Euler(0, 0, 90), emptyObject.transform);
+        edBottomFront = Instantiate(edgeRepPrefab, new Vector3(0, -halfHeight, +halfDepth), Quaternion.Euler(0, 0, 90), emptyObject.transform);
         edBottomFront.transform.localScale = new Vector3(0.2f, halfWidth * edSpan, 0.2f);
-        edRightFront = (GameObject)Instantiate(edgeRepPrefab, new Vector3(+halfWidth, 0, +halfDepth), Quaternion.Euler(0, 0, 0), emptyObject.transform);
+        edRightFront = Instantiate(edgeRepPrefab, new Vector3(+halfWidth, 0, +halfDepth), Quaternion.Euler(0, 0, 0), emptyObject.transform);
         edRightFront.transform.localScale = new Vector3(0.2f, halfHeight * edSpan, 0.2f);
-        edTopFront = (GameObject)Instantiate(edgeRepPrefab, new Vector3(0, +halfHeight, +halfDepth), Quaternion.Euler(0, 0, -90), emptyObject.transform);
+        edTopFront = Instantiate(edgeRepPrefab, new Vector3(0, +halfHeight, +halfDepth), Quaternion.Euler(0, 0, -90), emptyObject.transform);
         edTopFront.transform.localScale = new Vector3(0.2f, halfWidth * edSpan, 0.2f);
-        edLeftMid = (GameObject)Instantiate(edgeRepPrefab, new Vector3(-halfWidth, +halfHeight, 0), Quaternion.Euler(90, 0, 0), emptyObject.transform);
+        edLeftMid = Instantiate(edgeRepPrefab, new Vector3(-halfWidth, +halfHeight, 0), Quaternion.Euler(90, 0, 0), emptyObject.transform);
         edLeftMid.transform.localScale = new Vector3(0.2f, halfDepth * edSpan, 0.2f);
-        edBottomMid = (GameObject)Instantiate(edgeRepPrefab, new Vector3(-halfWidth, -halfHeight, 0), Quaternion.Euler(90, 0, 0), emptyObject.transform);
+        edBottomMid = Instantiate(edgeRepPrefab, new Vector3(-halfWidth, -halfHeight, 0), Quaternion.Euler(90, 0, 0), emptyObject.transform);
         edBottomMid.transform.localScale = new Vector3(0.2f, halfDepth * edSpan, 0.2f);
-        edRightMid = (GameObject)Instantiate(edgeRepPrefab, new Vector3(+halfWidth, -halfHeight, 0), Quaternion.Euler(-90, 0, 0), emptyObject.transform);
+        edRightMid = Instantiate(edgeRepPrefab, new Vector3(+halfWidth, -halfHeight, 0), Quaternion.Euler(-90, 0, 0), emptyObject.transform);
         edRightMid.transform.localScale = new Vector3(0.2f, halfDepth * edSpan, 0.2f);
-        edTopMid = (GameObject)Instantiate(edgeRepPrefab, new Vector3(+halfWidth, +halfHeight, 0), Quaternion.Euler(-90, 0, 0), emptyObject.transform);
+        edTopMid = Instantiate(edgeRepPrefab, new Vector3(+halfWidth, +halfHeight, 0), Quaternion.Euler(-90, 0, 0), emptyObject.transform);
         edTopMid.transform.localScale = new Vector3(0.2f, halfDepth * edSpan, 0.2f);
-        edLeftBack = (GameObject)Instantiate(edgeRepPrefab, new Vector3(-halfWidth, 0, -halfDepth), Quaternion.Euler(0, 0, 0), emptyObject.transform);
+        edLeftBack = Instantiate(edgeRepPrefab, new Vector3(-halfWidth, 0, -halfDepth), Quaternion.Euler(0, 0, 0), emptyObject.transform);
         edLeftBack.transform.localScale = new Vector3(0.2f, halfHeight * edSpan, 0.2f);
-        edBottomBack = (GameObject)Instantiate(edgeRepPrefab, new Vector3(0, -halfHeight, -halfDepth), Quaternion.Euler(0, 0, 90), emptyObject.transform);
+        edBottomBack = Instantiate(edgeRepPrefab, new Vector3(0, -halfHeight, -halfDepth), Quaternion.Euler(0, 0, 90), emptyObject.transform);
         edBottomBack.transform.localScale = new Vector3(0.2f, halfWidth * edSpan, 0.2f);
-        edRightBack = (GameObject)Instantiate(edgeRepPrefab, new Vector3(+halfWidth, 0, -halfDepth), Quaternion.Euler(0, 0, 0), emptyObject.transform);
+        edRightBack = Instantiate(edgeRepPrefab, new Vector3(+halfWidth, 0, -halfDepth), Quaternion.Euler(0, 0, 0), emptyObject.transform);
         edRightBack.transform.localScale = new Vector3(0.2f, halfHeight * edSpan, 0.2f);
-        edTopBack = (GameObject)Instantiate(edgeRepPrefab, new Vector3(0, +halfHeight, -halfDepth), Quaternion.Euler(0, 0, -90), emptyObject.transform);
+        edTopBack = Instantiate(edgeRepPrefab, new Vector3(0, +halfHeight, -halfDepth), Quaternion.Euler(0, 0, -90), emptyObject.transform);
         edTopBack.transform.localScale = new Vector3(0.2f, halfWidth * edSpan, 0.2f);
 
         return emptyObject;
@@ -208,6 +296,46 @@ public class RefObjects_Space : MonoBehaviour, RefObjectManager
         edRightBack.transform.SetParent(transform);
         edTopBack.transform.SetParent(transform);
 
+
+        // add the RefObject script and add the the reference of the plane to the refobject
+        RefObject addedScript;
+
+        addedScript = edLeftFront.AddComponent<RefObject>() as RefObject;
+        addedScript.addToAssocList(ptLeftTopFront);
+        addedScript.addToAssocList(ptLeftBottomFront);
+        addedScript = edBottomFront.AddComponent<RefObject>() as RefObject;
+        addedScript.addToAssocList(ptLeftBottomFront);
+        addedScript.addToAssocList(ptRightBottomFront);
+        addedScript = edRightFront.AddComponent<RefObject>() as RefObject;
+        addedScript.addToAssocList(ptRightBottomFront);
+        addedScript.addToAssocList(ptRightTopFront);
+        addedScript = edTopFront.AddComponent<RefObject>() as RefObject;
+        addedScript.addToAssocList(ptRightTopFront);
+        addedScript.addToAssocList(ptLeftTopFront);
+        addedScript = edLeftMid.AddComponent<RefObject>() as RefObject;
+        addedScript.addToAssocList(ptLeftTopBack);
+        addedScript.addToAssocList(ptLeftTopFront);
+        addedScript = edBottomMid.AddComponent<RefObject>() as RefObject;
+        addedScript.addToAssocList(ptLeftBottomBack);
+        addedScript.addToAssocList(ptLeftBottomFront);
+        addedScript = edRightMid.AddComponent<RefObject>() as RefObject;
+        addedScript.addToAssocList(ptRightBottomBack);
+        addedScript.addToAssocList(ptRightBottomFront);
+        addedScript = edTopMid.AddComponent<RefObject>() as RefObject;
+        addedScript.addToAssocList(ptRightTopBack);
+        addedScript.addToAssocList(ptRightTopFront);
+        addedScript = edLeftBack.AddComponent<RefObject>() as RefObject;
+        addedScript.addToAssocList(ptLeftTopBack);
+        addedScript.addToAssocList(ptLeftBottomBack);
+        addedScript = edBottomBack.AddComponent<RefObject>() as RefObject;
+        addedScript.addToAssocList(ptRightBottomBack);
+        addedScript.addToAssocList(ptLeftBottomBack);
+        addedScript = edRightBack.AddComponent<RefObject>() as RefObject;
+        addedScript.addToAssocList(ptRightBottomBack);
+        addedScript.addToAssocList(ptRightTopBack);
+        addedScript = edTopBack.AddComponent<RefObject>() as RefObject;
+        addedScript.addToAssocList(ptRightBottomBack);
+        addedScript.addToAssocList(ptRightTopBack);
 
         // rename all the objects
         ptCenter.name = "ptCenter";
