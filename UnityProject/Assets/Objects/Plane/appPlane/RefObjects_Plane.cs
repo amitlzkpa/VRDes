@@ -133,6 +133,7 @@ public class RefObjects_Plane : MonoBehaviour, RefObjectManager
         edRight.transform.position = (getPtRightTop() + getPtRightBottom()) / 2;
         edBottom.transform.up = getPtRightBottom() - getPtLeftBottom();
         edBottom.transform.position = (getPtRightBottom() + getPtLeftBottom()) / 2;
+        plCenter.transform.position = (getPtLeftTop() + getPtLeftBottom() + getPtRightBottom() + getPtRightTop()) / 4;
     }
 
 

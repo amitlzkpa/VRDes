@@ -109,7 +109,6 @@ public class MeshMaker_Space : MonoBehaviour, MeshMaker
         for (int i = 0; i < sides; i++)
         {
             List<Vector3> cornerPoints = new List<Vector3>(ptSets[i]);
-
             Mesh newMesh = getMesh(cornerPoints, normalSet[i]);
             meshFilter[i].mesh = newMesh;
             meshCollider[i].sharedMesh = newMesh;

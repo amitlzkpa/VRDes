@@ -79,7 +79,16 @@ public class RefObjects_Space : MonoBehaviour, RefObjectManager
         edRightBack.transform.up = getPtRightBottomBack() - getPtRightTopBack();
         edRightBack.transform.position = (getPtRightBottomBack() + getPtRightTopBack()) / 2;
         edTopBack.transform.up = getPtLeftTopBack() - getPtRightTopBack();
-        edTopBack.transform.position = (getPtLeftTopBack() + getPtRightTopBack()) / 2;  
+        edTopBack.transform.position = (getPtLeftTopBack() + getPtRightTopBack()) / 2;
+
+        /*
+        plFront.transform.position = (getPtLeftTopFront() + getPtLeftBottomFront() + getPtRightBottomFront() + getPtRightTopFront()) / 4;
+        plBack.transform.position = (getPtLeftTopBack() + getPtLeftBottomBack() + getPtRightBottomBack() + getPtRightTopBack()) / 4;
+        plTop.transform.position = (getPtLeftTopFront() + getPtRightTopFront() + getPtRightTopBack() + getPtLeftTopBack()) / 4;
+        plBottom.transform.position = (getPtLeftBottomFront() + getPtRightBottomFront() + getPtRightBottomBack() + getPtLeftBottomBack()) / 4;
+        plRight.transform.position = (getPtRightTopFront() + getPtRightBottomFront() + getPtRightBottomBack() + getPtRightTopBack()) / 4;
+        plLeft.transform.position = (getPtLeftTopFront() + getPtLeftBottomFront() + getPtLeftBottomBack() + getPtLeftTopBack()) / 4;
+        */
     }
 
     public Vector3 getPtCenter()
@@ -241,6 +250,8 @@ public class RefObjects_Space : MonoBehaviour, RefObjectManager
         edRightBack.transform.localScale = new Vector3(0.2f, halfHeight * edSpan, 0.2f);
         edTopBack = Instantiate(edgeRepPrefab, new Vector3(0, +halfHeight, -halfDepth), Quaternion.Euler(0, 0, -90), emptyObject.transform);
         edTopBack.transform.localScale = new Vector3(0.2f, halfWidth * edSpan, 0.2f);
+
+        // TO-DO: make the plane ref objects
 
         return emptyObject;
     }
