@@ -61,4 +61,15 @@ public class ToolBoxButtonActions : MonoBehaviour {
             GeneralSettings.setActiveActionObject(spaceCreatorPrefab);
         }
     }
+
+
+    public GameObject rectArrayCreatorPrefab;
+    public void createRectArray()
+    {
+        if (!editOnCheck())
+        {
+            GeneralSettings.deleteObjectMenu();
+            GeneralSettings.setActiveActionObject(rectArrayCreatorPrefab);
+        }
+    }
 }

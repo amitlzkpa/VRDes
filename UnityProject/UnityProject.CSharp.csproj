@@ -121,6 +121,7 @@
     <Compile Include="Assets\LERA_D-Coord Files\Scripts\zActionManager.cs" />
     <Compile Include="Assets\LayerButtonSet.cs" />
     <Compile Include="Assets\LayerManager.cs" />
+    <Compile Include="Assets\NumPadManager.cs" />
     <Compile Include="Assets\ObjectMenuManager.cs" />
     <Compile Include="Assets\Objects\Plane\PlaneActionManager.cs" />
     <Compile Include="Assets\Objects\Plane\PlaneCreator.cs" />
@@ -137,6 +138,9 @@
     <Compile Include="Assets\Objects\Points\appPoint\ObjectMenu_Point.cs" />
     <Compile Include="Assets\Objects\Points\appPoint\RefObjects_Point.cs" />
     <Compile Include="Assets\Objects\Points\appPoint\app_Point.cs" />
+    <Compile Include="Assets\Objects\RectArray\RectArrayActionManager.cs" />
+    <Compile Include="Assets\Objects\RectArray\RectArrayCreator.cs" />
+    <Compile Include="Assets\Objects\RectArray\RectArrayMenuManager.cs" />
     <Compile Include="Assets\Objects\Space\SpaceActionManager.cs" />
     <Compile Include="Assets\Objects\Space\SpaceCreator.cs" />
     <Compile Include="Assets\Objects\Space\SpaceMenuManager.cs" />

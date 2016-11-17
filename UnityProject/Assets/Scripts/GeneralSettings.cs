@@ -221,7 +221,7 @@ public class GeneralSettings : MonoBehaviour {
     ////////////////////////////////////////////////////////////////////////////////
 
 
-    
+
     private static GameObject int_Player;
     public static GameObject player
     {
@@ -390,6 +390,29 @@ public class GeneralSettings : MonoBehaviour {
     public static bool hasObjectMenu()
     {
         return objMenuManager.hasObjectMenu();
+    }
+
+
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+
+
+    public GameObject numPadUIPrefab;
+    private GameObject prevMenu;
+
+
+    private static GameObject getNumPadPrefab()
+
+    {
+        return Instantiate(instance.numPadUIPrefab);
+    }
+
+
+    public static void setNumPad()
+    {
+        deleteObjectMenu();
+        setObjectMenu(getNumPadPrefab());
     }
 
 
