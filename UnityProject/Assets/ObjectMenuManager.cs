@@ -8,8 +8,25 @@ public class ObjectMenuManager : MonoBehaviour {
     private GameObject menuContainer;
 
 
-    // Always pass a new copy of the menuObj with the same state as menu to be created
-    // needs a copy since the object will be destroyed on unsetting
+    /// <summary>
+    /// Detaches all object form the menuObject and transfers it to the retutnContainer.
+    /// </summary>
+    /// <returns></returns>
+    public void getAndEmptyObjectMenu(GameObject returnContainer)
+    {
+        for (int i = 0; i < menuContainer.transform.childCount; i++)
+        {
+            GameObject menuObj = menuContainer.transform.GetChild(i).gameObject;
+            menuObj.transform.SetParent(returnContainer.transform);
+        }
+    }
+
+
+    /// <summary>
+    /// Always pass a new copy of the menuObj with the same state as menu to be created.
+    /// Needs a copy since the object will be destroyed on unsetting.
+    /// </summary>
+    /// <param name="menuObj">The menuObject to be nested as menu.</param>
     public void setObjectMenu(GameObject menuObj)
     {
         menuObj.SetActive(true);
@@ -21,7 +38,11 @@ public class ObjectMenuManager : MonoBehaviour {
     }
 
 
-    // deletes all objetcs nested under the mnu container
+
+    /// <summary>
+    /// Deletes all objetcs nested under the menu container by destroying the instances. Use get @getAndEmptyObjectMenu()
+    /// if you need live access to the menu object instead of destroying it.
+    /// </summary>
     public void deleteObjectMenu()
     {
         for (int i=0; i<menuContainer.transform.childCount; i++)
@@ -34,7 +55,12 @@ public class ObjectMenuManager : MonoBehaviour {
     }
 
 
-    // theres an object menu if there are more than one menu parented below
+
+    /// <summary>
+    /// Check if there are any menus currently active.
+    /// Theres an object menu if there are more than one menu parented below.
+    /// </summary>
+    /// <returns></returns>
     public bool hasObjectMenu()
     {
         return (menuContainer.transform.childCount > 0);

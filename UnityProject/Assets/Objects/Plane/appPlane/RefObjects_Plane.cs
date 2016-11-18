@@ -197,18 +197,18 @@ public class RefObjects_Plane : MonoBehaviour, RefObjectManager
 
 
         // add the RefObject script and add the the reference of the plane to the refobject
-        RefObject addedScript;
+        RefObjectEdge addedScript;
 
-        addedScript = edLeft.AddComponent<RefObject>() as RefObject;
+        addedScript = edLeft.AddComponent<RefObjectEdge>() as RefObjectEdge;
         addedScript.addToAssocList(ptLeftTop);
         addedScript.addToAssocList(ptLeftBottom);
-        addedScript = edBottom.AddComponent<RefObject>() as RefObject;
+        addedScript = edBottom.AddComponent<RefObjectEdge>() as RefObjectEdge;
         addedScript.addToAssocList(ptLeftBottom);
         addedScript.addToAssocList(ptRightBottom);
-        addedScript = edRight.AddComponent<RefObject>() as RefObject;
+        addedScript = edRight.AddComponent<RefObjectEdge>() as RefObjectEdge;
         addedScript.addToAssocList(ptRightTop);
         addedScript.addToAssocList(ptRightBottom);
-        addedScript = edTop.AddComponent<RefObject>() as RefObject;
+        addedScript = edTop.AddComponent<RefObjectEdge>() as RefObjectEdge;
         addedScript.addToAssocList(ptLeftTop);
         addedScript.addToAssocList(ptRightTop);
 

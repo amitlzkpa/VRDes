@@ -16,11 +16,6 @@ public class NumPadManager : MonoBehaviour {
         UIText = transform.FindChild("_Text").gameObject.GetComponent<Text>();
 
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
 
 
@@ -34,6 +29,15 @@ public class NumPadManager : MonoBehaviour {
         {
             text += inp.ToString();
         }
+        UIText.text = text;
+    }
+
+
+
+    public void reportText()
+    {
+        GeneralSettings.returnNumPadVal(text);
+        text = "";
         UIText.text = text;
     }
 

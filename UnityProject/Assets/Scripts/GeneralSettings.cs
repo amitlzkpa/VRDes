@@ -398,21 +398,60 @@ public class GeneralSettings : MonoBehaviour {
 
 
 
+    private static WaitingObject waitingObj;
+    private static GameObject prevMenu;
+
+
+    /// <summary>
+    /// Destroys the current menu object and adds the menu item loaded into prevMenu to the active menu.
+    /// </summary>
+    public static void reinstatePreviousMenu()
+    {
+        deleteObjectMenu();
+        for (int i=0; i<prevMenu.transform.childCount; i++)
+        {
+            setObjectMenu(prevMenu.transform.GetChild(i).gameObject);
+        }
+    }
+
+
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+
+
+    private static void resetPrevMenuObjPosAndRot()
+    {
+        for (int i = 0; i < prevMenu.transform.childCount; i++)
+        {
+            prevMenu.transform.GetChild(i).localPosition = Vector3.zero;
+            prevMenu.transform.GetChild(i).localRotation = Quaternion.identity;
+        }
+    }
+
+
     public GameObject numPadUIPrefab;
-    private GameObject prevMenu;
 
 
     private static GameObject getNumPadPrefab()
-
     {
         return Instantiate(instance.numPadUIPrefab);
     }
 
 
-    public static void setNumPad()
+    public static void setNumPad(WaitingObject inpWaitObj)
     {
-        deleteObjectMenu();
+        waitingObj = inpWaitObj;
+        objMenuManager.getAndEmptyObjectMenu(prevMenu);
+        resetPrevMenuObjPosAndRot();
         setObjectMenu(getNumPadPrefab());
+    }
+
+
+    public static void returnNumPadVal(string retStr)
+    {
+        waitingObj.setString(retStr);
+        waitingObj = null;
     }
 
 
@@ -471,6 +510,8 @@ public class GeneralSettings : MonoBehaviour {
 
         objectMenuHolderObject = transform.FindChild("[CameraRig]").FindChild("Controller (right)").FindChild("_ObjectMenuCanvas").gameObject;
         objMenuManager = objectMenuHolderObject.GetComponent<ObjectMenuManager>();
+        prevMenu = new GameObject();
+        prevMenu.SetActive(false);
 
         blackScreen = player.transform.FindChild("_BlackScreen").FindChild("Image").gameObject.GetComponent<Image>();
 

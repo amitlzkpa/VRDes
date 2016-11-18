@@ -4,15 +4,19 @@ using UnityEngine.UI;
 
 
 
-enum SelectMoveType
-{
-    MoveRef, MoveGiz, MoveObj, None
-}
 
 
 
 public class ActionSwitcher : MonoBehaviour
 {
+
+
+    private enum SelectMoveType
+    {
+        MoveRefEd, MoveRefPt, MoveObj, None
+    }
+
+
 
     private GameObject laserObj;
     private LaserPicker laser;
@@ -159,13 +163,24 @@ public class ActionSwitcher : MonoBehaviour
 
 
                     // check whether hittin a refObject; in that case move only the ref object
-                    RefObject refScript = incidentObj.GetComponent<RefObject>();
-                    if (refScript != null)
+                    RefObjectEdge refScriptEd = incidentObj.GetComponent<RefObjectEdge>();
+                    if (refScriptEd != null)
                     {
-                        laser.setRestrictedPlane(incidentObj.GetComponent<RefObject>().getRefPlane());
+                        laser.setRestrictedPlane(incidentObj.GetComponent<RefObjectEdge>().getRefPlane());
                         objToMove = incidentObj;
                         startPos = objToMove.transform.localPosition;
-                        activeMoveType = SelectMoveType.MoveRef;
+                        activeMoveType = SelectMoveType.MoveRefEd;
+                        return;
+                    }
+                    // check whether hittin a refObject; in that case move only the ref object
+                    RefObjectPoint refScriptPt = incidentObj.GetComponent<RefObjectPoint>();
+                    if (refScriptPt != null)
+                    {
+                        laser.setToStickMode(detectRay.distance);
+                        objToMove = incidentObj;
+                        offsetVal = objToMove.transform.position - detectRay.point;
+                        activeMoveType = SelectMoveType.MoveRefPt;
+                        return;
                     }
                     // otherwise move the whole edit object
                     else
@@ -194,16 +209,22 @@ public class ActionSwitcher : MonoBehaviour
             switch (activeMoveType)
             {
                 // FIX-THIS: working only near origin
-                case SelectMoveType.MoveRef:
+                case SelectMoveType.MoveRefEd:
                     {
                         tgtPos = objToMove.transform.parent.InverseTransformVector(laser.getTerminalPoint());
-                        objToMove.GetComponent<RefObject>().moveObject(startPos, tgtPos);
+                        objToMove.GetComponent<RefObjectEdge>().moveObject(startPos, tgtPos);
+                        break;
+                    }
+                case SelectMoveType.MoveRefPt:
+                    {
+                        tgtPos = laser.getTerminalPoint();
+                        objToMove.GetComponent<RefObjectPoint>().moveObject(tgtPos + offsetVal);
                         break;
                     }
                 case SelectMoveType.MoveObj:
                     {
                         tgtPos = laser.getTerminalPoint();
-                        objToMove.transform.position = tgtPos + offsetVal;
+                        objToMove.GetComponent<Editable>().moveObject(tgtPos + offsetVal);
                         break;
                     }
                 case SelectMoveType.None:

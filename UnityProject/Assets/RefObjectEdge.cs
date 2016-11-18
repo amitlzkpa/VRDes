@@ -6,7 +6,7 @@ using UnityEngine;
 
 
 
-public class RefObject : MonoBehaviour {
+public class RefObjectEdge : MonoBehaviour {
 
 
 

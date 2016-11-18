@@ -309,42 +309,42 @@ public class RefObjects_Space : MonoBehaviour, RefObjectManager
 
 
         // add the RefObject script and add the the reference of the plane to the refobject
-        RefObject addedScript;
+        RefObjectEdge addedScript;
 
-        addedScript = edLeftFront.AddComponent<RefObject>() as RefObject;
+        addedScript = edLeftFront.AddComponent<RefObjectEdge>() as RefObjectEdge;
         addedScript.addToAssocList(ptLeftTopFront);
         addedScript.addToAssocList(ptLeftBottomFront);
-        addedScript = edBottomFront.AddComponent<RefObject>() as RefObject;
+        addedScript = edBottomFront.AddComponent<RefObjectEdge>() as RefObjectEdge;
         addedScript.addToAssocList(ptLeftBottomFront);
         addedScript.addToAssocList(ptRightBottomFront);
-        addedScript = edRightFront.AddComponent<RefObject>() as RefObject;
+        addedScript = edRightFront.AddComponent<RefObjectEdge>() as RefObjectEdge;
         addedScript.addToAssocList(ptRightBottomFront);
         addedScript.addToAssocList(ptRightTopFront);
-        addedScript = edTopFront.AddComponent<RefObject>() as RefObject;
+        addedScript = edTopFront.AddComponent<RefObjectEdge>() as RefObjectEdge;
         addedScript.addToAssocList(ptRightTopFront);
         addedScript.addToAssocList(ptLeftTopFront);
-        addedScript = edLeftMid.AddComponent<RefObject>() as RefObject;
+        addedScript = edLeftMid.AddComponent<RefObjectEdge>() as RefObjectEdge;
         addedScript.addToAssocList(ptLeftTopBack);
         addedScript.addToAssocList(ptLeftTopFront);
-        addedScript = edBottomMid.AddComponent<RefObject>() as RefObject;
+        addedScript = edBottomMid.AddComponent<RefObjectEdge>() as RefObjectEdge;
         addedScript.addToAssocList(ptLeftBottomBack);
         addedScript.addToAssocList(ptLeftBottomFront);
-        addedScript = edRightMid.AddComponent<RefObject>() as RefObject;
+        addedScript = edRightMid.AddComponent<RefObjectEdge>() as RefObjectEdge;
         addedScript.addToAssocList(ptRightBottomBack);
         addedScript.addToAssocList(ptRightBottomFront);
-        addedScript = edTopMid.AddComponent<RefObject>() as RefObject;
+        addedScript = edTopMid.AddComponent<RefObjectEdge>() as RefObjectEdge;
         addedScript.addToAssocList(ptRightTopBack);
         addedScript.addToAssocList(ptRightTopFront);
-        addedScript = edLeftBack.AddComponent<RefObject>() as RefObject;
+        addedScript = edLeftBack.AddComponent<RefObjectEdge>() as RefObjectEdge;
         addedScript.addToAssocList(ptLeftTopBack);
         addedScript.addToAssocList(ptLeftBottomBack);
-        addedScript = edBottomBack.AddComponent<RefObject>() as RefObject;
+        addedScript = edBottomBack.AddComponent<RefObjectEdge>() as RefObjectEdge;
         addedScript.addToAssocList(ptRightBottomBack);
         addedScript.addToAssocList(ptLeftBottomBack);
-        addedScript = edRightBack.AddComponent<RefObject>() as RefObject;
+        addedScript = edRightBack.AddComponent<RefObjectEdge>() as RefObjectEdge;
         addedScript.addToAssocList(ptRightBottomBack);
         addedScript.addToAssocList(ptRightTopBack);
-        addedScript = edTopBack.AddComponent<RefObject>() as RefObject;
+        addedScript = edTopBack.AddComponent<RefObjectEdge>() as RefObjectEdge;
         addedScript.addToAssocList(ptRightBottomBack);
         addedScript.addToAssocList(ptRightTopBack);
 

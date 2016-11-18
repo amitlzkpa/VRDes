@@ -27,6 +27,12 @@ public class EditSpace : MonoBehaviour, Editable
     }
 
 
+    public void moveObject(Vector3 tgtPos)
+    {
+        transform.position = tgtPos;
+    }
+
+
     public void toggleEditMode()
     {
         if (editOn) exitEditMode();

@@ -123,6 +123,14 @@
     <Compile Include="Assets\LayerManager.cs" />
     <Compile Include="Assets\NumPadManager.cs" />
     <Compile Include="Assets\ObjectMenuManager.cs" />
+    <Compile Include="Assets\Objects\Line\LineActionManager.cs" />
+    <Compile Include="Assets\Objects\Line\LineCreator.cs" />
+    <Compile Include="Assets\Objects\Line\LineMenuManager.cs" />
+    <Compile Include="Assets\Objects\Line\appLine\EditLine.cs" />
+    <Compile Include="Assets\Objects\Line\appLine\MeshMaker_Line.cs" />
+    <Compile Include="Assets\Objects\Line\appLine\ObjectMenu_Line.cs" />
+    <Compile Include="Assets\Objects\Line\appLine\RefObjects_Line.cs" />
+    <Compile Include="Assets\Objects\Line\appLine\app_Line.cs" />
     <Compile Include="Assets\Objects\Plane\PlaneActionManager.cs" />
     <Compile Include="Assets\Objects\Plane\PlaneCreator.cs" />
     <Compile Include="Assets\Objects\Plane\PlaneMenuManager.cs" />
@@ -138,6 +146,9 @@
     <Compile Include="Assets\Objects\Points\appPoint\ObjectMenu_Point.cs" />
     <Compile Include="Assets\Objects\Points\appPoint\RefObjects_Point.cs" />
     <Compile Include="Assets\Objects\Points\appPoint\app_Point.cs" />
+    <Compile Include="Assets\Objects\PolarArray\PolarArrayActionManager.cs" />
+    <Compile Include="Assets\Objects\PolarArray\PolarArrayCreator.cs" />
+    <Compile Include="Assets\Objects\PolarArray\PolarArrayMenuManager.cs" />
     <Compile Include="Assets\Objects\RectArray\RectArrayActionManager.cs" />
     <Compile Include="Assets\Objects\RectArray\RectArrayCreator.cs" />
     <Compile Include="Assets\Objects\RectArray\RectArrayMenuManager.cs" />
@@ -155,7 +166,8 @@
     <Compile Include="Assets\Prefabs\LaserPickerNew Folder\LaserImplm.cs" />
     <Compile Include="Assets\Prefabs\LaserPickerNew Folder\LaserPicker.cs" />
     <Compile Include="Assets\Prefabs\LaserPickerNew Folder\LaserRenderer.cs" />
-    <Compile Include="Assets\RefObject.cs" />
+    <Compile Include="Assets\RefObjectEdge.cs" />
+    <Compile Include="Assets\RefObjectPoint.cs" />
     <Compile Include="Assets\Scripts\ActionSwitcher.cs" />
     <Compile Include="Assets\Scripts\CloseMenuButtonActions.cs" />
     <Compile Include="Assets\Scripts\CursorManager.cs" />
@@ -202,6 +214,7 @@
     <Compile Include="Assets\SteamVR\Scripts\SteamVR_TrackedObject.cs" />
     <Compile Include="Assets\SteamVR\Scripts\SteamVR_UpdatePoses.cs" />
     <Compile Include="Assets\SteamVR\Scripts\SteamVR_Utils.cs" />
+    <Compile Include="Assets\WaitingObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonBasic.shader" />

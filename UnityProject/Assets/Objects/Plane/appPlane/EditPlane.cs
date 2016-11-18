@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class EditPlane : MonoBehaviour, Editable
 {
@@ -24,6 +25,12 @@ public class EditPlane : MonoBehaviour, Editable
     {
         GeneralSettings.clearEditObject();
         editOn = false;
+    }
+
+
+    public void moveObject(Vector3 tgtPos)
+    {
+        transform.position = tgtPos;
     }
 
 

@@ -7,7 +7,7 @@ public class RectArrayActionManager : MonoBehaviour, ActionManager {
 
     private enum ActionMode
     {
-        SELOBJ, SELSTART, SELVEC1, SELVEC2
+        SELOBJ, SELSTART, SELVEC1, SELVEC2, XCOUNT, YCOUNT
     }
 
 
@@ -18,6 +18,8 @@ public class RectArrayActionManager : MonoBehaviour, ActionManager {
     private int xCount = 4;
     private int yCount = 4;
     private ActionMode actionMode = ActionMode.SELOBJ;
+
+    private WaitingObject currWaitingObj;
 
 
 
@@ -53,8 +55,22 @@ public class RectArrayActionManager : MonoBehaviour, ActionManager {
                     getVec2(laser);
                     break;
                 }
+            case ActionMode.XCOUNT:
+                {
+                    getXCount(laser);
+                    break;
+                }
+            case ActionMode.YCOUNT:
+                {
+                    getYCount(laser);
+                    break;
+                }
         }
     }
+
+
+
+    //---------------------------------------------------------------
 
 
 
@@ -64,16 +80,12 @@ public class RectArrayActionManager : MonoBehaviour, ActionManager {
         {
             if (laser.isHit())
             {
-                GeneralSettings.setNumPad();
-                if (GeneralSettings.getParentClone(laser.getHitObject(), "app_") == null)
-                    return;
                 arrObj = GeneralSettings.getParentClone(laser.getHitObject(), "app_");
                 actionMode = ActionMode.SELSTART;
                 GeneralSettings.updateInteractText("Please select start point for the array.");
             }
         }
     }
-
 
 
 
@@ -92,7 +104,6 @@ public class RectArrayActionManager : MonoBehaviour, ActionManager {
 
 
 
-
     private void getVec1(LaserPicker laser)
     {
         if (WandControlsManager.WandControllerRight.getTriggerDown())
@@ -108,7 +119,6 @@ public class RectArrayActionManager : MonoBehaviour, ActionManager {
 
 
 
-
     private void getVec2(LaserPicker laser)
     {
         if (WandControlsManager.WandControllerRight.getTriggerDown())
@@ -116,14 +126,42 @@ public class RectArrayActionManager : MonoBehaviour, ActionManager {
             if (laser.isHit())
             {
                 vec2 = laser.getTerminalPoint() - startPos;
-                createArray();
-                amStart(laser);
-                GeneralSettings.updateInteractText("Array created. Please select next object to be arrayed.");
+                actionMode = ActionMode.XCOUNT;
+                currWaitingObj = ScriptableObject.CreateInstance<WaitingObject>();
+                GeneralSettings.setNumPad(currWaitingObj);
+                GeneralSettings.updateInteractText("Please specify number of copies in X-direction.");
             }
         }
     }
 
-    
+
+
+    private void getXCount(LaserPicker laser)
+    {
+        if (!currWaitingObj.isSet()) return;
+        xCount = int.Parse(currWaitingObj.readString());
+        actionMode = ActionMode.YCOUNT;
+        currWaitingObj = ScriptableObject.CreateInstance<WaitingObject>();
+        GeneralSettings.setNumPad(currWaitingObj);
+        GeneralSettings.updateInteractText("Please specify number of copies in Y-direction.");
+    }
+
+
+
+    private void getYCount(LaserPicker laser)
+    {
+        if (!currWaitingObj.isSet()) return;
+        yCount = int.Parse(currWaitingObj.readString());
+        GeneralSettings.reinstatePreviousMenu();
+        createArray();
+        amStart(laser);
+        GeneralSettings.updateInteractText("Array created. Please select next object to be arrayed.");
+    }
+
+
+    //---------------------------------------------------------------
+
+
 
     private void createArray()
     {

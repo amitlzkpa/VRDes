@@ -53,6 +53,7 @@ public interface Editable
     void enterEditMode();
     void exitEditMode();
     void toggleEditMode();
+    void moveObject(Vector3 tgtPos);
 }
 
 public interface Infoable
