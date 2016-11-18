@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnnotationButtons : MonoBehaviour {
+public class ToolBoxButtonAnnotations : MonoBehaviour {
 
 
 

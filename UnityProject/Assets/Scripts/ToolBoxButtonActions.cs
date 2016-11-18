@@ -41,6 +41,17 @@ public class ToolBoxButtonActions : MonoBehaviour {
     }
 
 
+    public GameObject lineCreatorPrefab;
+    public void createLine()
+    {
+        if (!editOnCheck())
+        {
+            GeneralSettings.deleteObjectMenu();
+            GeneralSettings.setActiveActionObject(lineCreatorPrefab);
+        }
+    }
+
+
     public GameObject planeCreatorPrefab;
     public void createPlane()
     {
@@ -63,35 +74,13 @@ public class ToolBoxButtonActions : MonoBehaviour {
     }
 
 
-    public GameObject rectArrayCreatorPrefab;
-    public void createRectArray()
+    public GameObject surfaceCreatorPrefab;
+    public void createSurface()
     {
         if (!editOnCheck())
         {
             GeneralSettings.deleteObjectMenu();
-            GeneralSettings.setActiveActionObject(rectArrayCreatorPrefab);
-        }
-    }
-
-
-    public GameObject polarArrayCreatorPrefab;
-    public void createPolarArray()
-    {
-        if (!editOnCheck())
-        {
-            GeneralSettings.deleteObjectMenu();
-            GeneralSettings.setActiveActionObject(polarArrayCreatorPrefab);
-        }
-    }
-
-
-    public GameObject lineCreatorPrefab;
-    public void createLine()
-    {
-        if (!editOnCheck())
-        {
-            GeneralSettings.deleteObjectMenu();
-            GeneralSettings.setActiveActionObject(lineCreatorPrefab);
+            GeneralSettings.setActiveActionObject(surfaceCreatorPrefab);
         }
     }
 }

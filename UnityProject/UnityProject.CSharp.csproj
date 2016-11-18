@@ -88,7 +88,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\AbstractCreator.cs" />
-    <Compile Include="Assets\AnnotationButtons.cs" />
     <Compile Include="Assets\Annotations\BoardSketch\BoardSketchActionManager.cs" />
     <Compile Include="Assets\Annotations\BoardSketch\BoardSketchCreator.cs" />
     <Compile Include="Assets\Annotations\BoardSketch\BoardSketchMenuManager.cs" />
@@ -160,6 +159,9 @@
     <Compile Include="Assets\Objects\Space\appSpace\ObjectMenu_Space.cs" />
     <Compile Include="Assets\Objects\Space\appSpace\RefObjects_Space.cs" />
     <Compile Include="Assets\Objects\Space\appSpace\app_Space.cs" />
+    <Compile Include="Assets\Objects\Surface\SurfaceActionManager.cs" />
+    <Compile Include="Assets\Objects\Surface\SurfaceCreator.cs" />
+    <Compile Include="Assets\Objects\Surface\SurfaceMenuManager.cs" />
     <Compile Include="Assets\PlaneEdit\PlaneEditActionManager.cs" />
     <Compile Include="Assets\PlaneEdit\PlaneEditMenuManager.cs" />
     <Compile Include="Assets\PlaneEdit\PlaneEditor.cs" />
@@ -177,6 +179,8 @@
     <Compile Include="Assets\Scripts\InfoObject.cs" />
     <Compile Include="Assets\Scripts\Interfaces.cs" />
     <Compile Include="Assets\Scripts\ToolBoxButtonActions.cs" />
+    <Compile Include="Assets\Scripts\ToolBoxButtonAnnotations.cs" />
+    <Compile Include="Assets\Scripts\ToolBoxButtonTransforms.cs" />
     <Compile Include="Assets\Scripts\ToolBoxManager.cs" />
     <Compile Include="Assets\Scripts\ToolScreenManager.cs" />
     <Compile Include="Assets\Scripts\UIUpdater.cs" />
