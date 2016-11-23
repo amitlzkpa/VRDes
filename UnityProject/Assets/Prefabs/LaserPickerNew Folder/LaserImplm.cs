@@ -9,6 +9,9 @@ using System;
 public class LaserImplm : MonoBehaviour
 {
 
+    private string NONE_STRING = "__none__";
+
+
     private Ray raycastRay;
     private RaycastHit hitRayObj;
     private float infinity = 100000f;
@@ -20,10 +23,12 @@ public class LaserImplm : MonoBehaviour
     private GameObject restrictedObj;
     private GameObject topLevelObject;
     private LayerMask layerMask = ~0;
+
     private string tgtNameStart;
     private string endNameStart;
-    private string tgtNameContains;
-    private string endNameContains;
+    //private string tgtNameContains;
+    //private string endNameContains;
+
     private Plane restrictedPlane;
     private bool planeRestrictMode;
     private bool planeRayHit;
@@ -34,6 +39,8 @@ public class LaserImplm : MonoBehaviour
     private bool isFirst = true;
 
     private bool stickMode;
+
+
 
 
 
@@ -114,33 +121,55 @@ public class LaserImplm : MonoBehaviour
 
     public void imp_setRestrictedObjectStartName(string tgtObjectName)
     {
-        imp_setRestrictedObjectStartName(tgtObjectName, null);
+        imp_setRestrictedObjectStartName(tgtObjectName, NONE_STRING);
     }
 
     public void imp_clearRestrictedObjectStartName()
     {
-        imp_setRestrictedObjectStartName(null, null);
+        imp_setRestrictedObjectStartName(NONE_STRING, NONE_STRING);
     }
 
     public void imp_setRestrictedObjectContainsName(string tgtObjectName, string endObjectName)
     {
-        tgtNameContains = tgtObjectName;
-        endNameContains = endObjectName;
+        //tgtNameContains = tgtObjectName;
+        //endNameContains = endObjectName;
     }
 
     public void imp_setRestrictedObjectContainsName(string tgtObjectName)
     {
-        imp_setRestrictedObjectContainsName(tgtObjectName, null);
+        imp_setRestrictedObjectContainsName(tgtObjectName, NONE_STRING);
     }
 
     public void imp_clearRestrictedObjectContainsName()
     {
-        imp_setRestrictedObjectContainsName(null, null);
+        imp_setRestrictedObjectContainsName(NONE_STRING, NONE_STRING);
     }
 
 
 
     //---------------------------------------------------------------
+
+
+
+    private bool parentHasStartName(GameObject hitObj, String tgtObjectName, String endObjectName, out GameObject foundObject)
+    {
+        if (hitObj.name.StartsWith(tgtObjectName))
+        {
+            foundObject = hitObj;
+            return true;
+        }
+        if (hitObj == null || hitObj.transform == null)
+        {
+            foundObject = null;
+            return false;
+        }
+        if (hitObj.transform.parent == null || hitObj.transform.parent.gameObject.name.Equals(NONE_STRING))
+        {
+            foundObject = null;
+            return false;
+        }
+        return (parentHasStartName(hitObj.transform.parent.gameObject, tgtObjectName, endObjectName, out foundObject));
+    }
 
 
 
@@ -184,6 +213,7 @@ public class LaserImplm : MonoBehaviour
         if (Physics.Raycast(raycastRay, out hitRayObj, maxLength, layerMask))
         {
             if (restrictedObj != null) { parentHasObj(hitRayObj.transform.gameObject, restrictedObj, topLevelObject, out hitObject); }
+            else if (tgtNameStart != null && !tgtNameStart.Equals(NONE_STRING)) { parentHasStartName(hitRayObj.transform.gameObject, tgtNameStart, endNameStart, out hitObject); }
             else hitObject = hitRayObj.transform.gameObject;
         }
     }
@@ -191,7 +221,7 @@ public class LaserImplm : MonoBehaviour
 
     private void stickModeCheck(Ray raycastRay)
     {
-
+        // no checks done in stick mode
     }
 
 

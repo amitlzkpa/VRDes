@@ -40,7 +40,13 @@ public class ActionSwitcher : MonoBehaviour
             am = null;
             cmObj = null;
             cm = null;
-            laser.setLength(1000000f);
+            laser.clearLayerMask();
+            laser.clearRestrictedObject();
+            laser.clearRestrictedObjectContainsName();
+            laser.clearRestrictedObjectStartName();
+            laser.clearRestrictedPlane();
+            laser.clearStickMode();
+            laser.setLengthToInfinity();
             return;
         }
 
@@ -119,6 +125,7 @@ public class ActionSwitcher : MonoBehaviour
 
 
     //---------------------------------------------------------------
+
 
     private SelectMoveType activeMoveType;
     

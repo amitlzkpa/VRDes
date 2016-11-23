@@ -162,6 +162,11 @@
     <Compile Include="Assets\Objects\Surface\SurfaceActionManager.cs" />
     <Compile Include="Assets\Objects\Surface\SurfaceCreator.cs" />
     <Compile Include="Assets\Objects\Surface\SurfaceMenuManager.cs" />
+    <Compile Include="Assets\Objects\Surface\appSurface\EditSurface.cs" />
+    <Compile Include="Assets\Objects\Surface\appSurface\MeshMaker_Surface.cs" />
+    <Compile Include="Assets\Objects\Surface\appSurface\ObjectMenu_Surface.cs" />
+    <Compile Include="Assets\Objects\Surface\appSurface\RefObjects_Surface.cs" />
+    <Compile Include="Assets\Objects\Surface\appSurface\app_Surface.cs" />
     <Compile Include="Assets\PlaneEdit\PlaneEditActionManager.cs" />
     <Compile Include="Assets\PlaneEdit\PlaneEditMenuManager.cs" />
     <Compile Include="Assets\PlaneEdit\PlaneEditor.cs" />

@@ -99,3 +99,14 @@ public interface MeshMaker
     void updateMesh();
 }
 
+
+//---------------------------------------------------------------
+
+
+public interface AppListener
+{
+    void onPositionChange(Vector3 pos);
+    void onRotationChange(Quaternion rot);
+    void onScaleChange(Vector3 scale);
+}
+
