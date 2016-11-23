@@ -67,7 +67,7 @@ public class RefObjects_Surface : MonoBehaviour, RefObjectManager
         foreach (Vector3 pt in pts)
         {
             GameObject ptRef = Instantiate(pointRepPrefab, pt, Quaternion.identity, newSet.transform);
-            ptRef.AddComponent<RefObjectPoint>().addToAssocList(gameObject);
+            ptRef.AddComponent<RefObjectPlaneConstraintPoint>();
             refPtList.Add(ptRef);
         }
         refPtObjs.Add(refPtList);

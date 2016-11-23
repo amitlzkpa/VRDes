@@ -167,6 +167,14 @@
     <Compile Include="Assets\Objects\Surface\appSurface\ObjectMenu_Surface.cs" />
     <Compile Include="Assets\Objects\Surface\appSurface\RefObjects_Surface.cs" />
     <Compile Include="Assets\Objects\Surface\appSurface\app_Surface.cs" />
+    <Compile Include="Assets\Objects\Wall\WallActionManager.cs" />
+    <Compile Include="Assets\Objects\Wall\WallCreator.cs" />
+    <Compile Include="Assets\Objects\Wall\WallMenuManager.cs" />
+    <Compile Include="Assets\Objects\Wall\appWall\EditWall.cs" />
+    <Compile Include="Assets\Objects\Wall\appWall\MeshMaker_Wall.cs" />
+    <Compile Include="Assets\Objects\Wall\appWall\ObjectMenu_Wall.cs" />
+    <Compile Include="Assets\Objects\Wall\appWall\RefObjects_Wall.cs" />
+    <Compile Include="Assets\Objects\Wall\appWall\app_Wall.cs" />
     <Compile Include="Assets\PlaneEdit\PlaneEditActionManager.cs" />
     <Compile Include="Assets\PlaneEdit\PlaneEditMenuManager.cs" />
     <Compile Include="Assets\PlaneEdit\PlaneEditor.cs" />
@@ -174,6 +182,7 @@
     <Compile Include="Assets\Prefabs\LaserPickerNew Folder\LaserPicker.cs" />
     <Compile Include="Assets\Prefabs\LaserPickerNew Folder\LaserRenderer.cs" />
     <Compile Include="Assets\RefObjectEdge.cs" />
+    <Compile Include="Assets\RefObjectPlaneConstraintPoint.cs" />
     <Compile Include="Assets\RefObjectPoint.cs" />
     <Compile Include="Assets\Scripts\ActionSwitcher.cs" />
     <Compile Include="Assets\Scripts\CloseMenuButtonActions.cs" />

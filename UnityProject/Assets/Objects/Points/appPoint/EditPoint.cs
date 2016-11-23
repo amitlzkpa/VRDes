@@ -16,6 +16,7 @@ public class EditPoint : MonoBehaviour, Editable
     public void enterEditMode()
     {
         GeneralSettings.setEditObject(gameObject);
+        transform.FindChild("_RefObjects").gameObject.GetComponent<RefObjectManager>().showRefObjects();
         editOn = true;
     }
 
@@ -23,6 +24,7 @@ public class EditPoint : MonoBehaviour, Editable
     public void exitEditMode()
     {
         GeneralSettings.clearEditObject();
+        transform.FindChild("_RefObjects").gameObject.GetComponent<RefObjectManager>().hideRefObjects();
         editOn = false;
     }
 

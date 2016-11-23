@@ -22,6 +22,12 @@ public class ObjectMenu_Surface : MonoBehaviour, ObjectMenu
     }
 
 
+    public void createVoid()
+    {
+        parentObj.GetComponent<EditSurface>().toggleVoidEditMode();
+    }
+
+
 
 
 

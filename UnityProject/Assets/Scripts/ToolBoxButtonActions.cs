@@ -83,4 +83,15 @@ public class ToolBoxButtonActions : MonoBehaviour {
             GeneralSettings.setActiveActionObject(surfaceCreatorPrefab);
         }
     }
+
+
+    public GameObject wallCreatorPrefab;
+    public void createWall()
+    {
+        if (!editOnCheck())
+        {
+            GeneralSettings.deleteObjectMenu();
+            GeneralSettings.setActiveActionObject(wallCreatorPrefab);
+        }
+    }
 }

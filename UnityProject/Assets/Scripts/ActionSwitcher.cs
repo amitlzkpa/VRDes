@@ -13,7 +13,7 @@ public class ActionSwitcher : MonoBehaviour
 
     private enum SelectMoveType
     {
-        MoveRefEd, MoveRefPt, MoveObj, None
+        MoveRefEd, MoveRefPt, MoveObj, MoveRefPtConstrained, None
     }
 
 
@@ -31,6 +31,17 @@ public class ActionSwitcher : MonoBehaviour
     //---------------------------------------------------------------
 
 
+    private void clearLaser()
+    {
+        laser.clearLayerMask();
+        laser.clearRestrictedObject();
+        laser.clearRestrictedObjectContainsName();
+        laser.clearRestrictedObjectStartName();
+        laser.clearRestrictedPlane();
+        laser.clearStickMode();
+    }
+
+
     public void setActionItem(GameObject crObj)
     {
         // setting to selection ray; null used to represent selection ray
@@ -40,12 +51,7 @@ public class ActionSwitcher : MonoBehaviour
             am = null;
             cmObj = null;
             cm = null;
-            laser.clearLayerMask();
-            laser.clearRestrictedObject();
-            laser.clearRestrictedObjectContainsName();
-            laser.clearRestrictedObjectStartName();
-            laser.clearRestrictedPlane();
-            laser.clearStickMode();
+            clearLaser();
             laser.setLengthToInfinity();
             return;
         }
@@ -125,7 +131,7 @@ public class ActionSwitcher : MonoBehaviour
 
 
     //---------------------------------------------------------------
-
+    
 
     private SelectMoveType activeMoveType;
     
@@ -189,6 +195,17 @@ public class ActionSwitcher : MonoBehaviour
                         activeMoveType = SelectMoveType.MoveRefPt;
                         return;
                     }
+                    // check whether hittin a refObject; in that case move only the ref object
+                    RefObjectPlaneConstraintPoint refScriptConstrPt = incidentObj.GetComponent<RefObjectPlaneConstraintPoint>();
+                    if (refScriptConstrPt != null)
+                    {
+                        laser.setRestrictedObject(refScriptConstrPt.getConstrainObject());
+                        objToMove = incidentObj;
+                        // offsetVal = objToMove.transform.position - detectRay.point;
+                        activeMoveType = SelectMoveType.MoveRefPtConstrained;
+                        objToMove.GetComponent<SphereCollider>().enabled = false;
+                        return;
+                    }
                     // otherwise move the whole edit object
                     else
                     {
@@ -203,8 +220,8 @@ public class ActionSwitcher : MonoBehaviour
             }
             if (WandControlsManager.WandControllerRight.getTriggerUp())
             {
-                laser.clearRestrictedPlane();
-                laser.clearStickMode();
+                if (objToMove.GetComponent<SphereCollider>() != null) objToMove.GetComponent<SphereCollider>().enabled = true;
+                clearLaser();
                 objToMove = null;
                 activeMoveType = SelectMoveType.None;
                 return;
@@ -226,6 +243,13 @@ public class ActionSwitcher : MonoBehaviour
                     {
                         tgtPos = laser.getTerminalPoint();
                         objToMove.GetComponent<RefObjectPoint>().moveObject(tgtPos + offsetVal);
+                        break;
+                    }
+                case SelectMoveType.MoveRefPtConstrained:
+                    {
+                        if (!laser.isHit()) break;
+                        tgtPos = laser.getTerminalPoint();
+                        objToMove.GetComponent<RefObjectPlaneConstraintPoint>().moveObject(tgtPos);
                         break;
                     }
                 case SelectMoveType.MoveObj:
