@@ -54,7 +54,7 @@ public class GeneralSettings : MonoBehaviour {
     {
         GeneralSettings.addLineToConsole(System.String.Format("Exiting edit for {0}.", objBeingEdited.name));
         objBeingEdited = null;
-        rightLaser.clearRestrictedObject();
+        int_rightLaser.clearRestrictedObject();
     }
 
 
@@ -64,7 +64,7 @@ public class GeneralSettings : MonoBehaviour {
         // if an object is being edited, reslease it and set the new object to edit mode
         if (editOn()) clearEditObject();
         objBeingEdited = inpObj;
-        rightLaser.setRestrictedObject(objBeingEdited, GeneralSettings.modelObjects);
+        int_rightLaser.setRestrictedObject(objBeingEdited, GeneralSettings.modelObjects);
         GeneralSettings.addLineToConsole(System.String.Format("Editing {0}.", objBeingEdited.name));
     }
 
@@ -278,7 +278,11 @@ public class GeneralSettings : MonoBehaviour {
     }
 
 
-    private static LaserPicker rightLaser;
+    private static LaserPicker int_rightLaser;
+    public static LaserPicker rightLaser
+    {
+        get { return int_rightLaser; }
+    }
 
 
 
@@ -528,7 +532,7 @@ public class GeneralSettings : MonoBehaviour {
 
         int_Player = transform.FindChild("[CameraRig]").FindChild("Camera (eye)").gameObject;
 
-        rightLaser = transform.FindChild("[CameraRig]").FindChild("Controller (right)").FindChild("_LaserPicker").gameObject.GetComponent<LaserPicker>();
+        int_rightLaser = transform.FindChild("[CameraRig]").FindChild("Controller (right)").FindChild("_LaserPicker").gameObject.GetComponent<LaserPicker>();
 
         int_Model = transform.FindChild("_Model").gameObject;
         modelStartPos = model.transform.position;

@@ -43,13 +43,21 @@ public class MeshMaker_Surface : MonoBehaviour, MeshMaker
 
     private Mesh getMesh(List<Vector3> points, Vector3 normal)
     {
+        // create small offset to avoid z-fighting problem
+        List<Vector3> offsetPts = new List<Vector3>();
+        foreach(Vector3 pt in points)
+        {
+            offsetPts.Add(pt + 0.001f * normal);
+        }
+
+
         // rework order to ensure meshes are created where points are considered to be stored cyclically
-        Vector3 tempPt = points[2];
-        points[2] = points[3];
-        points[3] = tempPt;
+        Vector3 tempPt = offsetPts[2];
+        offsetPts[2] = offsetPts[3];
+        offsetPts[3] = tempPt;
 
         Mesh m = new Mesh();
-        m.SetVertices(points);
+        m.SetVertices(offsetPts);
         //create both side facing mesh
         int[] triArr = new int[12];
         triArr[0] = 0;
@@ -65,7 +73,7 @@ public class MeshMaker_Surface : MonoBehaviour, MeshMaker
         triArr[10] = 3;
         triArr[11] = 2;
 
-        Vector3[] norArr = new Vector3[points.Count];
+        Vector3[] norArr = new Vector3[offsetPts.Count];
         for (int i = 0; i < norArr.Length; i++)
         { norArr[i] = normal; }
 

@@ -40,6 +40,36 @@ public class LaserPicker : MonoBehaviour {
     }
 
 
+    public void clearFacingDir()
+    {
+        l.imp_clearFacingDir();
+    }
+
+
+    public void reverseFacingDir()
+    {
+        l.imp_reverseFacingDir();
+    }
+
+
+    public void setFacingX()
+    {
+        l.imp_setFacingX();
+    }
+
+
+    public void setFacingY()
+    {
+        l.imp_setFacingY();
+    }
+
+
+    public void setFacingZ()
+    {
+        l.imp_setFacingZ();
+    }
+
+
     public void setLengthToInfinity()
     {
         l.imp_setLength(100000f);

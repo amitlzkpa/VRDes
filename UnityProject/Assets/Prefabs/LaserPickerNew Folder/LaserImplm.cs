@@ -66,6 +66,49 @@ public class LaserImplm : MonoBehaviour
 
 
 
+    private enum FaceDir
+    {
+        X, Y, Z, NONE
+    }
+
+    private FaceDir faceDir = FaceDir.NONE;
+    private int normDirMultiplier = 1;
+
+
+    public void imp_clearFacingDir()
+    {
+        faceDir = FaceDir.NONE;
+    }
+
+
+    public void imp_reverseFacingDir()
+    {
+        normDirMultiplier *= -1;
+    }
+
+
+    public void imp_setFacingX()
+    {
+        faceDir = FaceDir.X;
+    }
+
+
+    public void imp_setFacingY()
+    {
+        faceDir = FaceDir.Y;
+    }
+
+
+    public void imp_setFacingZ()
+    {
+        faceDir = FaceDir.Z;
+    }
+
+
+
+
+
+
     public void imp_setStickMode()
     {
         stickMode = true;
@@ -250,7 +293,7 @@ public class LaserImplm : MonoBehaviour
     {
         planeRayHit = restrictedPlane.Raycast(raycastRay, out planeHitLen);
         planeHitPt = raycastRay.GetPoint(planeHitLen);
-        // DIRTY QUICK FIX: change later so that it returns a generic gameobject which represents emptiness
+        // DIRTY QUICK FIX: change later so that it returns a specific gameobject which represents emptiness
         hitObject = gameObject;
     }
 
@@ -329,10 +372,13 @@ public class LaserImplm : MonoBehaviour
 
     public Vector3 imp_getTerminalNormal()
     {
-        if (stickMode) return imp_getEndNormal();
-        if (inAir && !isFirst) return imp_getEndNormal();
-        if (imp_isHit()) return imp_getHitNormal();
-        return imp_getEndNormal();
+        if (faceDir == FaceDir.X) return Vector3.forward * normDirMultiplier;
+        if (faceDir == FaceDir.Y) return Vector3.up * normDirMultiplier;
+        if (faceDir == FaceDir.Z) return Vector3.right * normDirMultiplier;
+        if (stickMode) return imp_getEndNormal() * normDirMultiplier;
+        if (inAir && !isFirst) return imp_getEndNormal() * normDirMultiplier;
+        if (imp_isHit()) return imp_getHitNormal() * normDirMultiplier;
+        return imp_getEndNormal() * normDirMultiplier;
     }
 
     public float imp_getTerminalDistance()
