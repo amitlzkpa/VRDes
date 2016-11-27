@@ -106,9 +106,34 @@ public class ActionSwitcher : MonoBehaviour
 
 
     private GameObject hitAppObj;
+    private SnapObject snapObjScript;
 
     void Update()
     {
+
+
+        if (laser.isHit())
+        {
+            snapObjScript = laser.getHitObject().GetComponent<SnapObject>();
+        }
+        else
+        {
+            snapObjScript = null;
+        }
+
+
+
+        if (snapObjScript != null && snapObjScript.isSnap())
+        {
+            laser.setSnapPoint(snapObjScript.getSnapPt(laser.getHitPoint()));
+        }
+        else
+        {
+            laser.clearSnappedPoint();
+        }
+        
+
+
         // highlight object being edited if edit mode is on or the pointed object
         hitAppObj = GeneralSettings.editOn() ? GeneralSettings.getEditObject() : GeneralSettings.getParentClone(laser.getHitObject(), "app_");
         if (hitAppObj != null)

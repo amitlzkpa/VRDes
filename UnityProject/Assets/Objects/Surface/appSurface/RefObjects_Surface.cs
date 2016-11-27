@@ -53,6 +53,7 @@ public class RefObjects_Surface : MonoBehaviour, RefObjectManager
     private List<bool> visibilityList = new List<bool>();
 
 
+
     public void addToPtSet(List<Vector3> pts, bool visibility)
     {
         if (refPtObjs.Count != visibilityList.Count && refPtObjs.Count != transform.childCount)
@@ -60,7 +61,7 @@ public class RefObjects_Surface : MonoBehaviour, RefObjectManager
             Debug.LogError("Invalid state with list and child lengths, before adding.");
         }
 
-        GameObject newSet = new GameObject("srfPtSet_" + transform.childCount);
+        GameObject newSet = new GameObject("wallPtSet_" + transform.childCount);
         newSet.transform.position = transform.position;
         newSet.transform.SetParent(transform);
         List<GameObject> refPtList = new List<GameObject>();

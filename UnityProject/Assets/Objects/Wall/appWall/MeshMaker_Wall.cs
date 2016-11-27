@@ -19,15 +19,16 @@ public class MeshMaker_Wall : MonoBehaviour, MeshMaker
     {
         List<List<Vector3>> cornerPoints = refObj.getAllPtSets();
         List<bool> visibilityList = refObj.getAllVisibilityList();
+        float halfThickness = refObj.getHalfThickness();
         int subMeshCount = cornerPoints.Count;
         for (int i=0; i<subMeshCount; i++)
         {
-            if (!visibilityList[i]) continue;
+            if (!visibilityList[i]) continue; // dont create meshes with visibility marked off
             GameObject meshObj = GameObject.CreatePrimitive(PrimitiveType.Quad);
             Material defMat = Resources.Load("Materials/White", typeof(Material)) as Material;
             meshObj.GetComponent<MeshRenderer>().material = defMat;
             meshObj.transform.SetParent(transform);
-            Mesh newMesh = getBoxMesh(cornerPoints[i], transform.forward);
+            Mesh newMesh = getBoxMesh(cornerPoints[i], halfThickness);
             meshObj.GetComponent<MeshFilter>().mesh = newMesh;
             meshObj.GetComponent<MeshCollider>().sharedMesh = newMesh;
         }
@@ -40,9 +41,9 @@ public class MeshMaker_Wall : MonoBehaviour, MeshMaker
     //---------------------------------------------------------------
 
 
-    private List<Vector3> getBoxPts(List<Vector3> points, Vector3 normal)
+    private List<Vector3> getBoxPts(List<Vector3> points, Vector3 normal, float halfThickness)
     {
-        float d = 0.2f;
+        float d = halfThickness;
         List<Vector3> retList = new List<Vector3>();
         retList.Add(points[0] + (normal * d));  // 0
         retList.Add(points[0] - (normal * d));  // 1
@@ -79,33 +80,47 @@ public class MeshMaker_Wall : MonoBehaviour, MeshMaker
 
 
 
-
-    // CONTINUE HERE: check normal correctness
-    private Mesh getBoxMesh(List<Vector3> points, Vector3 normal)
+    
+    private Mesh getBoxMesh(List<Vector3> points, float halfThickness)
     {
+        // get the normal for the given points
+        // point at this stage should always be planar since they come from a reference place
+        Vector3 dir = Vector3.Cross(points[1] - points[0], points[2] - points[0]);
+        Vector3 normal = Vector3.Normalize(dir);
+
+
         Mesh m = new Mesh();
-        List<Vector3> crPts = getBoxPts(points, normal);
+        List<Vector3> crPts = getBoxPts(points, normal, halfThickness);
 
         m.SetVertices(crPts);
 
 
+
+        Vector3 fwd = normal;
+        Vector3 up = Quaternion.AngleAxis(90, Vector3.up) * normal;
+        Vector3 right = Quaternion.AngleAxis(90, Vector3.right) * normal;
+
         Vector3[] normales = new Vector3[]
         {
-            // bottom
-            // front
-            // top
-            // back
-            normal,     normal,     normal,     normal,
-            -normal,    -normal,    -normal,    -normal,
+	        up, up, up, up,
+	        right, right, right, right,
+            -up, -up, -up, -up,
+	        -right, -right, -right, -right,
+	        fwd, fwd, fwd, fwd,
+	        -fwd, -fwd, -fwd, -fwd,
         };
+        m.normals = normales;
+
+
+
 
         int[] triangles = new int[]
         {
             0, 1, 2,
             2, 1, 3,
 
-            7, 6, 4,
-            4, 5, 7,
+            4, 5, 6,
+            5, 7, 6,
 
             10, 9, 11,
             9, 10, 8,
@@ -121,50 +136,6 @@ public class MeshMaker_Wall : MonoBehaviour, MeshMaker
         };
         m.triangles = triangles;
 
-
-        return m;
-    }
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    private Mesh getMesh(List<Vector3> points, Vector3 normal)
-    {
-        Mesh m = new Mesh();
-        m.SetVertices(points);
-        //create both side facing mesh
-        int[] triArr = new int[12];
-        triArr[0] = 0;
-        triArr[1] = 2;
-        triArr[2] = 1;
-        triArr[3] = 2;
-        triArr[4] = 3;
-        triArr[5] = 1;
-        triArr[6] = 1;
-        triArr[7] = 2;
-        triArr[8] = 0;
-        triArr[9] = 1;
-        triArr[10] = 3;
-        triArr[11] = 2;
-
-        Vector3[] norArr = new Vector3[points.Count];
-        for (int i = 0; i < norArr.Length; i++)
-        { norArr[i] = normal; }
-
-        m.triangles = triArr;
-        m.normals = norArr;
 
         return m;
     }

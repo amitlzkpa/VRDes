@@ -84,6 +84,45 @@ public class GeneralSettings : MonoBehaviour {
 
 
 
+    // snapping methods
+    ////////////////////////////////////////////////////////////////////////////////
+
+
+
+    private static HashSet<SnapType> activeSnaps;
+
+
+    public static void clearActiveSnaps()
+    {
+        activeSnaps.Clear();
+    }
+
+
+    public static void addToActiveSnaps(SnapType st)
+    {
+        activeSnaps.Add(st);
+    }
+
+
+    public static void removeFromActiveSnaps(SnapType st)
+    {
+        activeSnaps.Remove(st);
+    }
+
+
+    public static bool hasOneActiveSnap(HashSet<SnapType> stSet)
+    {
+        return activeSnaps.Overlaps(stSet);
+    }
+
+
+    public static bool hasOneActiveSnap(List<SnapType> stSet)
+    {
+        return activeSnaps.Overlaps(stSet);
+    }
+
+
+
     // common utility methods
     ////////////////////////////////////////////////////////////////////////////////
 
@@ -512,6 +551,10 @@ public class GeneralSettings : MonoBehaviour {
         prevMenu.SetActive(false);
 
         blackScreen = player.transform.FindChild("_BlackScreen").FindChild("Image").gameObject.GetComponent<Image>();
+
+        activeSnaps = new HashSet<SnapType>();
+        addToActiveSnaps(SnapType.MID);
+        addToActiveSnaps(SnapType.END);
 
         addLineToConsole(System.String.Format("Session Start Time: {0}", sessionStartTime.ToLongTimeString()));
 		addLineToConsole(System.String.Format("Session ID: {0}", sessionID));

@@ -43,6 +43,11 @@ public class MeshMaker_Surface : MonoBehaviour, MeshMaker
 
     private Mesh getMesh(List<Vector3> points, Vector3 normal)
     {
+        // rework order to ensure meshes are created where points are considered to be stored cyclically
+        Vector3 tempPt = points[2];
+        points[2] = points[3];
+        points[3] = tempPt;
+
         Mesh m = new Mesh();
         m.SetVertices(points);
         //create both side facing mesh

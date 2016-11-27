@@ -41,6 +41,27 @@ public class LaserImplm : MonoBehaviour
     private bool stickMode;
 
 
+    private bool isSnapped = false;
+    private Vector3 snappedPoint;
+
+
+
+
+
+
+    public void imp_setSnapPoint(Vector3 inp)
+    {
+        isSnapped = true;
+        snappedPoint = inp;
+    }
+
+
+    public void imp_clearSnappedPoint()
+    {
+        isSnapped = false;
+    }
+
+
 
 
 
@@ -229,6 +250,8 @@ public class LaserImplm : MonoBehaviour
     {
         planeRayHit = restrictedPlane.Raycast(raycastRay, out planeHitLen);
         planeHitPt = raycastRay.GetPoint(planeHitLen);
+        // DIRTY QUICK FIX: change later so that it returns a generic gameobject which represents emptiness
+        hitObject = gameObject;
     }
 
 
@@ -297,6 +320,7 @@ public class LaserImplm : MonoBehaviour
 
     public Vector3 imp_getTerminalPoint()
     {
+        if (isSnapped) return snappedPoint;
         if (stickMode) return imp_getEndPoint();
         if (inAir && !isFirst) return imp_getEndPoint();
         if (imp_isHit()) return imp_getHitPoint();

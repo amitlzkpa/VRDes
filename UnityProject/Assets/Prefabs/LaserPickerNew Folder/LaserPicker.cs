@@ -22,6 +22,24 @@ public class LaserPicker : MonoBehaviour {
     }
 
 
+
+
+
+
+
+
+    public void setSnapPoint(Vector3 inp)
+    {
+        l.imp_setSnapPoint(inp);
+    }
+
+
+    public void clearSnappedPoint()
+    {
+        l.imp_clearSnappedPoint();
+    }
+
+
     public void setLengthToInfinity()
     {
         l.imp_setLength(100000f);

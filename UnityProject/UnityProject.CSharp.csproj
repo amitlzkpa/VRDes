@@ -192,6 +192,8 @@
     <Compile Include="Assets\Scripts\IToolsScreenManager.cs" />
     <Compile Include="Assets\Scripts\InfoObject.cs" />
     <Compile Include="Assets\Scripts\Interfaces.cs" />
+    <Compile Include="Assets\Scripts\SnapObject_Line.cs" />
+    <Compile Include="Assets\Scripts\SnapObject_Point.cs" />
     <Compile Include="Assets\Scripts\ToolBoxButtonActions.cs" />
     <Compile Include="Assets\Scripts\ToolBoxButtonAnnotations.cs" />
     <Compile Include="Assets\Scripts\ToolBoxButtonTransforms.cs" />

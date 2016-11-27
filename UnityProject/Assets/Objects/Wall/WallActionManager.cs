@@ -17,7 +17,7 @@ public class WallActionManager : MonoBehaviour, ActionManager {
         laser.setRestrictedObjectStartName("app_Plane");
         selectedPtObjects = new List<GameObject>();
         hostSurface = null;
-        GeneralSettings.updateInteractText("Please select a plane to act as host for the surface.");
+        GeneralSettings.updateInteractText("Please select a plane to act as host for the wall.");
     }
 
     public void amUpdate(LaserPicker laser)
@@ -41,24 +41,24 @@ public class WallActionManager : MonoBehaviour, ActionManager {
                             pts.Add(ptObj.transform.position);
                         }
 
-                        GameObject newSrf = Instantiate(app_Wall, laser.getHitPoint(), Quaternion.identity);
-                        newSrf.GetComponent<app_Wall>().init(pts);
-                        hostSurface.GetComponent<app_Plane>().enhostObject(newSrf);
+                        GameObject newWall = Instantiate(app_Wall, laser.getHitPoint(), Quaternion.identity);
+                        newWall.GetComponent<app_Wall>().init(pts);
+                        hostSurface.GetComponent<app_Plane>().enhostObject(newWall);
 
                         GeneralSettings.updateInteractText("");
-                        GeneralSettings.addLineToConsole(string.Format("{0} surface created under {1} host plane.", newSrf.name, hostSurface.name));
+                        GeneralSettings.addLineToConsole(string.Format("{0} wall created under {1} host plane.", newWall.name, hostSurface.name));
                         clearPointCollectionMode(laser);
                         return;
                     }
-                    GeneralSettings.updateInteractText(string.Format("Pick {0} more points to complete the surafce.", 4 - selectedPtObjects.Count));
+                    GeneralSettings.updateInteractText(string.Format("Pick {0} more points to complete the wall.", 4 - selectedPtObjects.Count));
                 }
             }
 
             if (WandControlsManager.WandControllerRight.getGripDown())
             {
                 clearPointCollectionMode(laser);
-                GeneralSettings.addLineToConsole("Surface creation exited.");
-                GeneralSettings.updateInteractText("Please select a plane to act as host for the surface.");
+                GeneralSettings.addLineToConsole("Wall creation exited.");
+                GeneralSettings.updateInteractText("Please select a plane to act as host for the wall.");
             }
 
             return;
@@ -68,8 +68,8 @@ public class WallActionManager : MonoBehaviour, ActionManager {
         {
             hostSurface = laser.getHitObject();
             laser.setRestrictedObject(hostSurface);
-            GeneralSettings.updateInteractText("Select 4 corner points for surface.");
-            GeneralSettings.addLineToConsole(string.Format("{0} selected as host plane for surface to be created.", hostSurface.name));
+            GeneralSettings.updateInteractText("Select 4 corner points for wall.");
+            GeneralSettings.addLineToConsole(string.Format("{0} selected as host plane for wall to be created.", hostSurface.name));
         }
     }
 

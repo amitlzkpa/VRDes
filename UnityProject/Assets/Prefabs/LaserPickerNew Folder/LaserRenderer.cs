@@ -27,7 +27,5 @@ public class LaserRenderer : MonoBehaviour {
         }
         lineRenderer.SetPosition(0, laser.imp_getStartPoint());
         lineRenderer.SetPosition(1, laser.imp_getTerminalPoint());
-
-        Debug.DrawRay(laser.imp_getTerminalPoint(), laser.imp_getTerminalNormal(), Color.green);
     }
 }

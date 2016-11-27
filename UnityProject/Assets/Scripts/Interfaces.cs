@@ -110,3 +110,19 @@ public interface AppListener
     void onScaleChange(Vector3 scale);
 }
 
+
+//---------------------------------------------------------------
+
+
+public enum SnapType
+{
+    MID, END
+}
+
+
+public interface SnapObject
+{
+    bool isSnap();
+    Vector3 getSnapPt(Vector3 inPos);
+}
+

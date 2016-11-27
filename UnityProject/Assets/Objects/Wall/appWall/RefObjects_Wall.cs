@@ -51,6 +51,7 @@ public class RefObjects_Wall : MonoBehaviour, RefObjectManager
 
     private List<List<GameObject>> refPtObjs = new List<List<GameObject>>();
     private List<bool> visibilityList = new List<bool>();
+    private float halfThickness = 0.1f;
 
 
     public void addToPtSet(List<Vector3> pts, bool visibility)
@@ -106,6 +107,12 @@ public class RefObjects_Wall : MonoBehaviour, RefObjectManager
     }
 
 
+    public float getHalfThickness()
+    {
+        return halfThickness;
+    }
+
+
 
     //---------------------------------------------------------------
 
@@ -130,12 +137,6 @@ public class RefObjects_Wall : MonoBehaviour, RefObjectManager
 
 
     //---------------------------------------------------------------
-
-
-
-    void Awake ()
-    {
-    }
 
 
 

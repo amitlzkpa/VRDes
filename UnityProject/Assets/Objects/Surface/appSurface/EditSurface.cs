@@ -44,36 +44,4 @@ public class EditSurface : MonoBehaviour, Editable
 
 
 
-    //---------------------------------------------------------------
-
-
-
-    // TO-DO: complete this part for void creation 
-
-
-    private bool voidEditOn = false;
-
-
-    private void enterVoidEditMode()
-    {
-        GeneralSettings.setEditObject(gameObject);
-        voidEditOn = true;
-    }
-
-
-    public void exitVoidEditMode()
-    {
-        GeneralSettings.clearEditObject();
-        voidEditOn = false;
-    }
-
-
-    public void toggleVoidEditMode()
-    {
-        if (voidEditOn) exitVoidEditMode();
-        else enterVoidEditMode();
-    }
-
-
-
 }

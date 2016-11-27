@@ -18,13 +18,7 @@ public class ObjectMenu_Wall : MonoBehaviour, ObjectMenu
 
     public void edit()
     {
-        parentObj.GetComponent<EditSurface>().toggleEditMode();
-    }
-
-
-    public void createVoid()
-    {
-        parentObj.GetComponent<EditSurface>().toggleVoidEditMode();
+        parentObj.GetComponent<EditWall>().toggleEditMode();
     }
 
 
