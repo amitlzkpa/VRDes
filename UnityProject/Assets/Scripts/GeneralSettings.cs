@@ -89,6 +89,16 @@ public class GeneralSettings : MonoBehaviour {
 
 
 
+    public GameObject snapGenLinePrefab;
+
+
+    public static GameObject getSnapGenLinePrefab()
+    {
+        return Instantiate(instance.snapGenLinePrefab);
+    }
+
+
+
     private static HashSet<SnapType> activeSnaps;
 
 

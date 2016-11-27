@@ -137,6 +137,7 @@
     <Compile Include="Assets\Objects\Plane\appPlane\MeshMaker_Plane.cs" />
     <Compile Include="Assets\Objects\Plane\appPlane\ObjectMenu_Plane.cs" />
     <Compile Include="Assets\Objects\Plane\appPlane\RefObjects_Plane.cs" />
+    <Compile Include="Assets\Objects\Plane\appPlane\SnapObjectManager_Plane.cs" />
     <Compile Include="Assets\Objects\Plane\appPlane\app_Plane.cs" />
     <Compile Include="Assets\Objects\Points\PointActionManager.cs" />
     <Compile Include="Assets\Objects\Points\PointCreator.cs" />
@@ -144,6 +145,7 @@
     <Compile Include="Assets\Objects\Points\appPoint\EditPoint.cs" />
     <Compile Include="Assets\Objects\Points\appPoint\ObjectMenu_Point.cs" />
     <Compile Include="Assets\Objects\Points\appPoint\RefObjects_Point.cs" />
+    <Compile Include="Assets\Objects\Points\appPoint\SnapObjectManager_Point.cs" />
     <Compile Include="Assets\Objects\Points\appPoint\app_Point.cs" />
     <Compile Include="Assets\Objects\PolarArray\PolarArrayActionManager.cs" />
     <Compile Include="Assets\Objects\PolarArray\PolarArrayCreator.cs" />
@@ -186,6 +188,7 @@
     <Compile Include="Assets\RefObjectPoint.cs" />
     <Compile Include="Assets\Scripts\ActionSwitcher.cs" />
     <Compile Include="Assets\Scripts\CloseMenuButtonActions.cs" />
+    <Compile Include="Assets\Scripts\CollisonManager_Plane.cs" />
     <Compile Include="Assets\Scripts\CursorManager.cs" />
     <Compile Include="Assets\Scripts\GeneralSettings.cs" />
     <Compile Include="Assets\Scripts\HighlightStyle1.cs" />
@@ -200,6 +203,7 @@
     <Compile Include="Assets\Scripts\ToolBoxManager.cs" />
     <Compile Include="Assets\Scripts\ToolScreenManager.cs" />
     <Compile Include="Assets\Scripts\UIUpdater.cs" />
+    <Compile Include="Assets\SnapObject_GenLine.cs" />
     <Compile Include="Assets\SteamVR\Extras\SteamVR_GazeTracker.cs" />
     <Compile Include="Assets\SteamVR\Extras\SteamVR_LaserPointer.cs" />
     <Compile Include="Assets\SteamVR\Extras\SteamVR_Teleporter.cs" />

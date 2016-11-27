@@ -31,6 +31,7 @@ public class RefObjectPoint : MonoBehaviour {
         GameObject parentCloneObj = GeneralSettings.getParentClone(gameObject, "app_");
         parentCloneObj.transform.FindChild("_RefObjects").gameObject.GetComponent<RefObjectManager>().adjustEdgeHandles();
         parentCloneObj.transform.FindChild("_Model").gameObject.GetComponent<MeshMaker>().updateMesh();
+        parentCloneObj.transform.FindChild("_SnapObjects").gameObject.GetComponent<SnapObjectManager>().updateSnapObjects();
     }
 
 

@@ -13,7 +13,6 @@ public class SnapObject_Line : MonoBehaviour, SnapObject
 
     public bool isSnap()
     {
-        //return true;
         return GeneralSettings.hasOneActiveSnap(snapTypes);
     }
 

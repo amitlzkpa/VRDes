@@ -94,6 +94,15 @@ public interface RefObjectManager
 //---------------------------------------------------------------
 
 
+public interface SnapObjectManager
+{
+    void updateSnapObjects();
+}
+
+
+//---------------------------------------------------------------
+
+
 public interface MeshMaker
 {
     void updateMesh();
