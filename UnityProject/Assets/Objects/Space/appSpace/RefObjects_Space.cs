@@ -83,17 +83,17 @@ public class RefObjects_Space : MonoBehaviour, RefObjectManager
 
 
         plFront.transform.position = (getPtLeftTopFront() + getPtLeftBottomFront() + getPtRightBottomFront() + getPtRightTopFront()) / 4;
-        plFront.transform.up = getPtLeftTopFront() - getPtLeftTopBack();
+        plFront.transform.up = Vector3.Cross(getPtLeftTopFront() - getPtRightTopFront(), getPtRightBottomFront() - getPtRightTopFront());
         plBack.transform.position = (getPtLeftTopBack() + getPtLeftBottomBack() + getPtRightBottomBack() + getPtRightTopBack()) / 4;
-        plBack.transform.up = getPtLeftTopBack() - getPtLeftTopFront();
+        plBack.transform.up = Vector3.Cross(getPtLeftTopBack() - getPtRightTopBack(), getPtRightBottomBack() - getPtRightTopBack());
         plTop.transform.position = (getPtLeftTopFront() + getPtRightTopFront() + getPtRightTopBack() + getPtLeftTopBack()) / 4;
-        plTop.transform.up = getPtLeftTopFront() - getPtLeftBottomFront();
+        plTop.transform.up = Vector3.Cross(getPtLeftTopBack() - getPtRightTopBack(), getPtLeftTopFront() - getPtRightTopBack());
         plBottom.transform.position = (getPtLeftBottomFront() + getPtRightBottomFront() + getPtRightBottomBack() + getPtLeftBottomBack()) / 4;
-        plBottom.transform.up = getPtLeftBottomFront() - getPtLeftTopFront();
+        plBottom.transform.up = Vector3.Cross(getPtLeftBottomBack() - getPtRightBottomBack(), getPtLeftBottomFront() - getPtRightBottomBack());
         plRight.transform.position = (getPtRightTopFront() + getPtRightBottomFront() + getPtRightBottomBack() + getPtRightTopBack()) / 4;
-        plRight.transform.up = getPtRightTopFront() - getPtLeftTopFront();
+        plRight.transform.up = Vector3.Cross(getPtRightBottomBack() - getPtRightBottomFront(), getPtRightTopBack() - getPtRightBottomFront());
         plLeft.transform.position = (getPtLeftTopFront() + getPtLeftBottomFront() + getPtLeftBottomBack() + getPtLeftTopBack()) / 4;
-        plLeft.transform.up = getPtLeftTopFront() - getPtRightTopFront();
+        plLeft.transform.up = Vector3.Cross(getPtRightTopBack() - getPtRightTopFront(), getPtLeftTopBack() - getPtRightTopFront());
 
     }
 
@@ -439,6 +439,6 @@ public class RefObjects_Space : MonoBehaviour, RefObjectManager
         Destroy(frame);
         adjustEdgeHandles();
 
-        // hideRefObjects();
+        hideRefObjects();
     }
 }

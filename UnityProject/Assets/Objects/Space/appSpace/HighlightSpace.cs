@@ -1,11 +1,8 @@
 ﻿    using UnityEngine;
 using System.Collections;
 
-public class HighlightStyle1 : MonoBehaviour, Highlightable
+public class HighlightSpace : MonoBehaviour, Highlightable
 {
-    public Material highlightMaterial;
-
-    private Material[] realMaterialArray;
 
     private GameObject modelObj;
     private GameObject infoCanvasObj;
@@ -80,7 +77,7 @@ public class HighlightStyle1 : MonoBehaviour, Highlightable
     {
         for (int i = 0; i < modelObj.transform.childCount; i++)
         {
-            modelObj.transform.GetChild(i).gameObject.GetComponent<MeshRenderer>().material = highlightMaterial;
+            modelObj.transform.GetChild(i).gameObject.GetComponent<Highlightable>().setHighlightMaterial();
         }
     }
 
@@ -89,7 +86,7 @@ public class HighlightStyle1 : MonoBehaviour, Highlightable
     {
         for (int i = 0; i < modelObj.transform.childCount; i++)
         {
-            modelObj.transform.GetChild(i).gameObject.GetComponent<MeshRenderer>().material = realMaterialArray[i];
+            modelObj.transform.GetChild(i).gameObject.GetComponent<Highlightable>().unsetHighlightMaterial();
         }
     }
 
@@ -136,19 +133,6 @@ public class HighlightStyle1 : MonoBehaviour, Highlightable
     //---------------------------------------------------------------
 
 
-    public void setupRealMaterialArray()
-    {
-        realMaterialArray = new Material[modelObj.transform.childCount];
-        for (int i = 0; i < modelObj.transform.childCount; i++)
-        {
-            realMaterialArray[i] = modelObj.transform.GetChild(i).gameObject.GetComponent<MeshRenderer>().material;
-        }
-    }
-
-
-    //---------------------------------------------------------------
-
-
     // Use this for initialization
     void Start()
     {
@@ -157,7 +141,6 @@ public class HighlightStyle1 : MonoBehaviour, Highlightable
         infoCanvasObj.SetActive(false);
         objectMenuObj = transform.FindChild("_ObjectMenu").gameObject;
         objectMenuObj.SetActive(false);
-        setupRealMaterialArray();
         refObj = transform.FindChild("_RefObjects").gameObject.GetComponent<RefObjectManager>();
     }
 

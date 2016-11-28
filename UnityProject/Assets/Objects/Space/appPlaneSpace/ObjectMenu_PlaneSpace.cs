@@ -8,17 +8,18 @@ public class ObjectMenu_PlaneSpace : MonoBehaviour, ObjectMenu
 
 
     private GameObject parentObj;
+    private GameObject parentSpaceObj;
 
 
     public void delete()
     {
         GeneralSettings.deleteObjectMenu();
-        GeneralSettings.deleteObject(parentObj);
+        GeneralSettings.deleteObject(parentSpaceObj);
     }
 
     public void edit()
     {
-        parentObj.GetComponent<EditPlaneSpace>().toggleEditMode();
+        parentSpaceObj.GetComponent<EditSpace>().toggleEditMode();
     }
 
 
@@ -28,5 +29,6 @@ public class ObjectMenu_PlaneSpace : MonoBehaviour, ObjectMenu
     void Awake()
     {
         parentObj = transform.parent.gameObject;
+        parentSpaceObj = GeneralSettings.getParentClone(parentObj, "app_Space");
     }
 }

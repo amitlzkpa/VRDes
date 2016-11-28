@@ -181,9 +181,9 @@ public class ActionSwitcher : MonoBehaviour
         if (currHitAppObj != prevHitAppObj)
         {
             // collapse the edit menu on the object it was previously pointing
-            if (prevHitAppObj != null) prevHitAppObj.GetComponent<HighlightStyle1>().hideObjectMenu();
+            if (prevHitAppObj != null) prevHitAppObj.GetComponent<Highlightable>().hideObjectMenu();
             // expand the edit menu for current object
-            if (currHitAppObj != null) currHitAppObj.GetComponent<HighlightStyle1>().displayObjectMenu();
+            if (currHitAppObj != null) currHitAppObj.GetComponent<Highlightable>().displayObjectMenu();
         }
         prevHitAppObj = currHitAppObj;
         

@@ -35,6 +35,11 @@ public interface ActionManager
 public interface Highlightable
 {
     void highlightObject();
+    void hideObjectMenu();
+    void displayObjectMenu();
+    void hideInfoMenu();
+    void setHighlightMaterial();
+    void unsetHighlightMaterial();
 }
 
 
