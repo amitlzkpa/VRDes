@@ -33,7 +33,6 @@ public class EditPlane : MonoBehaviour, Editable
     public void moveObject(Vector3 tgtPos)
     {
         transform.position = tgtPos;
-        GetComponent<app_Plane>().notifyTransformChange();
     }
 
 

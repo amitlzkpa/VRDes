@@ -11,6 +11,7 @@ public class HighlightStyle1 : MonoBehaviour, Highlightable
     private GameObject infoCanvasObj;
     private GameObject objectMenuObj;
     private bool objectMenuDisplayed;
+    private RefObjectManager refObj;
 
     private Vector3 directionVec;
     Quaternion tgtRotation;
@@ -95,7 +96,7 @@ public class HighlightStyle1 : MonoBehaviour, Highlightable
 
     private void orientUICanvas()
     {
-        directionVec = (GeneralSettings.player.transform.position - modelObj.transform.position).normalized;
+        directionVec = (GeneralSettings.player.transform.position - refObj.getPtCenter()).normalized;
         tgtRotation = Quaternion.LookRotation(directionVec);
         infoCanvasObj.transform.rotation = tgtRotation;
         // rotate canvas so it faces the user instead of away from the user
@@ -104,13 +105,13 @@ public class HighlightStyle1 : MonoBehaviour, Highlightable
         // i.e. when user looks from exactly below move it down a little; useful when the tag is on the ceiling
         // and user tries to look at it from the same level
         verticalOffsetVal = (infoCanvasObj.transform.localScale.y * directionVec.y);
-        infoCanvasObj.transform.position = modelObj.transform.position + (directionVec * 0.6f) + new Vector3(0, verticalOffsetVal, 0);
+        infoCanvasObj.transform.position = refObj.getPtCenter() + (directionVec * 0.6f) + new Vector3(0, verticalOffsetVal, 0);
     }
 
 
     private void resetUICanvasOrient()
     {
-        infoCanvasObj.transform.position = modelObj.transform.position;
+        infoCanvasObj.transform.position = refObj.getPtCenter();
         infoCanvasObj.transform.rotation = Quaternion.identity;
     }
 
@@ -157,6 +158,7 @@ public class HighlightStyle1 : MonoBehaviour, Highlightable
         objectMenuObj = transform.FindChild("_ObjectMenu").gameObject;
         objectMenuObj.SetActive(false);
         setupRealMaterialArray();
+        refObj = transform.FindChild("_RefObjects").gameObject.GetComponent<RefObjectManager>();
     }
 
 

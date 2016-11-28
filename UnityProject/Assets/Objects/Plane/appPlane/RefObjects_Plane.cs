@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class RefObjects_Plane : MonoBehaviour, RefObjectManager
 {
@@ -45,11 +46,6 @@ public class RefObjects_Plane : MonoBehaviour, RefObjectManager
     public GameObject pointRepPrefab;
     public GameObject edgeRepPrefab;
     public GameObject planeRepPrefab;
-
-
-
-    private float halfWidth = 3f;
-    private float halfHeight = 2f;
 
 
 
@@ -122,47 +118,63 @@ public class RefObjects_Plane : MonoBehaviour, RefObjectManager
     }
 
 
+    private float def = 0.2f;
+    private float gap = 0.4f;
+
 
     public void adjustEdgeHandles()
     {
         edLeft.transform.up = getPtLeftBottom() - getPtLeftTop();
         edLeft.transform.position = (getPtLeftBottom() + getPtLeftTop()) / 2;
+        edLeft.transform.localScale = new Vector3(def, Vector3.Distance(getPtLeftBottom(), getPtLeftTop()) * gap, def);
         edTop.transform.up = getPtLeftTop() - getPtRightTop();
         edTop.transform.position = (getPtLeftTop() + getPtRightTop()) / 2;
+        edTop.transform.localScale = new Vector3(def, Vector3.Distance(getPtLeftTop(), getPtRightTop()) * gap, def);
         edRight.transform.up = getPtRightTop() - getPtRightBottom();
         edRight.transform.position = (getPtRightTop() + getPtRightBottom()) / 2;
+        edRight.transform.localScale = new Vector3(def, Vector3.Distance(getPtRightTop(), getPtRightBottom()) * gap, def);
         edBottom.transform.up = getPtRightBottom() - getPtLeftBottom();
         edBottom.transform.position = (getPtRightBottom() + getPtLeftBottom()) / 2;
+        edBottom.transform.localScale = new Vector3(def, Vector3.Distance(getPtRightBottom(), getPtLeftBottom()) * gap, def);
         plCenter.transform.position = (getPtLeftTop() + getPtLeftBottom() + getPtRightBottom() + getPtRightTop()) / 4;
     }
 
 
 
-    private GameObject createFrameAtOrigin()
+    private GameObject createFrame(List<Vector3> pts)
     {
-        // create an empty object at origin
-        GameObject emptyObject = getEmptyGameObjectAtOrigin();
+        GameObject frameObject = new GameObject();
 
-        plCenter = Instantiate(planeRepPrefab, Vector3.zero, Quaternion.LookRotation(Vector3.up), emptyObject.transform);
+        Vector3 center = Vector3.zero;
+        foreach(Vector3 pt in pts)
+        {
+            center += pt;
+        }
+        center /= pts.Count;
 
-        ptLeftTop = Instantiate(pointRepPrefab, new Vector3(-halfWidth, +halfHeight, 0), Quaternion.identity, emptyObject.transform);
-        ptLeftBottom = Instantiate(pointRepPrefab, new Vector3(-halfWidth, -halfHeight, 0), Quaternion.identity, emptyObject.transform);
-        ptRightBottom = Instantiate(pointRepPrefab, new Vector3(+halfWidth, -halfHeight, 0), Quaternion.identity, emptyObject.transform);
-        ptRightTop = Instantiate(pointRepPrefab, new Vector3(+halfWidth, +halfHeight, 0), Quaternion.identity, emptyObject.transform);
+        // get the normal for the given points
+        // point at this stage should always be planar since they come from a reference place
+        Vector3 dir = Vector3.Cross(pts[1] - pts[0], pts[2] - pts[0]);
+        Vector3 normal = Vector3.Normalize(dir);
 
-        edLeft = Instantiate(edgeRepPrefab, new Vector3(-halfWidth, 0, 0), Quaternion.identity, emptyObject.transform);
-        edLeft.transform.localScale = new Vector3(0.2f, halfHeight * edSpan, 0.2f);
-        edBottom = Instantiate(edgeRepPrefab, new Vector3(0, -halfHeight, 0), Quaternion.identity, emptyObject.transform);
-        edBottom.transform.localScale = new Vector3(0.2f, halfWidth * edSpan, 0.2f);
-        //edBottom.transform.Rotate(0, 0, 90);
-        edRight = Instantiate(edgeRepPrefab, new Vector3(+halfWidth, 0, 0), Quaternion.identity, emptyObject.transform);
-        edRight.transform.localScale = new Vector3(0.2f, halfHeight * edSpan, 0.2f);
-        edTop = Instantiate(edgeRepPrefab, new Vector3(0, +halfHeight, 0), Quaternion.identity, emptyObject.transform);
-        edTop.transform.localScale = new Vector3(0.2f, halfWidth * edSpan, 0.2f);
-        //edTop.transform.Rotate(0, 0, 90);
+        // move the empty parent to the required position and facing the needed direction
+        frameObject.transform.position = center;
+        frameObject.transform.forward = normal;
+
+        plCenter = Instantiate(planeRepPrefab, center, Quaternion.identity, frameObject.transform);
+        ptLeftBottom = Instantiate(pointRepPrefab, pts[0], Quaternion.LookRotation(normal, frameObject.transform.forward), frameObject.transform);
+        ptRightBottom = Instantiate(pointRepPrefab, pts[1], Quaternion.LookRotation(normal, frameObject.transform.forward), frameObject.transform);
+        ptRightTop = Instantiate(pointRepPrefab, pts[2], Quaternion.LookRotation(normal, frameObject.transform.forward), frameObject.transform);
+        ptLeftTop = Instantiate(pointRepPrefab, pts[3], Quaternion.LookRotation(normal, frameObject.transform.forward), frameObject.transform);
+        plCenter.transform.up = normal;
+
+        edLeft = Instantiate(edgeRepPrefab, Vector3.zero, Quaternion.identity, frameObject.transform);
+        edBottom = Instantiate(edgeRepPrefab, Vector3.zero, Quaternion.identity, frameObject.transform);
+        edRight = Instantiate(edgeRepPrefab, Vector3.zero, Quaternion.identity, frameObject.transform);
+        edTop = Instantiate(edgeRepPrefab, Vector3.zero, Quaternion.identity, frameObject.transform);
         adjustEdgeHandles();
 
-        return emptyObject;
+        return frameObject;
     }
 
 
@@ -171,15 +183,11 @@ public class RefObjects_Plane : MonoBehaviour, RefObjectManager
 
 
 
-    void Awake ()
+    private void createRefObjects(List<Vector3> pts)
     {
         // create the frame at origin
-        GameObject frame = createFrameAtOrigin();
-
-
-        // move the empty parent to the required position and facing the needed direction
-        frame.transform.position = transform.position;
-        frame.transform.rotation = transform.rotation;
+        //GameObject frame = createFrameAtOrigin();
+        GameObject frame = createFrame(pts);
 
 
         // change the parent of each object to the object the script is on
@@ -234,6 +242,23 @@ public class RefObjects_Plane : MonoBehaviour, RefObjectManager
         Destroy(frame);
 
         hideRefObjects();
+    }
+
+
+    private void clearRefObjects()
+    {
+        for (int i=0; i<transform.childCount; i++)
+        {
+            Destroy(transform.GetChild(i).gameObject);
+        }
+    }
+
+
+
+    public void updateRefObjects(List<Vector3> pts)
+    {
+        clearRefObjects();
+        createRefObjects(pts);
     }
 
 

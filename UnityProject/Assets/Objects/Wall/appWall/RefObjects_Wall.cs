@@ -120,7 +120,8 @@ public class RefObjects_Wall : MonoBehaviour, RefObjectManager
 
     public Vector3 getPtCenter()
     {
-        return transform.position;
+        List<Vector3> firstSet = getAllPtSets()[0];
+        return (firstSet[0] + firstSet[1] + firstSet[2] + firstSet[3]) / 4;
     }
 
 

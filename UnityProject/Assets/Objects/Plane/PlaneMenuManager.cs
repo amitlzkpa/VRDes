@@ -5,6 +5,10 @@ public class PlaneMenuManager : MonoBehaviour, ContextMenuManager
 {
 
 
+    public GameObject actionManagerObj;
+    private PlaneActionManager actionManager;
+
+
     private LaserPicker l;
 
 
@@ -20,12 +24,25 @@ public class PlaneMenuManager : MonoBehaviour, ContextMenuManager
     }
 
 
+    public void setupForDefByPt()
+    {
+        actionManager.switchDefMode(PlaneDefMode.BYPOINT);
+    }
+
+
+    public void setupForDefByCorners()
+    {
+        actionManager.switchDefMode(PlaneDefMode.BYCORNERS);
+    }
+
+
 
 
 
     public void cmStart(LaserPicker laser)
     {
         l = laser;
+        actionManager = actionManagerObj.GetComponent<PlaneActionManager>();
     }
 
     public void cmUpdate(LaserPicker laser)

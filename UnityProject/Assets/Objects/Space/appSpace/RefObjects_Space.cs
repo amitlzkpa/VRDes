@@ -81,14 +81,20 @@ public class RefObjects_Space : MonoBehaviour, RefObjectManager
         edTopBack.transform.up = getPtLeftTopBack() - getPtRightTopBack();
         edTopBack.transform.position = (getPtLeftTopBack() + getPtRightTopBack()) / 2;
 
-        /*
+
         plFront.transform.position = (getPtLeftTopFront() + getPtLeftBottomFront() + getPtRightBottomFront() + getPtRightTopFront()) / 4;
+        plFront.transform.up = getPtLeftTopFront() - getPtLeftTopBack();
         plBack.transform.position = (getPtLeftTopBack() + getPtLeftBottomBack() + getPtRightBottomBack() + getPtRightTopBack()) / 4;
+        plBack.transform.up = getPtLeftTopBack() - getPtLeftTopFront();
         plTop.transform.position = (getPtLeftTopFront() + getPtRightTopFront() + getPtRightTopBack() + getPtLeftTopBack()) / 4;
+        plTop.transform.up = getPtLeftTopFront() - getPtLeftBottomFront();
         plBottom.transform.position = (getPtLeftBottomFront() + getPtRightBottomFront() + getPtRightBottomBack() + getPtLeftBottomBack()) / 4;
+        plBottom.transform.up = getPtLeftBottomFront() - getPtLeftTopFront();
         plRight.transform.position = (getPtRightTopFront() + getPtRightBottomFront() + getPtRightBottomBack() + getPtRightTopBack()) / 4;
+        plRight.transform.up = getPtRightTopFront() - getPtLeftTopFront();
         plLeft.transform.position = (getPtLeftTopFront() + getPtLeftBottomFront() + getPtLeftBottomBack() + getPtLeftTopBack()) / 4;
-        */
+        plLeft.transform.up = getPtLeftTopFront() - getPtRightTopFront();
+
     }
 
     public Vector3 getPtCenter()
@@ -148,6 +154,42 @@ public class RefObjects_Space : MonoBehaviour, RefObjectManager
     }
 
 
+    public Vector3 getPtCenterFront()
+    {
+        return plFront.transform.position;
+    }
+
+
+    public Vector3 getPtCenterLeft()
+    {
+        return plLeft.transform.position;
+    }
+
+
+    public Vector3 getPtCenterBack()
+    {
+        return plBack.transform.position;
+    }
+
+
+    public Vector3 getPtCenterRight()
+    {
+        return plRight.transform.position;
+    }
+
+
+    public Vector3 getPtCenterTop()
+    {
+        return plTop.transform.position;
+    }
+
+
+    public Vector3 getPtCenterBottom()
+    {
+        return plBottom.transform.position;
+    }
+
+
     //---------------------------------------------------------------
 
 
@@ -176,7 +218,6 @@ public class RefObjects_Space : MonoBehaviour, RefObjectManager
     private GameObject edTopBack;
 
     private float edSpan = 0.75f;
-
 
     private GameObject plFront;
     private GameObject plLeft;
@@ -251,7 +292,13 @@ public class RefObjects_Space : MonoBehaviour, RefObjectManager
         edTopBack = Instantiate(edgeRepPrefab, new Vector3(0, +halfHeight, -halfDepth), Quaternion.Euler(0, 0, -90), emptyObject.transform);
         edTopBack.transform.localScale = new Vector3(0.2f, halfWidth * edSpan, 0.2f);
 
-        // TO-DO: make the plane ref objects
+
+        plFront = Instantiate(planeRepPrefab, Vector3.zero, Quaternion.identity, emptyObject.transform);
+        plLeft = Instantiate(planeRepPrefab, Vector3.zero, Quaternion.identity, emptyObject.transform);
+        plBack = Instantiate(planeRepPrefab, Vector3.zero, Quaternion.identity, emptyObject.transform);
+        plRight = Instantiate(planeRepPrefab, Vector3.zero, Quaternion.identity, emptyObject.transform);
+        plTop = Instantiate(planeRepPrefab, Vector3.zero, Quaternion.identity, emptyObject.transform);
+        plBottom = Instantiate(planeRepPrefab, Vector3.zero, Quaternion.identity, emptyObject.transform);
 
         return emptyObject;
     }
@@ -306,6 +353,14 @@ public class RefObjects_Space : MonoBehaviour, RefObjectManager
         edBottomBack.transform.SetParent(transform);
         edRightBack.transform.SetParent(transform);
         edTopBack.transform.SetParent(transform);
+
+
+        plFront.transform.SetParent(transform);
+        plLeft.transform.SetParent(transform);
+        plBack.transform.SetParent(transform);
+        plRight.transform.SetParent(transform);
+        plTop.transform.SetParent(transform);
+        plBottom.transform.SetParent(transform);
 
 
         // add the RefObject script and add the the reference of the plane to the refobject
@@ -372,11 +427,18 @@ public class RefObjects_Space : MonoBehaviour, RefObjectManager
         edRightBack.name = "edRightBack";
         edTopBack.name = "edTopBack";
 
+        plFront.name = "plFront";
+        plLeft.name = "plLeft";
+        plBack.name = "plBack";
+        plRight.name = "plRight";
+        plTop.name = "plTop";
+        plBottom.name = "plBottom";
+
 
         // destroy empty object
         Destroy(frame);
+        adjustEdgeHandles();
 
-
-        hideRefObjects();
+        // hideRefObjects();
     }
 }

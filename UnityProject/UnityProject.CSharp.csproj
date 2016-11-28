@@ -157,7 +157,14 @@
     <Compile Include="Assets\Objects\Space\SpaceActionManager.cs" />
     <Compile Include="Assets\Objects\Space\SpaceCreator.cs" />
     <Compile Include="Assets\Objects\Space\SpaceMenuManager.cs" />
+    <Compile Include="Assets\Objects\Space\appPlaneSpace\EditPlaneSpace.cs" />
+    <Compile Include="Assets\Objects\Space\appPlaneSpace\MeshMaker_PlaneSpace.cs" />
+    <Compile Include="Assets\Objects\Space\appPlaneSpace\ObjectMenu_PlaneSpace.cs" />
+    <Compile Include="Assets\Objects\Space\appPlaneSpace\RefObjects_PlaneSpace.cs" />
+    <Compile Include="Assets\Objects\Space\appPlaneSpace\SnapObjectManager_PlaneSpace.cs" />
+    <Compile Include="Assets\Objects\Space\appPlaneSpace\app_PlaneSpace.cs" />
     <Compile Include="Assets\Objects\Space\appSpace\EditSpace.cs" />
+    <Compile Include="Assets\Objects\Space\appSpace\MeshMaker_PlaneSpaceManager.cs" />
     <Compile Include="Assets\Objects\Space\appSpace\MeshMaker_Space.cs" />
     <Compile Include="Assets\Objects\Space\appSpace\ObjectMenu_Space.cs" />
     <Compile Include="Assets\Objects\Space\appSpace\RefObjects_Space.cs" />

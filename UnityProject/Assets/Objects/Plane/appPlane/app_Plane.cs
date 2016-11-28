@@ -9,9 +9,11 @@ public class app_Plane : MonoBehaviour {
     private GameObject infoCanvasObj;
     private GameObject refObjs;
     private GameObject hostObjs;
-    
 
-    void Start()
+
+
+
+    void Awake()
     {
         modelObj = transform.FindChild("_Model").gameObject;
         infoCanvasObj = transform.FindChild("_ObjectInfo").gameObject;
@@ -32,56 +34,10 @@ public class app_Plane : MonoBehaviour {
     //---------------------------------------------------------------
 
 
-    private List<AppListener> listeners = new List<AppListener>();
-
-
-    public void registerListener(AppListener l)
+    public void init(List<Vector3> pts)
     {
-        listeners.Add(l);
+        refObjs.GetComponent<RefObjects_Plane>().updateRefObjects(pts);
     }
-
-
-    public void deRegisterListener(AppListener l)
-    {
-        listeners.Remove(l);
-    }
-
-
-    public void notifyPosChange()
-    {
-        foreach(AppListener l in listeners)
-        {
-            l.onPositionChange(transform.position);
-        }
-    }
-
-
-    public void notifyRotChange()
-    {
-        foreach (AppListener l in listeners)
-        {
-            l.onRotationChange(transform.rotation);
-        }
-    }
-
-
-    public void notifyScaleChange()
-    {
-        foreach (AppListener l in listeners)
-        {
-            l.onScaleChange(transform.localScale);
-        }
-    }
-
-
-    public void notifyTransformChange()
-    {
-        notifyPosChange();
-        notifyRotChange();
-        notifyScaleChange();
-    }
-
-
 
 
 }
