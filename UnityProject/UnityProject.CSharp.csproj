@@ -129,6 +129,7 @@
     <Compile Include="Assets\Objects\Line\appLine\MeshMaker_Line.cs" />
     <Compile Include="Assets\Objects\Line\appLine\ObjectMenu_Line.cs" />
     <Compile Include="Assets\Objects\Line\appLine\RefObjects_Line.cs" />
+    <Compile Include="Assets\Objects\Line\appLine\SnapObjectManager_Line.cs" />
     <Compile Include="Assets\Objects\Line\appLine\app_Line.cs" />
     <Compile Include="Assets\Objects\Plane\PlaneActionManager.cs" />
     <Compile Include="Assets\Objects\Plane\PlaneCreator.cs" />
@@ -168,6 +169,7 @@
     <Compile Include="Assets\Objects\Surface\appSurface\MeshMaker_Surface.cs" />
     <Compile Include="Assets\Objects\Surface\appSurface\ObjectMenu_Surface.cs" />
     <Compile Include="Assets\Objects\Surface\appSurface\RefObjects_Surface.cs" />
+    <Compile Include="Assets\Objects\Surface\appSurface\SnapObjectManager_Surface.cs" />
     <Compile Include="Assets\Objects\Surface\appSurface\app_Surface.cs" />
     <Compile Include="Assets\Objects\Wall\WallActionManager.cs" />
     <Compile Include="Assets\Objects\Wall\WallCreator.cs" />
@@ -176,6 +178,7 @@
     <Compile Include="Assets\Objects\Wall\appWall\MeshMaker_Wall.cs" />
     <Compile Include="Assets\Objects\Wall\appWall\ObjectMenu_Wall.cs" />
     <Compile Include="Assets\Objects\Wall\appWall\RefObjects_Wall.cs" />
+    <Compile Include="Assets\Objects\Wall\appWall\SnapObjectManager_Wall.cs" />
     <Compile Include="Assets\Objects\Wall\appWall\app_Wall.cs" />
     <Compile Include="Assets\PlaneEdit\PlaneEditActionManager.cs" />
     <Compile Include="Assets\PlaneEdit\PlaneEditMenuManager.cs" />
@@ -195,6 +198,7 @@
     <Compile Include="Assets\Scripts\IToolsScreenManager.cs" />
     <Compile Include="Assets\Scripts\InfoObject.cs" />
     <Compile Include="Assets\Scripts\Interfaces.cs" />
+    <Compile Include="Assets\Scripts\SnapObjectManager.cs" />
     <Compile Include="Assets\Scripts\SnapObject_Line.cs" />
     <Compile Include="Assets\Scripts\SnapObject_Point.cs" />
     <Compile Include="Assets\Scripts\ToolBoxButtonActions.cs" />

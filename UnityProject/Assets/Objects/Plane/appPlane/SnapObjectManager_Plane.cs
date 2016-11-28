@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SnapObjectManager_Plane : MonoBehaviour, SnapObjectManager
+public class SnapObjectManager_Plane : SnapObjectManager
 {
 
 
@@ -12,27 +12,6 @@ public class SnapObjectManager_Plane : MonoBehaviour, SnapObjectManager
 
 
     //---------------------------------------------------------------
-
-    
-    
-    private void createAndPlaceSnapObj(Vector3 start, Vector3 end)
-    {
-        GameObject newSnapObj;
-        newSnapObj = GeneralSettings.getSnapGenLinePrefab();
-        newSnapObj.transform.SetParent(transform);
-        newSnapObj.GetComponent<SnapObject_GenLine>().setEnds(start, end);
-    }
-
-
-
-    private void createAndPlaceSnapObj(Vector3 start, Vector3 end, SnapType st)
-    {
-        GameObject newSnapObj;
-        newSnapObj = GeneralSettings.getSnapGenLinePrefab();
-        newSnapObj.transform.SetParent(transform);
-        newSnapObj.GetComponent<SnapObject_GenLine>().setEnds(start, end);
-        newSnapObj.GetComponent<SnapObject_GenLine>().setType(st);
-    }
 
 
 
@@ -44,35 +23,25 @@ public class SnapObjectManager_Plane : MonoBehaviour, SnapObjectManager
         Vector3 rB = refObj.getPtRightBottom();
         Vector3 rT = refObj.getPtRightTop();
 
-        createAndPlaceSnapObj(lT, rT);
-        createAndPlaceSnapObj(rT, rB);
-        createAndPlaceSnapObj(rB, lB);
-        createAndPlaceSnapObj(lB, lT);
+        base.createAndPlaceSnapObj(lT, rT);
+        base.createAndPlaceSnapObj(rT, rB);
+        base.createAndPlaceSnapObj(rB, lB);
+        base.createAndPlaceSnapObj(lB, lT);
 
-        createAndPlaceSnapObj(lT, lT, SnapType.END);
-        createAndPlaceSnapObj(rT, rT, SnapType.END);
-        createAndPlaceSnapObj(rB, rB, SnapType.END);
-        createAndPlaceSnapObj(lB, lB, SnapType.END);
+        base.createAndPlaceSnapObj(lT, lT, SnapType.END);
+        base.createAndPlaceSnapObj(rT, rT, SnapType.END);
+        base.createAndPlaceSnapObj(rB, rB, SnapType.END);
+        base.createAndPlaceSnapObj(lB, lB, SnapType.END);
 
         Vector3 mid;
         mid = (lT + rT) / 2;
-        createAndPlaceSnapObj(mid, mid, SnapType.MID);
+        base.createAndPlaceSnapObj(mid, mid, SnapType.MID);
         mid = (rT + rB) / 2;
-        createAndPlaceSnapObj(mid, mid, SnapType.MID);
+        base.createAndPlaceSnapObj(mid, mid, SnapType.MID);
         mid = (rB + lB) / 2;
-        createAndPlaceSnapObj(mid, mid, SnapType.MID);
+        base.createAndPlaceSnapObj(mid, mid, SnapType.MID);
         mid = (lB + lT) / 2;
-        createAndPlaceSnapObj(mid, mid, SnapType.MID);
-    }
-
-
-
-    private void clearSnapObjects()
-    {
-        for(int i=0; i<transform.childCount; i++)
-        {
-            Destroy(transform.GetChild(i).gameObject);
-        }
+        base.createAndPlaceSnapObj(mid, mid, SnapType.MID);
     }
 
 
@@ -81,9 +50,9 @@ public class SnapObjectManager_Plane : MonoBehaviour, SnapObjectManager
 
 
 
-    public void updateSnapObjects()
+    public override void updateSnapObjects()
     {
-        clearSnapObjects();
+        base.clearSnapObjects();
         createSnapObjects();
     }
 

@@ -54,6 +54,24 @@ public class HighlightStyle1 : MonoBehaviour, Highlightable
     }
 
 
+
+    //---------------------------------------------------------------
+
+
+
+    public void displayInfoMenu()
+    {
+        infoCanvasObj.SetActive(true);
+    }
+
+
+    public void hideInfoMenu()
+    {
+        infoCanvasObj.SetActive(false);
+    }
+
+
+
     //---------------------------------------------------------------
 
 
@@ -171,7 +189,7 @@ public class HighlightStyle1 : MonoBehaviour, Highlightable
         if(highlightDown)
         {
             setHighlightMaterial();
-            infoCanvasObj.SetActive(true);
+            displayInfoMenu();
             highlightDown = false;
         }
 
@@ -183,7 +201,7 @@ public class HighlightStyle1 : MonoBehaviour, Highlightable
         if (highlightUp)
         {
             unsetHighlightMaterial();
-            infoCanvasObj.SetActive(false);
+            hideInfoMenu();
             resetUICanvasOrient();
             highlightUp = false;
         }

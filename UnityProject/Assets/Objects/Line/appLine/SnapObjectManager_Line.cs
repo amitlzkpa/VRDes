@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SnapObjectManager_Point : SnapObjectManager
+public class SnapObjectManager_Line : SnapObjectManager
 {
 
 
     private GameObject parentCloneObj;
-    private RefObjects_Point refObj;
+    private RefObjects_Line refObj;
 
 
 
@@ -15,12 +15,18 @@ public class SnapObjectManager_Point : SnapObjectManager
 
 
 
-
     private void createSnapObjects()
     {
-        Vector3 pt = refObj.getPtCenter();
+        List<Vector3> pts = refObj.getAllPts();
+        foreach(Vector3 pt in pts)
+        {
+            base.createAndPlaceSnapObj(pt, pt, SnapType.END);
+        }
 
-        base.createAndPlaceSnapObj(pt, pt, SnapType.END);
+        for (int i=0; i<pts.Count-1; i++)
+        {
+            base.createAndPlaceSnapObj(pts[i], pts[i+1]);
+        }
     }
 
 
@@ -45,7 +51,7 @@ public class SnapObjectManager_Point : SnapObjectManager
     void Start ()
     {
         parentCloneObj = transform.parent.gameObject;
-        refObj = parentCloneObj.transform.FindChild("_RefObjects").gameObject.GetComponent<RefObjects_Point>();
+        refObj = parentCloneObj.transform.FindChild("_RefObjects").gameObject.GetComponent<RefObjects_Line>();
         updateSnapObjects();
     }
 

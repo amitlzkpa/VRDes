@@ -64,6 +64,7 @@ public class GeneralSettings : MonoBehaviour {
         // if an object is being edited, reslease it and set the new object to edit mode
         if (editOn()) clearEditObject();
         objBeingEdited = inpObj;
+        objBeingEdited.GetComponent<HighlightStyle1>().hideInfoMenu();
         int_rightLaser.setRestrictedObject(objBeingEdited, GeneralSettings.modelObjects);
         GeneralSettings.addLineToConsole(System.String.Format("Editing {0}.", objBeingEdited.name));
     }

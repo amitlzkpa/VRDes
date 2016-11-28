@@ -97,6 +97,8 @@ public class MeshMaker_Plane : MonoBehaviour, MeshMaker
         Mesh newMesh = getMesh(cornerPoints, transform.forward);
         meshFilter.mesh = newMesh;
         meshCollider.sharedMesh = newMesh;
+
+        meshObj.transform.position = Vector3.zero;
     }
 
 
