@@ -112,6 +112,7 @@ public class MeshMaker_Space : MonoBehaviour, MeshMaker
             Mesh newMesh = getMesh(cornerPoints, normalSet[i]);
             meshFilter[i].mesh = newMesh;
             meshCollider[i].sharedMesh = newMesh;
+            meshObj[i].transform.position = Vector3.zero;
         }
     }
 
