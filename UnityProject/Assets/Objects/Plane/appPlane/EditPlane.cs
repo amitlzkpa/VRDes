@@ -18,7 +18,8 @@ public class EditPlane : MonoBehaviour, Editable
     {
         GeneralSettings.setEditObject(gameObject);
         transform.FindChild("_RefObjects").gameObject.GetComponent<RefObjectManager>().showRefObjects();
-        transform.FindChild("_MoveGizmo").gameObject.GetComponent<GizmoManager>().showMoveGizmo();
+        transform.FindChild("_Gizmo").gameObject.GetComponent<GizmoManager>().showMoveGizmo();
+        transform.FindChild("_Gizmo").gameObject.GetComponent<GizmoManager>().showRotateGizmo();
         editOn = true;
     }
 
@@ -27,7 +28,8 @@ public class EditPlane : MonoBehaviour, Editable
     {
         GeneralSettings.clearEditObject();
         transform.FindChild("_RefObjects").gameObject.GetComponent<RefObjectManager>().hideRefObjects();
-        transform.FindChild("_MoveGizmo").gameObject.GetComponent<GizmoManager>().hideMoveGizmo();
+        transform.FindChild("_Gizmo").gameObject.GetComponent<GizmoManager>().hideMoveGizmo();
+        transform.FindChild("_Gizmo").gameObject.GetComponent<GizmoManager>().hideRotateGizmo();
         editOn = false;
     }
 

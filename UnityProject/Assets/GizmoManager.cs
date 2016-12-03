@@ -7,15 +7,40 @@ public class GizmoManager : MonoBehaviour {
 
 
     public GameObject moveGizmoPrefab;
-
-
     private GameObject moveGizmoObject;
 
 
-	// Use this for initialization
-	void Start () {
-        moveGizmoObject = Instantiate(moveGizmoPrefab, transform.position, Quaternion.LookRotation(transform.forward), transform);
-        hideMoveGizmo();
+
+    public GameObject rotateGizmoPrefab;
+    private GameObject rotateGizmoObject;
+
+
+
+    //---------------------------------------------------------------
+
+
+
+    private bool moveGizIsVisible = true;
+
+
+    public void hideMoveGizmo()
+    {
+        moveGizIsVisible = false;
+        moveGizmoObject.SetActive(moveGizIsVisible);
+    }
+
+
+    public void showMoveGizmo()
+    {
+        moveGizIsVisible = true;
+        moveGizmoObject.SetActive(moveGizIsVisible);
+    }
+
+
+    public void toggleMoveGizmo()
+    {
+        moveGizIsVisible = !moveGizIsVisible;
+        moveGizmoObject.SetActive(moveGizIsVisible);
     }
 
 
@@ -24,28 +49,42 @@ public class GizmoManager : MonoBehaviour {
 
 
 
+    private bool rotGizIsVisible = true;
 
-    private bool isVisible = true;
 
-
-    public void hideMoveGizmo()
+    public void hideRotateGizmo()
     {
-        isVisible = false;
-        moveGizmoObject.SetActive(isVisible);
+        rotGizIsVisible = false;
+        rotateGizmoObject.SetActive(rotGizIsVisible);
     }
 
 
-    public void showMoveGizmo()
+    public void showRotateGizmo()
     {
-        isVisible = true;
-        moveGizmoObject.SetActive(isVisible);
+        rotGizIsVisible = true;
+        rotateGizmoObject.SetActive(rotGizIsVisible);
     }
 
 
-    public void toggleMoveGizmo()
+    public void toggleRotateGizmo()
     {
-        isVisible = !isVisible;
-        moveGizmoObject.SetActive(isVisible);
+        rotGizIsVisible = !rotGizIsVisible;
+        rotateGizmoObject.SetActive(rotGizIsVisible);
+    }
+
+
+
+    //---------------------------------------------------------------
+
+
+
+    // Use this for initialization
+    void Start()
+    {
+        moveGizmoObject = Instantiate(moveGizmoPrefab, transform.position, Quaternion.LookRotation(transform.forward), transform);
+        hideMoveGizmo();
+        rotateGizmoObject = Instantiate(rotateGizmoPrefab, transform.position, Quaternion.LookRotation(transform.forward), transform);
+        hideRotateGizmo();
     }
 
 

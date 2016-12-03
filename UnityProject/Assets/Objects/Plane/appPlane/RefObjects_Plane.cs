@@ -52,8 +52,8 @@ public class RefObjects_Plane : MonoBehaviour, RefObjectManager
     //---------------------------------------------------------------
 
 
-
-    private GameObject plCenter;
+    
+    private GameObject emptyCenter;
 
 
     private GameObject ptLeftTop;
@@ -76,7 +76,7 @@ public class RefObjects_Plane : MonoBehaviour, RefObjectManager
 
     public Vector3 getPtCenter()
     {
-        return plCenter.transform.position;
+        return emptyCenter.transform.position;
     }
 
 
@@ -136,7 +136,7 @@ public class RefObjects_Plane : MonoBehaviour, RefObjectManager
         edBottom.transform.up = getPtRightBottom() - getPtLeftBottom();
         edBottom.transform.position = (getPtRightBottom() + getPtLeftBottom()) / 2;
         edBottom.transform.localScale = new Vector3(def, Vector3.Distance(getPtRightBottom(), getPtLeftBottom()) * gap, def);
-        plCenter.transform.position = (getPtLeftTop() + getPtLeftBottom() + getPtRightBottom() + getPtRightTop()) / 4;
+        emptyCenter.transform.position = (getPtLeftTop() + getPtLeftBottom() + getPtRightBottom() + getPtRightTop()) / 4;
     }
 
 
@@ -161,12 +161,12 @@ public class RefObjects_Plane : MonoBehaviour, RefObjectManager
         frameObject.transform.position = center;
         frameObject.transform.forward = normal;
 
-        plCenter = Instantiate(planeRepPrefab, center, Quaternion.identity, frameObject.transform);
+        emptyCenter = new GameObject();
+        emptyCenter.transform.SetParent(frameObject.transform);
         ptLeftBottom = Instantiate(pointRepPrefab, pts[0], Quaternion.LookRotation(normal, frameObject.transform.forward), frameObject.transform);
         ptRightBottom = Instantiate(pointRepPrefab, pts[1], Quaternion.LookRotation(normal, frameObject.transform.forward), frameObject.transform);
         ptRightTop = Instantiate(pointRepPrefab, pts[2], Quaternion.LookRotation(normal, frameObject.transform.forward), frameObject.transform);
         ptLeftTop = Instantiate(pointRepPrefab, pts[3], Quaternion.LookRotation(normal, frameObject.transform.forward), frameObject.transform);
-        plCenter.transform.up = normal;
 
         edLeft = Instantiate(edgeRepPrefab, Vector3.zero, Quaternion.identity, frameObject.transform);
         edBottom = Instantiate(edgeRepPrefab, Vector3.zero, Quaternion.identity, frameObject.transform);
@@ -191,7 +191,7 @@ public class RefObjects_Plane : MonoBehaviour, RefObjectManager
 
 
         // change the parent of each object to the object the script is on
-        plCenter.transform.SetParent(transform);
+        emptyCenter.transform.SetParent(transform);
 
         ptLeftTop.transform.SetParent(transform);
         ptLeftBottom.transform.SetParent(transform);
@@ -225,7 +225,7 @@ public class RefObjects_Plane : MonoBehaviour, RefObjectManager
         // add the ref object name prepend to all names
         string refStrt = GeneralSettings.REF_OBJ_START_NAME;
 
-        plCenter.name = refStrt + "plCenter";
+        emptyCenter.name = refStrt + "plCenter";
 
         ptLeftTop.name = refStrt + "ptLeftTop";
         ptLeftBottom.name = refStrt + "ptLeftBottom";

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 
 
@@ -13,7 +14,8 @@ public class ActionSwitcher : MonoBehaviour
 
     private enum SelectMoveType
     {
-        MoveRefEd, MoveRefPt, MoveObj, MoveRefPtConstrained, MoveGizmoLinear, None
+        MoveRefEd, MoveRefPt, MoveObj, MoveRefPtConstrained, MoveGizmoLinear, RotateGizmoAxis,
+        MoveSpecOneAxis, MoveSpecPt, None
     }
 
 
@@ -171,6 +173,9 @@ public class ActionSwitcher : MonoBehaviour
     private GameObject currHitAppObj;
 
     private GameObject incidentObj;
+    private WaitingObject currWaitingObj;
+    private string specMoveAxis;
+    private List<float> tgtPosList = new List<float>();
 
 
     private void selActionMethods()
@@ -190,7 +195,12 @@ public class ActionSwitcher : MonoBehaviour
         
         if (GeneralSettings.editOn())
         {
-            if (WandControlsManager.WandControllerRight.getTriggerDown())
+            if (WandControlsManager.WandControllerRight.getGripDown())
+            {
+                GeneralSettings.clearEditObject();
+                return;
+            }
+                if (WandControlsManager.WandControllerRight.getTriggerDown())
             {
                 if (laser.isHit())
                 {
@@ -242,6 +252,39 @@ public class ActionSwitcher : MonoBehaviour
                         activeMoveType = SelectMoveType.MoveGizmoLinear;
                         return;
                     }
+                    // check whether hittin a refObject; in that case move only the ref object
+                    GizmoRotateAxis gizRotateAxis = incidentObj.GetComponent<GizmoRotateAxis>();
+                    if (gizRotateAxis != null)
+                    {
+                        laser.setRestrictedPlane(incidentObj.GetComponent<GizmoRotateAxis>().getRefPlane());
+                        objToMove = incidentObj;
+                        activeMoveType = SelectMoveType.RotateGizmoAxis;
+                        return;
+                    }
+                    // check whether hittin a refObject; in that case move only the ref object
+                    GizmoSpecMoveOneAxis moveSpecOneAxis = incidentObj.GetComponent<GizmoSpecMoveOneAxis>();
+                    if (moveSpecOneAxis != null)
+                    {
+                        specMoveAxis = incidentObj.GetComponent<GizmoSpecMoveOneAxis>().getAxis();
+                        currWaitingObj = ScriptableObject.CreateInstance<WaitingObject>();
+                        GeneralSettings.setNumPad(currWaitingObj);
+                        GeneralSettings.updateInteractText("Please specify offset along " + specMoveAxis + "-axis.");
+                        objToMove = incidentObj;
+                        activeMoveType = SelectMoveType.MoveSpecOneAxis;
+                        return;
+                    }
+                    // check whether hittin a refObject; in that case move only the ref object
+                    GizmoMoveSpecPoint moveSpecPt = incidentObj.GetComponent<GizmoMoveSpecPoint>();
+                    if (moveSpecPt != null)
+                    {
+                        currWaitingObj = ScriptableObject.CreateInstance<WaitingObject>();
+                        GeneralSettings.setNumPad(currWaitingObj);
+                        GeneralSettings.updateInteractText("Please enter target point on X-axis.");
+                        objToMove = incidentObj;
+                        activeMoveType = SelectMoveType.MoveSpecPt;
+                        tgtPosList.Clear();
+                        return;
+                    }
                     // otherwise move the whole edit object
                     else
                     {
@@ -256,6 +299,9 @@ public class ActionSwitcher : MonoBehaviour
             }
             if (WandControlsManager.WandControllerRight.getTriggerUp())
             {
+                // these modes require continuation and are not exited on just trigger up
+                // their reselase methods are defined in the parts where the activeMoveType is set back to default
+                if (activeMoveType == SelectMoveType.MoveSpecOneAxis || activeMoveType == SelectMoveType.MoveSpecPt) return;
                 if (objToMove.GetComponent<SphereCollider>() != null) objToMove.GetComponent<SphereCollider>().enabled = true;
                 clearLaser();
                 objToMove = null;
@@ -298,6 +344,61 @@ public class ActionSwitcher : MonoBehaviour
                     {
                         tgtPos = objToMove.transform.parent.InverseTransformVector(laser.getTerminalPoint());
                         objToMove.GetComponent<GizmoMoveLinear>().moveObject(tgtPos);
+                        break;
+                    }
+                case SelectMoveType.RotateGizmoAxis:
+                    {
+                        tgtPos = laser.getTerminalPoint();
+                        objToMove.GetComponent<GizmoRotateAxis>().rotateObject(tgtPos);
+                        break;
+                    }
+                case SelectMoveType.MoveSpecOneAxis:
+                    {
+                        if (!currWaitingObj.isSet()) return;
+                        int amt = int.Parse(currWaitingObj.readString());
+                        objToMove.GetComponent<GizmoSpecMoveOneAxis>().moveObject(amt);
+                        GeneralSettings.addLineToConsole(string.Format("Moved {0} by {1} in {2}-axis", GeneralSettings.getParentClone(objToMove, "app_").name, amt, specMoveAxis));
+                        objToMove = null;
+                        activeMoveType = SelectMoveType.None;
+                        GeneralSettings.reinstatePreviousMenu();
+                        GeneralSettings.updateInteractText("");
+                        if (objToMove.GetComponent<SphereCollider>() != null) objToMove.GetComponent<SphereCollider>().enabled = true;
+                        clearLaser();
+                        break;
+                    }
+                case SelectMoveType.MoveSpecPt:
+                    {
+                        if (!currWaitingObj.isSet()) return;
+                        float amt = float.Parse(currWaitingObj.readString());
+                        tgtPosList.Add(amt);
+                        if (tgtPosList.Count == 1)
+                        {
+                            GeneralSettings.reinstatePreviousMenu();
+                            currWaitingObj = ScriptableObject.CreateInstance<WaitingObject>();
+                            GeneralSettings.setNumPad(currWaitingObj);
+                            GeneralSettings.updateInteractText("Please enter target point on Y-axis.");
+                            return;
+                        }
+                        if (tgtPosList.Count == 2)
+                        {
+                            GeneralSettings.reinstatePreviousMenu();
+                            currWaitingObj = ScriptableObject.CreateInstance<WaitingObject>();
+                            GeneralSettings.setNumPad(currWaitingObj);
+                            GeneralSettings.updateInteractText("Please enter target point on Z-axis.");
+                            return;
+                        }
+                        if (tgtPosList.Count == 3)
+                        {
+                            Vector3 tgtSpecPos = new Vector3(tgtPosList[0], tgtPosList[1], tgtPosList[2]);
+                            objToMove.GetComponent<GizmoMoveSpecPoint>().moveObject(tgtSpecPos);
+                            GeneralSettings.addLineToConsole(string.Format("Moved {0} to {1}", GeneralSettings.getParentClone(objToMove, "app_").name, tgtSpecPos));
+                            if (objToMove.GetComponent<SphereCollider>() != null) objToMove.GetComponent<SphereCollider>().enabled = true;
+                            objToMove = null;
+                            activeMoveType = SelectMoveType.None;
+                            GeneralSettings.reinstatePreviousMenu();
+                            GeneralSettings.updateInteractText("");
+                            clearLaser();
+                        }
                         break;
                     }
                 case SelectMoveType.None:
