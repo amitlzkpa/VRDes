@@ -13,7 +13,7 @@ public class ActionSwitcher : MonoBehaviour
 
     private enum SelectMoveType
     {
-        MoveRefEd, MoveRefPt, MoveObj, MoveRefPtConstrained, None
+        MoveRefEd, MoveRefPt, MoveObj, MoveRefPtConstrained, MoveGizmoLinear, None
     }
 
 
@@ -231,6 +231,17 @@ public class ActionSwitcher : MonoBehaviour
                         objToMove.GetComponent<SphereCollider>().enabled = false;
                         return;
                     }
+                    // DIRTY-FIX
+                    // check whether hittin a refObject; in that case move only the ref object
+                    GizmoMoveLinear gizMoveLin = incidentObj.GetComponent<GizmoMoveLinear>();
+                    if (gizMoveLin != null)
+                    {
+                        laser.setRestrictedPlane(incidentObj.GetComponent<GizmoMoveLinear>().getRefPlane());
+                        objToMove = incidentObj;
+                        startPos = objToMove.transform.localPosition;
+                        activeMoveType = SelectMoveType.MoveGizmoLinear;
+                        return;
+                    }
                     // otherwise move the whole edit object
                     else
                     {
@@ -257,7 +268,6 @@ public class ActionSwitcher : MonoBehaviour
         {
             switch (activeMoveType)
             {
-                // FIX-THIS: working only near origin
                 case SelectMoveType.MoveRefEd:
                     {
                         tgtPos = objToMove.transform.parent.InverseTransformVector(laser.getTerminalPoint());
@@ -281,6 +291,13 @@ public class ActionSwitcher : MonoBehaviour
                     {
                         tgtPos = laser.getTerminalPoint();
                         objToMove.GetComponent<Editable>().moveObject(tgtPos + offsetVal);
+                        break;
+                    }
+                // DIRTY-FIX
+                case SelectMoveType.MoveGizmoLinear:
+                    {
+                        tgtPos = objToMove.transform.parent.InverseTransformVector(laser.getTerminalPoint());
+                        objToMove.GetComponent<GizmoMoveLinear>().moveObject(tgtPos);
                         break;
                     }
                 case SelectMoveType.None:
