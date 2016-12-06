@@ -18,8 +18,6 @@ public class EditPlane : MonoBehaviour, Editable
     {
         GeneralSettings.setEditObject(gameObject);
         transform.FindChild("_RefObjects").gameObject.GetComponent<RefObjectManager>().showRefObjects();
-        transform.FindChild("_Gizmo").gameObject.GetComponent<GizmoManager>().showMoveGizmo();
-        transform.FindChild("_Gizmo").gameObject.GetComponent<GizmoManager>().showRotateGizmo();
         editOn = true;
     }
 
@@ -28,15 +26,7 @@ public class EditPlane : MonoBehaviour, Editable
     {
         GeneralSettings.clearEditObject();
         transform.FindChild("_RefObjects").gameObject.GetComponent<RefObjectManager>().hideRefObjects();
-        transform.FindChild("_Gizmo").gameObject.GetComponent<GizmoManager>().hideMoveGizmo();
-        transform.FindChild("_Gizmo").gameObject.GetComponent<GizmoManager>().hideRotateGizmo();
         editOn = false;
-    }
-
-
-    public void moveObject(Vector3 tgtPos)
-    {
-        transform.position = tgtPos;
     }
 
 
@@ -49,7 +39,78 @@ public class EditPlane : MonoBehaviour, Editable
 
 
     //---------------------------------------------------------------
-    
+
+
+
+    private bool moveOn = false;
+
+
+    public void enterMoveMode()
+    {
+        GeneralSettings.setEditObject(gameObject);
+        transform.FindChild("_Gizmo").gameObject.GetComponent<GizmoManager>().showMoveGizmo();
+        // transform.FindChild("_Gizmo").gameObject.GetComponent<GizmoManager>().showRotateGizmo();
+        moveOn = true;
+    }
+
+
+    public void exitMoveMode()
+    {
+        GeneralSettings.clearEditObject();
+        transform.FindChild("_Gizmo").gameObject.GetComponent<GizmoManager>().hideMoveGizmo();
+        // transform.FindChild("_Gizmo").gameObject.GetComponent<GizmoManager>().hideRotateGizmo();
+        moveOn = false;
+    }
+
+
+    public void toggleMoveMode()
+    {
+        if (moveOn) exitMoveMode();
+        else enterMoveMode();
+    }
+
+
+
+    //---------------------------------------------------------------
+
+
+
+    private bool rotateOn = false;
+
+
+    public void enterRotateMode()
+    {
+        GeneralSettings.setEditObject(gameObject);
+        transform.FindChild("_Gizmo").gameObject.GetComponent<GizmoManager>().showRotateGizmo();
+        rotateOn = true;
+    }
+
+
+    public void exitRotateMode()
+    {
+        GeneralSettings.clearEditObject();
+        transform.FindChild("_Gizmo").gameObject.GetComponent<GizmoManager>().hideRotateGizmo();
+        rotateOn = false;
+    }
+
+
+    public void toggleRotateMode()
+    {
+        if (rotateOn) exitRotateMode();
+        else enterRotateMode();
+    }
+
+
+
+    //---------------------------------------------------------------
+
+
+
+    public void moveObject(Vector3 tgtPos)
+    {
+        transform.position = tgtPos;
+    }
+
 
 
 }

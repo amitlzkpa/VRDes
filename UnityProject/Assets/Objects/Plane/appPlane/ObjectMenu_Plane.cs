@@ -22,6 +22,18 @@ public class ObjectMenu_Plane : MonoBehaviour, ObjectMenu
     }
 
 
+    public void move()
+    {
+        parentObj.GetComponent<EditPlane>().toggleMoveMode();
+    }
+
+
+    public void rotate()
+    {
+        parentObj.GetComponent<EditPlane>().toggleRotateMode();
+    }
+
+
 
 
 

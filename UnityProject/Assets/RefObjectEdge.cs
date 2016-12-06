@@ -40,11 +40,11 @@ public class RefObjectEdge : MonoBehaviour {
     {
         if (gameObject.name.ToLower().Contains("left") || gameObject.name.ToLower().Contains("right"))
         {
-            tgtPos.y = startPos.y;
+            tgtPos.x = startPos.x;
         }
         else
         {
-            tgtPos.x = startPos.x;
+            tgtPos.y = startPos.y;
         }
         tgtPos.z = startPos.z;
 
